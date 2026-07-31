@@ -348,7 +348,7 @@ function challengeStage(){const c=state.challenge,a=c.missionA,b=c.missionB;
  if(!a.projectCreated||a.projectStatus!=='in_progress')return 3;if(!a.branchCreated)return 4;
  if(!a.branchCommitSha)return 5;if(!a.prCreated)return 6;
  if(!a.reviewRead||!a.fixCommitSha)return 7;if(!a.jamieApproved||!a.merged)return 8;
- if(!b.prOpened)return 9;if(b.diffViewedSha!==b.currentHeadSha||b.selectedDiffLine!=='budget-line'||b.issueCategory!=='missing-currency')return 10;
+ if(!b.prOpened)return 9;if(!b.jamieFixCommitSha&&(b.diffViewedSha!==b.currentHeadSha||b.selectedDiffLine!=='budget-line'||b.issueCategory!=='missing-currency'))return 10;
  if(!b.reviewComment||!b.changesRequested)return 11;if(!b.jamieFixCommitSha)return 12;
  if(b.latestDiffViewedSha!==b.currentHeadSha||!b.latestDiffLine||!b.fixVerified)return 13;
  if(!b.approved)return 14;if(!b.merged)return 15;if(!b.projectStatusVerified||!b.issueClosureVerified)return 16;
