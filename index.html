@@ -157,7 +157,7 @@ function save(render=true){persist();if(render)draw()}
 function draftPractice(key,value){state.practice.drafts[key]=value;persist()}
 function draftChallenge(key,value){state.challenge.drafts[key]=value;persist()}
 function draftPracticeFiles(){state.practice.drafts.files=[...document.querySelectorAll('.p-file:checked')].map(x=>x.value);persist()}
-function draftChallengeFiles(){state.challenge.drafts.files=[...document.querySelectorAll('.c-file:checked')].map(x=>x.value);persist()}
+function draftChallengeFiles(){state.challenge.drafts.files=[...document.querySelectorAll('.ca-file:checked,.c-file:checked')].map(x=>x.value);persist()}
 function practiceDraftValue(key){return state.practice.drafts[key]??''}
 function challengeDraftValue(key){return state.challenge.drafts[key]??''}
 function setLang(v){state.lang=v;save()}
