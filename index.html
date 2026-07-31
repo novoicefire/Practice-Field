@@ -345,7 +345,7 @@ function challengeStepNames(){return [
 ]}
 function challengeStage(){const c=state.challenge,a=c.missionA,b=c.missionB;
  if(!a.repoCreated)return 0;if(!a.filesCreated)return 1;if(!a.issueCreated)return 2;
- if(!a.projectCreated||a.projectStatus!=='in_progress')return 3;if(!a.branchCreated)return 4;
+ if(!a.projectCreated||a.projectStatus==='todo')return 3;if(!a.branchCreated)return 4;
  if(!a.branchCommitSha)return 5;if(!a.prCreated)return 6;
  if(!a.reviewRead||!a.fixCommitSha)return 7;if(!a.jamieApproved||!a.merged)return 8;
  if(!b.prOpened)return 9;if(!b.jamieFixCommitSha&&(b.diffViewedSha!==b.currentHeadSha||b.selectedDiffLine!=='budget-line'||b.issueCategory!=='missing-currency'))return 10;
