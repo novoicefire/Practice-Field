@@ -151,6 +151,7 @@ function readPracticeBundle(fallbackPractice,fallbackChallenge){try{const versio
 let state=load();
 let focusRequested=false;
 let modalReturnFocus=null;
+let modalReturnFocusSelector=null;
 function load(){try{const x=JSON.parse(localStorage.getItem(STORE));if(x&&x.version===VERSION){const bundle=readPracticeBundle(x.practice,x.challenge);x.practice=bundle.practice;x.challenge=bundle.challenge;if(!x.demo||x.demo.version!==DEMO_VERSION)x.demo={index:0,played:false,auto:false,version:DEMO_VERSION};else x.demo.auto=false;return x}}catch(e){}return fresh()}
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(state));localStorage.setItem(PRACTICE_STORAGE_VERSION_KEY,String(PRACTICE_STORAGE_VERSION));localStorage.setItem(PRACTICE_STORAGE_KEY,JSON.stringify({practice:state.practice,challenge:state.challenge}))}catch(e){}}
 function save(render=true){persist();if(render)draw()}
@@ -173,8 +174,8 @@ function termPanel(){const list=[...new Set(relevantTerms())];return `<aside cla
 function termCard(k,active=false){const x=terms[k];if(!x)return'';return `<article class="term-card ${active?'active':''}"><h3><span class="term-en">${esc(x.en)}</span>｜${esc(x.zh)}</h3><p>${tx(esc(x.descZh),esc(x.descEn))}</p><div class="term-where">${tx(esc(x.whereZh),esc(x.whereEn))}</div></article>`}
 function termsModal(){const list=state.phase<5?relevantTerms():Object.keys(terms);return `<div class="modal-wrap" role="presentation" onclick="if(event.target===this)closeModal()"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="terms-title"><div class="modal-head"><h2 id="terms-title">${tx('專有名詞字卡','Terminology cards')}</h2><button class="modal-close" onclick="closeModal()" aria-label="Close">×</button></div><div class="modal-body">${[...new Set(list)].map(k=>termCard(k)).join('')}</div></div></div>`}
 function mobileTerms(){return state.phase<=4?`<button class="btn blue mobile-terms" onclick="openTerms()">${tx('名詞字卡','Terms')}</button>`:''}
-function openTerms(){modalReturnFocus=document.activeElement;state.modal='terms';save()}
-function closeModal(){const returnFocus=modalReturnFocus;modalReturnFocus=null;state.modal=null;save();requestAnimationFrame(()=>{if(returnFocus&&document.body.contains(returnFocus))returnFocus.focus()})}
+function openTerms(){modalReturnFocus=document.activeElement;modalReturnFocusSelector=document.activeElement?.matches('button.mobile-terms')?'button.mobile-terms':null;state.modal='terms';save()}
+function closeModal(){const returnFocus=modalReturnFocus,selector=modalReturnFocusSelector;modalReturnFocus=null;modalReturnFocusSelector=null;state.modal=null;save();requestAnimationFrame(()=>{const target=returnFocus&&document.body.contains(returnFocus)?returnFocus:(selector?document.querySelector(selector):null);if(target)target.focus()})}
 function phaseFooter(prev,next,label){return `<div class="footer-nav"><div>${prev?`<button class="btn" onclick="${prev}">${tx('上一步','Back')}</button>`:''}</div><div>${next?`<button class="btn primary" onclick="${next}">${label||tx('繼續','Continue')}</button>`:''}</div></div>`}
 function pageWrap(content,withTerms=true){return `<main class="page ${withTerms?'with-terms':''}"><div class="maincol">${content}</div>${withTerms?termPanel():''}</main>${mobileTerms()}`}
 /* stage 1 */
