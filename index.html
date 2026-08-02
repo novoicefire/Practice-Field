@@ -1185,8 +1185,8 @@ function stage5PageKey(page){return page==='pull-request'?'pullRequest':page}
 function stage5QuestionPage(questionId){return questionId==='pullRequest'?'pull-request':questionId}
 function stage5QuestionForPage(page){return stage5Questions[page]||null}
 function stage5ResultFromAttempts(wrongAttempts){return wrongAttempts===0?'mastered':wrongAttempts===1?'clarified':'needs-review'}
-function stage5StatusRank(status){return status==='needs-review'?2:status==='clarified'?1:0}
-function stage5MinimumResult(ids){const values=ids.map(function(id){return state.review.results[id]||state.review.stepResults[id]||'needs-review'});return values.sort(function(a,b){return stage5StatusRank(b)-stage5StatusRank(a)})[0]||'needs-review'}
+function stage5StatusRank(status){return status==='needs-review'?3:status==='clarified'?2:status==='mastered'?1:0}
+function stage5MinimumResult(ids){const values=ids.map(function(id){return state.review.results[id]||state.review.stepResults[id]||'unassessed'}),assessed=values.filter(function(value){return value!=='unassessed'});return (assessed.length?assessed:values).sort(function(a,b){return stage5StatusRank(b)-stage5StatusRank(a)})[0]||'unassessed'}
 function stage5Text(copy){return tx(copy[0],copy[1])}
 function stage5SelectedKey(questionId){return questionId==='review'?(state.review.reviewStep===1?'reviewStep1':'reviewStep2'):stage5PageKey(questionId)}
 function stage5Choose(questionId,value){const r=state.review;r.answers[stage5SelectedKey(questionId)]=value;r.feedback=null;persist()}
@@ -1421,10 +1421,11 @@ const stage5Domains={
   reviewMerge:{title:['提出修改與團隊審查','Proposing and reviewing changes'],ids:['pullRequest','review','workflow'],returnTo:'reviewMerge',description:['Pull Request 集中討論，Review 與修正後才合併。','Pull Request concentrates discussion; review and fix before merging.']},
   fullWorkflow:{title:['完整協作流程','Complete collaboration workflow'],ids:['workflow'],returnTo:'fullWorkflow',description:['把前面的理解串成一套能實際使用的流程。','Connect the earlier ideas into a workflow the team can use.']}
 };
-function stage5StatusLabel(result){return result==='mastered'?['已掌握','Mastered']:result==='clarified'?['經提示後已釐清','Clarified']:['建議再回顧','Review again']}
-function stage5DomainStatus(domain){const d=stage5Domains[domain];return d?stage5MinimumResult(d.ids):'needs-review'}
+function stage5StatusLabel(result){return result==='mastered'?['已掌握','Mastered']:result==='clarified'?['經提示後已釐清','Clarified']:result==='unassessed'?['尚未完成','Not assessed']:['建議再回顧','Review again']}
+function stage5DomainStatus(domain){const d=stage5Domains[domain];return d?stage5MinimumResult(d.ids):'unassessed'}
+function stage5FormalResult(result){return result==='mastered'||result==='clarified'||result==='needs-review'?result:'needs-review'}
 function reviewBuildReport(){
-  const report={};Object.keys(stage5Domains).forEach(function(domain){report[domain]=stage5DomainStatus(domain)});report.createdAt=new Date().toISOString();return report;
+  const report={};Object.keys(stage5Domains).forEach(function(domain){report[domain]=stage5FormalResult(stage5DomainStatus(domain))});report.createdAt=new Date().toISOString();return report;
 }
 function reviewReturnToDomain(domain){
   const r=state.review;
