@@ -540,6 +540,109 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
   .workspace-surface:has(.error-scene)>.gh-window{height:auto;min-height:520px;overflow:auto}
   .workspace-surface:has(.error-scene)>.error-scene{position:static;width:auto;margin:0 0 10px;padding:15px}
 }
+
+/* Stage 5 adaptive review */
+.review-page{display:grid;gap:16px}
+.review-intro{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:14px;align-items:stretch}
+.review-brief,.review-route-card,.review-surface,.review-report{border:1px solid var(--line);background:var(--surface);border-radius:8px}
+.review-brief{padding:20px 22px;border-top:3px solid var(--ink)}
+.review-brief h2{margin:0 0 8px;font-size:27px;line-height:1.18}
+.review-brief p{margin:0;color:var(--muted);line-height:1.65}
+.review-route-card{padding:16px 18px;display:grid;gap:8px;align-content:start}
+.review-route-card h3{margin:0;font-size:15px}
+.review-route-list{display:grid;gap:7px;margin:0;padding:0;list-style:none}
+.review-route-list li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:start;color:var(--muted);font-size:13px}
+.review-route-list li i{font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
+.review-route-list li.active{color:var(--ink);font-weight:600}
+.review-route-list li.done{color:var(--green)}
+.review-route-list li.repair{padding-left:8px;border-left:2px solid var(--primary)}
+.review-workbench{display:grid;grid-template-columns:minmax(200px,.34fr) minmax(0,.66fr);gap:16px;align-items:start}
+.review-sidebar{display:grid;gap:10px;position:sticky;top:var(--sticky-top);align-self:start}
+.review-evidence-card,.review-sidebar-note{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px 16px}
+.review-evidence-card h3,.review-sidebar-note h3{margin:0 0 8px;font-size:15px}
+.review-evidence-card p,.review-sidebar-note p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.review-domain-list{display:grid;gap:7px;margin:0;padding:0;list-style:none}
+.review-domain-list li{display:flex;gap:8px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:8px;font-size:13px}
+.review-domain-list li:first-child{border-top:0;padding-top:0}
+.review-domain-status{color:var(--muted);font-size:12px;white-space:nowrap}
+.review-domain-status.weak{color:var(--primary);font-weight:600}
+.review-domain-status.ready{color:var(--green);font-weight:600}
+.review-surface{min-width:0;overflow:hidden}
+.review-surface-head{padding:18px 20px;border-bottom:1px solid var(--line)}
+.review-surface-head h2{margin:5px 0 6px;font-size:29px;line-height:1.15}
+.review-surface-head p{margin:0;color:var(--muted);line-height:1.55}
+.review-surface-body{padding:18px 20px;display:grid;gap:14px}
+.review-question{border-top:1px solid var(--line);padding-top:14px}
+.review-question:first-child{border-top:0;padding-top:0}
+.review-question h3{margin:0 0 8px;font-size:16px;line-height:1.4}
+.review-question>p{margin:0 0 10px;color:var(--muted);line-height:1.55}
+.review-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.review-field{display:grid;gap:5px;min-width:0}
+.review-field label{font-size:12px;color:var(--muted);font-weight:600}
+.review-field select,.review-field input,.review-field textarea{width:100%;box-sizing:border-box}
+.review-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.review-choice{min-height:46px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer;transition:border-color .16s ease,background .16s ease}
+.review-choice:hover{border-color:var(--ink)}
+.review-choice:focus-visible,.review-diff-line:focus-visible,.review-check:focus-within{outline:2px solid var(--primary);outline-offset:2px}
+.review-choice.selected{border-color:var(--primary);background:var(--primary-soft)}
+.review-choice.correct{border-color:var(--green);background:var(--green-soft)}
+.review-check-list{display:grid;gap:7px}
+.review-check{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:7px;padding:9px 10px;color:var(--ink);font-size:13px;line-height:1.45}
+.review-check input{margin-top:3px;accent-color:var(--primary)}
+.review-inline-status{min-height:18px;color:var(--muted);font-size:13px}
+.review-feedback{border-left:3px solid var(--primary);background:var(--primary-soft);padding:10px 12px;color:var(--ink);line-height:1.5}
+.review-feedback.success{border-left-color:var(--green);background:var(--green-soft)}
+.review-feedback.error{border-left-color:var(--red);background:var(--red-soft)}
+.review-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:14px}
+.review-actions .field-help{margin:0;flex:1 1 220px}
+.review-pr-grid{display:grid;grid-template-columns:minmax(210px,.8fr) minmax(0,1.2fr);gap:12px}
+.review-pr-timeline{border:1px solid var(--line);border-radius:7px;padding:12px;display:grid;gap:9px;background:#20252b;color:#f5f6f7}
+.review-pr-timeline h3{margin:0;font-size:15px;color:#fff}
+.review-timeline-item{border-left:2px solid #59636d;padding-left:10px;font-size:12px;line-height:1.45;color:#d8dde1}
+.review-timeline-item strong{display:block;color:#fff}
+.review-timeline-item.warn{border-left-color:#f5a623}
+.review-timeline-item.good{border-left-color:#54b685}
+.review-diff{border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#f7f8f9}
+.review-diff-head{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 11px;border-bottom:1px solid var(--line);font-size:12px}
+.review-diff-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.review-diff-tab{border:1px solid var(--line);background:var(--surface);border-radius:5px;padding:5px 8px;font:inherit;cursor:pointer}
+.review-diff-tab.selected{border-color:var(--primary);color:var(--primary);font-weight:600}
+.review-diff-line{display:block;width:100%;border:0;border-bottom:1px solid #e0e3e6;padding:9px 11px;text-align:left;font:12px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;color:#30363d;cursor:pointer}
+.review-diff-line:last-child{border-bottom:0}
+.review-diff-line.del{background:#fff0f0}
+.review-diff-line.add{background:#eaf8ef}
+.review-diff-line.selected{box-shadow:inset 3px 0 0 var(--primary);font-weight:700}
+.review-snapshot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.review-snapshot article{border:1px solid var(--line);border-radius:7px;padding:10px;background:var(--canvas)}
+.review-snapshot b{display:block;font-size:12px;margin-bottom:4px}
+.review-snapshot span{font-size:12px;color:var(--muted);line-height:1.4}
+.review-report{padding:20px}
+.review-report h2{margin:0 0 6px;font-size:30px}
+.review-report>p{margin:0 0 14px;color:var(--muted);line-height:1.6}
+.review-result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.review-result{border:1px solid var(--line);border-radius:7px;padding:13px}
+.review-result h3{margin:0 0 8px;font-size:15px}
+.review-result p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.review-result.mastered{border-top:3px solid var(--green)}
+.review-result.clarified{border-top:3px solid var(--primary)}
+.review-result.needs-review{border-top:3px solid var(--ink)}
+.review-result-actions{margin-top:10px}
+.review-answer-review{display:grid;gap:10px;margin-top:14px}
+.review-answer-review article{border-top:1px solid var(--line);padding-top:10px}
+.review-answer-review h3{margin:0 0 5px;font-size:14px}
+.review-answer-review p{margin:0;color:var(--muted);white-space:pre-wrap;line-height:1.55}
+.review-verify-note{border-left:3px solid var(--primary);padding:9px 11px;background:var(--primary-soft);font-size:13px;line-height:1.5}
+.review-qa-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border:1px solid #20252b;border-radius:8px;background:#20252b;color:#fff;padding:8px 10px;font-size:12px}
+.review-qa-tools strong{letter-spacing:.08em;font-size:11px;color:#ffb38f}
+.review-qa-tools button{border:1px solid #59636d;border-radius:5px;background:#30363d;color:#fff;padding:6px 9px;font:inherit;cursor:pointer}
+.review-qa-tools button:hover{background:#424a53;border-color:#fff}
+.review-qa-key{border:1px solid #d8dee4;border-radius:7px;background:#f6f8fa;padding:9px 11px;color:#30363d;font-size:12px;line-height:1.5}
+.review-qa-key summary{cursor:pointer;font-weight:700}
+.review-qa-key ul{display:grid;gap:4px;margin:8px 0 0;padding-left:18px}
+.review-route-list button{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;width:100%;border:0;background:transparent;padding:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.review-route-list button:hover{color:var(--ink)}
+@media(max-width:1180px){.review-intro,.review-workbench,.review-pr-grid{grid-template-columns:1fr}.review-sidebar{position:static}.review-result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.review-brief,.review-surface-head,.review-surface-body,.review-report{padding:15px}.review-brief h2,.review-surface-head h2,.review-report h2{font-size:25px}.review-field-grid,.review-choice-grid,.review-snapshot,.review-result-grid{grid-template-columns:1fr}.review-pr-timeline{order:2}.review-diff{order:1}.review-actions{align-items:stretch}.review-actions .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -1081,7 +1184,7 @@ function reviewSelect(group,key,value,options){return '<select class=\"select\" 
 function reviewCheck(group,key,value,checked,label){return '<label class=\"review-check\"><input type=\"checkbox\" '+(checked?'checked':'')+' onchange=\"reviewToggleArray(\''+group+'\',\''+key+'\',\''+value+'\',this.checked)\"><span>'+label+'</span></label>'}
 function reviewRouteList(){
   const r=ensureReviewRoute();
-  return '<ol class=\"review-route-list\">'+r.route.map(function(page,i){const cls=i===r.cursor?'active':i<r.cursor?'done':'';return '<li class=\"'+cls+' '+(page.indexOf('-repair')>-1?'repair':'')+'\"><i>'+(i+1)+'</i><span>'+tx(...reviewPageLabel(page))+'</span></li>'}).join('')+'</ol>';
+  return '<ol class=\"review-route-list\">'+r.route.map(function(page,i){const cls=i===r.cursor?'active':i<r.cursor?'done':'';const label='<i>'+(i+1)+'</i><span>'+tx(...reviewPageLabel(page))+'</span>';return '<li class=\"'+cls+' '+(page.indexOf('-repair')>-1?'repair':'')+'\">'+(alexTestMode?'<button type=\"button\" onclick=\"alexJumpReview('+i+')\" aria-label=\"'+esc(plain('跳到','Jump to')+' '+tx(...reviewPageLabel(page)))+'\">'+label+'</button>':label)+'</li>'}).join('')+'</ol>';
 }
 function reviewSidebar(){
   const domains=[['versionRelations','版本與分支','Version and branches'],['prMergeGate','審查與合併','Review and merge'],['workTracking','任務與進度','Tasks and progress']];
@@ -1215,6 +1318,12 @@ function reviewMarkPassed(page){
 }
 function reviewNext(){
   const r=ensureReviewRoute(),page=reviewPage();
+  if(alexTestMode){
+    alexSeedReviewAnswers();
+    if(page==='report'){alexCompleteReview();return}
+    reviewAdvance();
+    return;
+  }
   if(page==='footprint'){r.status='in-progress';reviewAdvance();return}
   if(page==='version'){if(!reviewValidateVersion()){reviewFail(page,['先把版本關係補完整','Complete the version relationships'],['請確認 Repository 裡有 main 和工作 Branch；再檢查操作順序、Commit／儲存，以及 Upload files／Push 的差異。','Confirm that main and the work Branch are inside the Repository, then check the order, Commit versus saving, and Upload files versus Push.']);return}reviewMarkPassed(page);reviewAdvance();return}
   if(page==='version-repair'){if(!reviewValidateVersionRepair()){reviewFail(page,['還需要更多版本證據','More version evidence is needed'],['請找出 Commit message 和 SHA；普通儲存本身不會留下這兩項 Git 紀錄。','Look for the Commit message and SHA; ordinary saving does not create those Git records by itself.']);return}state.review.repairsCompleted[page]=true;state.review.domainResults.versionRelations='clarified';reviewAdvance();return}
@@ -1313,7 +1422,51 @@ function confirmResetPhase(){
 function reviewTermKeys(){return ['Git','GitHub','Repository','main','Branch','Commit','Upload','Push','PR','Review','Merge','Issue','Assignee','Project','ProjectAutomation'].filter(function(k){return terms[k]})}
 function reviewHeading(page){
   const r=ensureReviewRoute(),index=r.cursor,total=r.route.length,label=reviewPageLabel(page),title=page==='footprint'?tx('先看看你走過的學習路線','Review the learning path you have taken'):tx('5.'+(index+1)+' '+label[0],'5.'+(index+1)+' '+label[1]),desc=page==='footprint'?tx('這不是另一場考試；系統會把前面做過的判斷串起來，必要時多給你一個釐清步驟。','This is not another exam. The route connects your earlier decisions and adds a repair step only when needed.'):page==='explain'?tx('請用自己的話說明判斷理由，讓理解不只停在按鈕位置。','Explain your reasoning so understanding does not stop at button positions.'):page==='report'?tx('回看你在版本、審查合併、任務進度上的狀態。','Review your status across versions, review and merge, and task progress.'):tx('做出判斷後，讀懂回饋，再決定下一步。','Make a judgment, read the feedback, and decide what comes next.');
-  return stageHeading('STAGE 5 · ADAPTIVE REVIEW',title,desc,index,total);
+  return stageHeading('STAGE 5 · ADAPTIVE REVIEW',title,desc,index,total)+alexReviewTools();
+}
+function alexSeedReviewAnswers(){
+  if(!alexTestMode)return;
+  const r=state.review||baseReview();
+  r.route=['footprint','version','version-repair','pr','pr-repair','tracking','tracking-repair','explain','report'];
+  r.cursor=Math.min(Number(r.cursor)||0,r.route.length-1);
+  r.maxVisitedCursor=Math.max(Number(r.maxVisitedCursor)||0,r.cursor);
+  r.status='in-progress';r.error=null;r.attempts={};r.revealed={};r.repairsCompleted={};
+  r.answers={
+    version:{repoPlacement:'repository',mainPlacement:'main',branchPlacement:'branch',order:['save','commit','pr','merge'],reasons:['trace','working-file'],upload:'web-commit',push:'local-remote'},
+    versionRepair:{choice:'committed',evidence:['message','sha']},
+    pr:{mergeDecision:'not-yet',blockers:['latest-review','request-changes'],diffViewedSha:'f4e5d6a',selectedLine:'date-line',fixConfirmed:true,approvedSha:'f4e5d6a',merged:true},
+    prRepair:{choice:'b',reasons:['sha','changes']},
+    tracking:{issuePlacement:'issue',projectPlacement:'project',automationPlacement:'workflow',assignee:'Alex',automationDecision:'not-always',automationConditions:['closes','workflow']},
+    trackingRepair:{reasons:['link','workflow']},
+    explain1:tx('我會先查看最新 Diff，確認修正後的 SHA，確定 Request changes 已解決，再核准目前版本。','I would first check the latest Diff and SHA, make sure Request changes is resolved, and then approve the current version.'),
+    explain1Checks:['new-diff','sha','changes'],
+    explain2:tx('我會檢查 PR 是否正確連結 Issue，也會確認 Project 的 workflow automation 是否啟用；Merge 不代表一定會變成 Done。','I would check the PR-Issue link and whether Project workflow automation is enabled; Merge does not always make a task Done.'),
+    explain2Checks:['link','workflow','not-fixed-rule']
+  };
+  r.domainResults={versionRelations:'mastered',prMergeGate:'mastered',workTracking:'mastered',explanation:'self-check'};
+  state.review=r;
+  r.report=reviewBuildReport();
+}
+function alexJumpReview(index){
+  if(!alexTestMode)return;
+  alexSeedReviewAnswers();
+  const r=state.review;r.cursor=Math.max(0,Math.min(Number(index)||0,r.route.length-1));r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);r.error=null;
+  if(r.cursor===r.route.length-1){r.status='completed';r.completed=true;r.report=reviewBuildReport()}
+  draw();topNow();
+}
+function alexCompleteReview(){
+  if(!alexTestMode)return;
+  alexSeedReviewAnswers();
+  const r=state.review;r.cursor=r.route.length-1;r.maxVisitedCursor=r.cursor;r.status='completed';r.completed=true;r.report=reviewBuildReport();r.error=null;
+  draw();topNow();
+}
+function alexReviewAnswerKey(){
+  if(!alexTestMode)return'';
+  return '<details class=\"review-qa-key\" open><summary>'+tx('ALEX 答案總表','ALEX answer key')+'</summary><ul><li>'+tx('版本結構：campus-market 是 Repository；main 是正式分支；fix-event-date 是工作 Branch。','Version structure: campus-market is the Repository; main is the official branch; fix-event-date is the work Branch.')+'</li><li>'+tx('操作順序：普通儲存 → Commit → Pull Request → Merge。','Action order: saving → Commit → Pull Request → Merge.')+'</li><li>'+tx('Commit 會留下可追蹤紀錄；Upload files 會走網頁 Commit；Push 會把本機 Commit 傳到遠端。','A Commit leaves a traceable record; Upload files creates a web Commit; Push sends a local Commit to the remote.')+'</li><li>'+tx('版本補強：要看到 Commit message、作者與 SHA；瀏覽器自動儲存不算 Commit。','Version repair: look for the Commit message, author, and SHA; browser autosave is not a Commit.')+'</li><li>'+tx('PR：先查看最新 Diff f4e5d6a，確認 11/23 修正、解決 Request changes，再 Approve 最新版本並 Merge。','PR: open the latest Diff f4e5d6a, verify the 11/23 fix, resolve Request changes, then Approve the latest version and Merge.')+'</li><li>'+tx('PR 補強：新增 Commit 後要用最新 SHA 重新審查；不是因為按鈕位置或舊核准仍然有效。','PR repair: review again with the latest SHA after a new Commit; an old approval or button position is not enough.')+'</li><li>'+tx('Issue 記錄具體工作與負責人；Project 看多件工作的狀態；狀態自動更新取決於 Issue 關聯與 Project workflow。','Issue records a concrete task and owner; Project tracks many task states; automation depends on the Issue link and Project workflow.')+'</li><li>'+tx('追蹤補強：先檢查 PR 是否連結 Issue，再檢查 Project workflow；狀態沒動不代表 Merge 一定失敗。','Tracking repair: check the PR-Issue link, then the Project workflow; a status that did not move does not prove Merge failed.')+'</li><li>'+tx('開放題關鍵理由：最新 Diff、最新 SHA、Request changes、Issue 連結與 Project workflow。','Open-response key points: latest Diff, latest SHA, Request changes, the Issue link, and Project workflow.')+'</li></ul></details>';
+}
+function alexReviewTools(){
+  if(!alexTestMode)return'';
+  return '<div class=\"review-qa-tools\" role=\"region\" aria-label=\"ALEX test controls\"><strong>ALEX · QA</strong><span>'+tx('答案已預填，可直接跳到任一回顧頁。','Answers are prefilled; jump to any review page.')+'</span><button type=\"button\" onclick=\"alexSeedReviewAnswers();draw();topNow()\">'+tx('顯示所有答案','Show all answers')+'</button><button type=\"button\" onclick=\"alexCompleteReview()\">'+tx('直接完成 Stage 5','Complete Stage 5')+'</button></div>'+alexReviewAnswerKey();
 }
 function reviewFootprintView(){
   return '<div class="review-intro"><article class="review-brief"><span class="status-badge purple">'+tx('自適應回顧','Adaptive review')+'</span><h2>'+tx('我真的懂了嗎？','Do I really understand it?')+'</h2><p>'+tx('你會重新整理三個最重要的關係：版本與分支、審查與合併、任務與進度。系統會參考前面留下的學習紀錄，但不把看過示範或使用自動填寫當成已掌握。','You will connect three important relationships: versions and branches, review and merge, and tasks and progress. Earlier learning evidence guides the route, but watching a demo or using auto-fill is not treated as mastery.')+'</p><div class="review-actions"><button type="button" class="btn primary" onclick="reviewNext()">'+tx('開始回顧','Start review')+'</button></div></article><aside class="review-route-card"><h3>'+tx('這次的回顧路線','This review route')+'</h3>'+reviewRouteList()+'<p class="field-help">'+tx('有弱項時會多一個釐清頁，最多兩頁。','Weak concepts add a repair page, up to two.')+'</p></aside></div>';
@@ -1325,10 +1478,10 @@ function renderReviewPage(){
 }
 function redesignChallengePage(){return renderReviewPage()}
 function headerCourseActionState(){
-  if(state.phase===1){if(state.scenarioIntro)return {prev:null,next:null,label:null,showNext:false};const ready=state.scenarioFound.length===pains.length;return {prev:'showScenarioIntro()',next:ready?'unlock(2)':null,label:tx('進入引導思考','Continue to guided thinking'),showNext:true}}
-  if(state.phase===2){const ready=Object.keys(state.thinking).length===pains.length;return {prev:'gotoPhase(1)',next:ready?'unlock(3)':null,label:tx('觀看完整示範','Watch the complete demonstration'),showNext:true}}
-  if(state.phase===3){markDemoViewed(state.demo.index);return {prev:'gotoPhase(2)',next:state.demo.played?'unlock(4)':null,label:tx('開始引導練習','Start guided practice'),showNext:true}}
-  if(state.phase===4){const p=state.practice,ready=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return {prev:'gotoPhase(3)',next:ready?'unlock(5)':null,label:tx('開始綜合回顧','Start adaptive review'),showNext:true}}
+  if(state.phase===1){if(state.scenarioIntro)return alexTestMode?{prev:null,next:'gotoPhase(2)',label:tx('跳到引導思考','Skip to guided thinking'),showNext:true}:{prev:null,next:null,label:null,showNext:false};const ready=state.scenarioFound.length===pains.length;return {prev:'showScenarioIntro()',next:alexTestMode?'gotoPhase(2)':ready?'unlock(2)':null,label:tx('進入引導思考','Continue to guided thinking'),showNext:true}}
+  if(state.phase===2){const ready=Object.keys(state.thinking).length===pains.length;return {prev:'gotoPhase(1)',next:alexTestMode?'gotoPhase(3)':ready?'unlock(3)':null,label:tx('觀看完整示範','Watch the complete demonstration'),showNext:true}}
+  if(state.phase===3){markDemoViewed(state.demo.index);return {prev:'gotoPhase(2)',next:alexTestMode?'gotoPhase(4)':state.demo.played?'unlock(4)':null,label:tx('開始引導練習','Start guided practice'),showNext:true}}
+  if(state.phase===4){const p=state.practice,ready=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return {prev:'gotoPhase(3)',next:alexTestMode?'gotoPhase(5)':ready?'unlock(5)':null,label:tx('開始綜合回顧','Start adaptive review'),showNext:true}}
   const page=reviewPage(),r=state.review;
   if(page==='report')return {prev:'gotoPhase(4)',next:'reviewJumpToReport()',label:tx('重看回顧報告','Review the report again'),showNext:true};
   const label=page==='footprint'?tx('開始回顧','Start review'):r.error&&r.error.page===page?tx('再檢查一次','Check again'):tx('檢查目前答案','Check this checkpoint');
@@ -1393,7 +1546,7 @@ function activateAlexTestMode(){
   state.unlocked=5;
   state.review=baseReview();
   state.modal=null;state.navOpen=false;state.termsOpen=false;state.scenarioWrong='';
-  ensureReviewRoute();
+  alexSeedReviewAnswers();
   focusRequested=true;draw();topNow();
   return 'ALEX test mode enabled. All stages are available; reload to exit.';
 }
