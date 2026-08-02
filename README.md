@@ -26,7 +26,7 @@
 
 本練習場只保留適合零基礎學習者的 GitHub 網頁操作路線：從瀏覽器建立與上傳檔案，理解 Commit、Branch、Pull Request、Review、Merge、Issue 與 Project。終端機 Git 指令不屬於本教材的學習關卡。
 
-> 💡 **關鍵觀念辨識**：網頁版的「Upload files」**不是** Push。Push 是另一種本機 Git 工作流程；本教材只在第五階段用回顧題說明兩者差異，不安排終端機練習。
+> 💡 **Web-only 路線**：本教材專注 GitHub 網頁操作，不安排終端機或 Push 指令練習；學生會用 Repository、Branch、Commit、Pull Request、Review、Merge、Issue 與 Project 完成一次小組協作。
 
 ---
 

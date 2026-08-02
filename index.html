@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>GitHub 協作練習場｜五階段零基礎教材</title>
+<link rel="icon" href="data:,">
 <style id="course-redesign">
 :root{
   --canvas:#f7f7f4;
@@ -643,6 +644,52 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
 .review-route-list button:hover{color:var(--ink)}
 @media(max-width:1180px){.review-intro,.review-workbench,.review-pr-grid{grid-template-columns:1fr}.review-sidebar{position:static}.review-result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.review-brief,.review-surface-head,.review-surface-body,.review-report{padding:15px}.review-brief h2,.review-surface-head h2,.review-report h2{font-size:25px}.review-field-grid,.review-choice-grid,.review-snapshot,.review-result-grid{grid-template-columns:1fr}.review-pr-timeline{order:2}.review-diff{order:1}.review-actions{align-items:stretch}.review-actions .btn{width:100%}}
+.stage5-heading{align-items:flex-start}
+.stage5-heading-side{display:grid;justify-items:end;gap:8px;min-width:150px}
+.stage5-progress{display:grid;gap:5px;justify-items:end;color:var(--muted);font-size:13px;line-height:1.35;text-align:right}
+.stage5-progress span{font-weight:700;color:var(--ink)}
+.stage5-progress b{font-size:12px;color:var(--primary)}
+.stage5-time{display:inline-flex;min-height:44px;align-items:center;padding:0 12px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:12px}
+.stage5-migration{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.stage5-migration p{margin:0;line-height:1.5}
+.stage5-intro{grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr)}
+.stage5-intro .review-brief{display:grid;align-content:start;gap:10px}
+.stage5-intro .review-actions{margin-top:4px}
+.stage5-question-surface{min-width:0}
+.stage5-scenario{margin-top:14px;border-left:3px solid var(--primary);padding:11px 13px;background:var(--primary-soft);color:var(--ink)}
+.stage5-scenario strong{display:block;margin-bottom:4px;font-size:12px;letter-spacing:.04em}
+.stage5-scenario p{margin:0;line-height:1.6}
+.stage5-fieldset{min-width:0;border:0;margin:0;padding:0}
+.stage5-fieldset legend{width:100%;margin:0 0 12px;padding:0;font-size:18px;font-weight:700;line-height:1.45}
+.stage5-options{display:grid;gap:10px}
+.stage5-option{display:flex;align-items:flex-start;gap:11px;min-height:64px;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:12px 13px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.5}
+.stage5-option:hover{border-color:var(--ink)}
+.stage5-option:focus-within{outline:2px solid var(--primary);outline-offset:2px}
+.stage5-option.selected{border-color:var(--primary);background:var(--primary-soft)}
+.stage5-option input{flex:0 0 auto;width:20px;height:20px;margin:2px 0 0;accent-color:var(--primary)}
+.stage5-option>span{display:flex;gap:9px;min-width:0;overflow-wrap:anywhere}
+.stage5-option b{flex:0 0 auto}
+.stage5-step-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:11px;color:var(--muted)}
+.stage5-order-list{display:grid;gap:10px}
+.stage5-order-card{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:10px;min-width:0;border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--surface);cursor:grab;transition:border-color .15s,box-shadow .15s,opacity .15s}
+.stage5-order-card:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.stage5-order-card:active{cursor:grabbing}
+.stage5-order-card.dragging{opacity:.5}
+.stage5-order-card.drag-over{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary-soft)}
+.stage5-drag-handle{grid-row:1 / span 2;align-self:center;display:flex;align-items:center;justify-content:center;width:24px;color:var(--muted);pointer-events:none}
+.stage5-drag-handle svg{display:block;width:18px;height:27px;fill:currentColor}
+.stage5-order-card:hover .stage5-drag-handle,.stage5-order-card:focus-visible .stage5-drag-handle{color:var(--primary)}
+.stage5-order-position{font-size:12px;color:var(--primary);font-weight:700}
+.stage5-order-card p{margin:5px 0 0;line-height:1.5;overflow-wrap:anywhere}
+.stage5-feedback{border-left:4px solid var(--primary);background:var(--primary-soft);padding:12px 14px;line-height:1.55}
+.stage5-feedback.success{border-left-color:var(--green);background:var(--green-soft)}
+.stage5-feedback.error{border-left-color:var(--red);background:var(--red-soft)}
+.stage5-feedback h3{margin:0 0 5px;font-size:16px}
+.stage5-feedback p{margin:4px 0}
+.stage5-feedback-detail{margin-top:10px;border-top:1px solid currentColor;padding-top:8px}
+.stage5-result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stage5-result-grid .review-result{min-width:0}
+@media(max-width:700px){.stage5-heading-side{justify-items:start;min-width:0}.stage5-progress{text-align:left;justify-items:start}.stage5-migration{align-items:stretch;flex-direction:column}.stage5-result-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -655,6 +702,8 @@ const DEMO_VERSION=2;
 const PRACTICE_STORAGE_VERSION=1;
 const PRACTICE_STORAGE_VERSION_KEY='practiceFieldStateVersion';
 const PRACTICE_STORAGE_KEY='practiceFieldState';
+const STAGE5_SCHEMA_VERSION=2;
+const stage5Route=['intro','workspace','task','branch','commit','pull-request','review','workflow','report'];
 const ESC_MAP={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>ESC_MAP[c]);
 function tx(zh,en){return state.lang==='en'?`<span class="en-only">${en}</span>`:zh}
@@ -683,7 +732,7 @@ const terms={
  Review:{zh:'審核',en:'Review',descZh:'Review 就是查看 Diff、留言、要求修改，或核准這份修改。',descEn:'A review checks the Diff, adds comments, requests changes, or approves the work.',whereZh:'在 Pull Request 裡的 Files changed 畫面。',whereEn:'In the Files changed view of a Pull Request.'},
  Merge:{zh:'合併',en:'Merge',descZh:'Merge 是把審核通過的修改合進 main，讓它成為正式版本。',descEn:'Merge brings approved changes into main so they become official.',whereZh:'在審核通過的 Pull Request 頁面。',whereEn:'On the Pull Request page after review.'},
  Upload:{zh:'網頁上傳',en:'Upload files',descZh:'Upload files 是用瀏覽器把電腦檔案加進 GitHub。完成後會建立一筆 Commit，但不等於 push。',descEn:'Upload files adds files to GitHub through the browser. It creates a Commit, but it is not push.',whereZh:'Code → Add file → Upload files。',whereEn:'Code → Add file → Upload files.'},
-  Push:{zh:'推送',en:'push',descZh:'如果你是在電腦的 Git 指令列工作，push 就是把本機的 Commit 傳到 GitHub。只用網頁操作時，不需要 push。',descEn:'When you work with Git on your computer, push sends local commits to GitHub. You do not need it when working only in the browser.',whereZh:'第五階段會用回顧題比較 Push 與網頁 Upload files 的差異。',whereEn:'Stage 5 compares Push with web-based Upload files in the review questions.'}
+  Push:{zh:'推送',en:'push',descZh:'如果你是在電腦的 Git 指令列工作，push 就是把本機的 Commit 傳到 GitHub。只用網頁操作時，不需要 push。',descEn:'When you work with Git on your computer, push sends local commits to GitHub. You do not need it when working only in the browser.',whereZh:'本教材專注 GitHub 網頁操作，不安排 Push 指令練習。',whereEn:'This course focuses on the GitHub web interface and does not include push command practice.'}
 };
 terms.Assignee={zh:'負責人',en:'Assignee',descZh:'被指定主要跟進某張 Issue 的人；其他組員仍然可以留言、審查和協作。',descEn:'The person assigned to follow up on an Issue; other teammates can still comment, review, and collaborate.',whereZh:'在 Issue 的 Assignee 欄位。',whereEn:'In the Assignee field of an Issue.'};
 terms.ProjectAutomation={zh:'專案狀態自動化',en:'Project status automation',descZh:'依照 Issue 或 PR 的事件與設定，自動把 Project item 移到對應狀態；不是每個 Project 都預設啟用。',descEn:'Rules that move Project items based on Issue or PR events and configuration; not every Project has them enabled by default.',whereZh:'在 Project 的 workflow 或 automation 設定。',whereEn:'In the Project workflow or automation settings.'};
@@ -890,7 +939,7 @@ function demoChapterInfo(index){const groups=[];demoSteps.forEach((step,i)=>{con
 function redesignDemoPage(){const i=state.demo.index,s=demoSteps[i],chapter=demoChapterInfo(i),content=`${stageHeading(`STAGE 3 · ${tx('完整示範','FULL DEMONSTRATION')}`,tx(`3.${chapter.chapter+1} ${s.group[0]}`,`3.${chapter.chapter+1} ${s.group[1]}`),tx('系統會逐步操作右側 GitHub 模擬器。橘色框只標示這一步要看的位置；這一階段不能操作。','The system operates the GitHub simulator. The orange frame marks what to watch; this stage is view-only.'),chapter.local,chapter.total)}<div class="course-workbench"><aside class="task-console card"><div class="task-console-header"><span class="status-badge purple">${tx('系統示範中','System demo')} · ${i+1}/${demoSteps.length}</span><h2>${tx(...s.title)}</h2></div><div class="task-section"><div class="task-label">${tx('這一步在做什麼','What happens now')}</div><p>${tx(...s.action)}</p></div><div class="task-section"><div class="task-label">${tx('這一步看哪裡','Where to look')}</div><p>${tx('看右側橘色框標出的按鈕、欄位或資料；這裡先不用操作。','Look at the control, field, or data outlined in orange; do not interact yet.')}</p></div><div class="task-section"><div class="task-label">${tx('完成後會怎樣','What happens next')}</div><p>${tx(...s.result)}</p></div><div class="task-console-actions"><button class="btn" onclick="demoPrev()" ${i===0?'disabled':''}>${tx('上一步','Previous step')}</button><button class="btn" onclick="toggleDemoAuto()">${state.demo.auto?tx('暫停','Pause'):tx('自動播放','Auto play')}</button><button class="btn primary" onclick="demoNext()">${i===demoSteps.length-1?tx('完成示範','Finish demo'):tx('下一步','Next step')}</button></div></aside><section class="workspace-surface"><div class="demo-shield" aria-label="${plain('僅供示範，無法操作','Demonstration only')}"></div>${renderDemoGithub(i)}</section></div>`;return redesignPage(content,['GitHub','Repository','main',resolveTermKey(s.term)],redesignActionBar('gotoPhase(2)',state.demo.played?'unlock(4)':null,tx('開始引導練習','Start guided practice')))}
 
 function redesignPracticeWorkspace(){if(!state.practice.predictionOK)return `<div class="workspace-lock"><div class="workspace-lock-inner"><span class="workspace-lock-label">${tx('先想再操作','THINK BEFORE CLICKING')}</span><h2>${tx('操作區尚未解鎖','Workspace locked')}</h2><p>${tx('先完成左側的情境判斷。答對後，GitHub 模擬器會在這裡開啟。','Complete the scenario judgment on the left. The GitHub simulator opens here after a correct answer.')}</p></div></div>`;return renderPracticeWorkspace()}
-function redesignPracticePage(){const p=state.practice,m=practiceMeta[p.step],content=`${stageHeading('STAGE 4 · GUIDED PRACTICE',tx(`4.${p.step+1} ${m.title[0]}`,`4.${p.step+1} ${m.title[1]}`),tx('先想、再操作 GitHub 模擬器；需要時再看提示。做錯時，請看清楚後果並回頭修正。','Predict, operate the GitHub simulator, and use hints when needed. When something goes wrong, read the consequence and fix it.'),p.step,practiceMeta.length)}<div class="course-workbench"><aside class="task-console card"><div class="task-console-header"><span class="status-badge purple">${tx('目前任務','Current task')} · ${p.step+1}/${practiceMeta.length}</span><h2>${tx(...m.title)}</h2></div><div class="task-section"><div class="task-label">${tx('任務目標','Objective')}</div><p>${tx(...m.mission)}</p></div><div class="task-section"><div class="task-label">${tx('操作前先想一想','Predict before acting')}</div><p>${tx(...m.q)}</p><div class="predict">${m.opts.map(o=>`<button class="predict-option ${p.prediction===o[0]?(p.predictionOK?'correct':'wrong'):''}" onclick="practicePredict('${esc(o[0])}')">${tx(o[0],o[1])}</button>`).join('')}</div></div>${p.predictionOK?`<div class="task-section"><button class="btn" onclick="nextHint()">${tx(`展開提示 ${p.hint}/3`,`Show hint ${p.hint}/3`)}</button>${p.hint?`<div class="hint-box">${practiceHint(p.step,p.hint)}</div>`:''}</div>`:''}</aside><section class="workspace-surface">${p.error?practiceError(p.error):''}${redesignPracticeWorkspace()}${p.result?practiceResult():''}</section></div>`;const canContinue=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return redesignPage(content,[resolveTermKey(m.term),'main','Commit','Review'].filter(k=>terms[k]),redesignActionBar('gotoPhase(3)',canContinue?'unlock(5)':null,tx('開始綜合回顧','Start adaptive review')))}
+function redesignPracticePage(){const p=state.practice,m=practiceMeta[p.step],content=`${stageHeading('STAGE 4 · GUIDED PRACTICE',tx(`4.${p.step+1} ${m.title[0]}`,`4.${p.step+1} ${m.title[1]}`),tx('先想、再操作 GitHub 模擬器；需要時再看提示。做錯時，請看清楚後果並回頭修正。','Predict, operate the GitHub simulator, and use hints when needed. When something goes wrong, read the consequence and fix it.'),p.step,practiceMeta.length)}<div class="course-workbench"><aside class="task-console card"><div class="task-console-header"><span class="status-badge purple">${tx('目前任務','Current task')} · ${p.step+1}/${practiceMeta.length}</span><h2>${tx(...m.title)}</h2></div><div class="task-section"><div class="task-label">${tx('任務目標','Objective')}</div><p>${tx(...m.mission)}</p></div><div class="task-section"><div class="task-label">${tx('操作前先想一想','Predict before acting')}</div><p>${tx(...m.q)}</p><div class="predict">${m.opts.map(o=>`<button class="predict-option ${p.prediction===o[0]?(p.predictionOK?'correct':'wrong'):''}" onclick="practicePredict('${esc(o[0])}')">${tx(o[0],o[1])}</button>`).join('')}</div></div>${p.predictionOK?`<div class="task-section"><button class="btn" onclick="nextHint()">${tx(`展開提示 ${p.hint}/3`,`Show hint ${p.hint}/3`)}</button>${p.hint?`<div class="hint-box">${practiceHint(p.step,p.hint)}</div>`:''}</div>`:''}</aside><section class="workspace-surface">${p.error?practiceError(p.error):''}${redesignPracticeWorkspace()}${p.result?practiceResult():''}</section></div>`;const canContinue=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return redesignPage(content,[resolveTermKey(m.term),'main','Commit','Review'].filter(k=>terms[k]),redesignActionBar('gotoPhase(3)',canContinue?'unlock(5)':null,tx('開始綜合回顧','Start integrated review')))}
 
 document.addEventListener('keydown',event=>{if(state.modal){if(event.key==='Escape'){event.preventDefault();closeModal();return}if(event.key==='Tab'){const focusable=[...document.querySelectorAll('.modal button:not([disabled]),.modal input:not([disabled]),.modal textarea:not([disabled]),.modal select:not([disabled])')];if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}return}if(state.termsOpen){if(event.key==='Escape'){event.preventDefault();closeScenarioGlossary();return}if(event.key==='Tab'){const focusable=[...document.querySelectorAll('#scenario-glossary-drawer button:not([disabled])')];if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}}})
 
@@ -919,21 +968,12 @@ function baseLearningEvidence(){
     events:[]
   };
 }
+function stage5DefaultWorkflow(){return ['review','branch','workflow','merge','pullRequest','commit','issue']}
 function baseReview(){
   return {
-    schemaVersion:1,status:'not-started',sourceEvidenceRevision:0,route:[],cursor:0,maxVisitedCursor:0,
-    answers:{
-      version:{repoPlacement:'',mainPlacement:'',branchPlacement:'',order:[],reasons:[],upload:'',push:''},
-      versionRepair:{choice:'',evidence:[]},
-      pr:{mergeDecision:'',blockers:[],diffViewedSha:'',selectedLine:'',fixConfirmed:false,approvedSha:'',merged:false},
-      prRepair:{choice:'',reasons:[]},
-      tracking:{issuePlacement:'',projectPlacement:'',automationPlacement:'',assignee:'',automationDecision:'',automationConditions:[]},
-      trackingRepair:{reasons:[]},
-      explain1:'',explain1Checks:[],explain2:'',explain2Checks:[]
-    },
-    attempts:{},revealed:{},repairsCompleted:{},
-    domainResults:{versionRelations:'unassessed',prMergeGate:'unassessed',workTracking:'unassessed',explanation:'unassessed'},
-    error:null,report:null,completed:false
+    schemaVersion:STAGE5_SCHEMA_VERSION,route:[...stage5Route],cursor:0,maxVisitedCursor:0,status:'not-started',completed:false,
+    answers:{workspace:'',task:'',branch:'',commit:'',pullRequest:'',reviewStep1:'',reviewStep2:'',workflow:stage5DefaultWorkflow()},
+    attempts:{},wrongAttempts:{},results:{},stepResults:{},feedback:null,reviewStep:1,report:null,migrationNotice:false
   };
 }
 function normalizeLearningEvidence(value){
@@ -949,26 +989,10 @@ function normalizeLearningEvidence(value){
 }
 function normalizeReview(value){
   const base=baseReview(),v=value&&typeof value==='object'?value:{},a=v.answers||{};
-  const answer={
-    ...base.answers,...a,
-    version:{...base.answers.version,...(a.version||{}),order:Array.isArray(a.version?.order)?a.version.order:[],reasons:Array.isArray(a.version?.reasons)?a.version.reasons:[]},
-    versionRepair:{...base.answers.versionRepair,...(a.versionRepair||{}),evidence:Array.isArray(a.versionRepair?.evidence)?a.versionRepair.evidence:[]},
-    pr:{...base.answers.pr,...(a.pr||{}),blockers:Array.isArray(a.pr?.blockers)?a.pr.blockers:[]},
-    prRepair:{...base.answers.prRepair,...(a.prRepair||{}),reasons:Array.isArray(a.prRepair?.reasons)?a.prRepair.reasons:[]},
-    tracking:{...base.answers.tracking,...(a.tracking||{}),automationConditions:Array.isArray(a.tracking?.automationConditions)?a.tracking.automationConditions:[]},
-    trackingRepair:{...base.answers.trackingRepair,...(a.trackingRepair||{}),reasons:Array.isArray(a.trackingRepair?.reasons)?a.trackingRepair.reasons:[]},
-    explain1Checks:Array.isArray(a.explain1Checks)?a.explain1Checks:[],
-    explain2Checks:Array.isArray(a.explain2Checks)?a.explain2Checks:[]
-  };
-  return {
-    ...base,...v,answers:answer,
-    route:Array.isArray(v.route)?v.route:[],
-    attempts:{...base.attempts,...(v.attempts||{})},
-    revealed:{...base.revealed,...(v.revealed||{})},
-    repairsCompleted:{...base.repairsCompleted,...(v.repairsCompleted||{})},
-    domainResults:{...base.domainResults,...(v.domainResults||{})},
-    error:v.error||null
-  };
+  const validWorkflowIds=['issue','branch','commit','pullRequest','review','merge','workflow'];
+  const candidate=Array.isArray(a.workflow)?a.workflow.slice():[];
+  const workflow=candidate.length===validWorkflowIds.length&&candidate.every(function(id){return validWorkflowIds.includes(id)})&&new Set(candidate).size===validWorkflowIds.length?candidate:base.answers.workflow.slice();
+  return {...base,...v,answers:{...base.answers,...a,workflow},attempts:{...base.attempts,...(v.attempts||{})},wrongAttempts:{...base.wrongAttempts,...(v.wrongAttempts||{})},results:{...base.results,...(v.results||{})},stepResults:{...base.stepResults,...(v.stepResults||{})},feedback:v.feedback||null,route:Array.isArray(v.route)?v.route.slice():[],migrationNotice:Boolean(v.migrationNotice)};
 }
 function hydrateEvidenceFromExistingState(evidence,source){
   const e=normalizeLearningEvidence(evidence),x=source||{};
@@ -1060,266 +1084,158 @@ function reviewConceptForPracticeStep(step){
   if(term==='PR'||term==='Review'||term==='Merge')return 'prMergeGate';
   return 'versionRelations';
 }
-function reviewWeakness(evidence){
-  const e=evidence||baseLearningEvidence(),score={versionRelations:0,prMergeGate:0,workTracking:0};
-  score.versionRelations=Math.min(2,Number(e.stage1?.wrongBubbleClicks)||0);
-  Object.entries(e.stage2?.byProblem||{}).forEach(function(pair){const id=pair[0],s=pair[1]||{},d=reviewConceptForProblem(id);score[d]+=Math.min(4,(Number(s.wrong)||0)*2)});
-  Object.entries(e.stage4?.byStep||{}).forEach(function(pair){
-    const s=pair[1]||{},d=reviewConceptForPracticeStep(Number(pair[0])),wrong=Number(s.wrongPredictions)||0,errors=Array.isArray(s.operationErrors)?s.operationErrors.length:0,hints=Math.min(Number(s.hintsUsed)||0,3);
-    score[d]+=Math.min(6,wrong*2+errors*3+hints);
-    if((Number(s.predictionAttempts)||0)>0&&!wrong&&!errors&&!hints)score[d]=Math.max(0,score[d]-2);
-  });
-  return score;
+function s5(zh,en){return [zh,en]}
+function stage5Option(id,zh,en){return {id:id,label:s5(zh,en)}}
+function stage5Single(number,id,domain,terms,title,scenario,question,options,success,wrong,hint,explanation){
+  return {number:number,id:id,domain:domain,domains:[domain],type:'single',termKeys:terms,title:s5(...title),scenario:s5(...scenario),question:s5(...question),options:options,correct:'A',successFeedback:s5(...success),wrongFeedbackByOption:wrong,hint:s5(...hint),explanation:s5(...explanation)};
 }
-function buildReviewRoute(evidence){
-  const score=reviewWeakness(evidence),priority=['prMergeGate','versionRelations','workTracking'];
-  const repairs=priority.filter(function(d){return score[d]>=3}).slice(0,2);
-  const route=['footprint','version','pr','tracking','explain','report'];
-  repairs.forEach(function(d){const page=d==='versionRelations'?'version-repair':d==='prMergeGate'?'pr-repair':'tracking-repair';const after=d==='versionRelations'?'version':d==='prMergeGate'?'pr':'tracking';route.splice(route.indexOf(after)+1,0,page)});
-  return route;
-}
-function ensureReviewRoute(){
-  if(!state.review)state.review=baseReview();
-  const r=state.review,e=state.learningEvidence||baseLearningEvidence();
-  if(!r.route.length||(r.status==='not-started'&&r.sourceEvidenceRevision!==e.revision)){
-    r.route=buildReviewRoute(e);
-    r.sourceEvidenceRevision=e.revision;
-    r.cursor=Math.min(r.cursor,r.route.length-1);
-    persist();
+const stage5Questions={
+  workspace:stage5Single(1,'workspace','workspace',['Repository','main','Branch'],
+    ['正式版到底在哪裡？','Where is the official version?'],
+    ['LINE 群組裡出現：「企劃書_final.docx」、「企劃書_final_v2.docx」、「企劃書_真的最終版.docx」，組員已經不知道哪一份才要交給教授。','The LINE group contains proposal_final.docx, proposal_final_v2.docx, and proposal_REALLY_final.docx. The team no longer knows which file to submit.'],
+    ['接下來怎麼做，最能避免團隊繼續出現很多個「最終版」？','What should the team do next to avoid creating more “final” files?'],
+    [stage5Option('A','把共同檔案集中在 campus-market Repository，並把 main 當成目前認可的正式版本。','Keep the shared files in the campus-market repository and treat main as the currently accepted official version.'),stage5Option('B','繼續在 LINE 傳檔，只要每次把檔名加上新的 final。','Keep sending files in LINE and add another final to the filename each time.'),stage5Option('C','每位組員各自建立一個 Repository，最後再猜哪一份最新。','Have each teammate create a separate repository, then guess which one is newest.'),stage5Option('D','所有人都直接修改 main，這樣最快。','Have everyone edit main directly because it is fastest.')],
+    ['對。Repository 是團隊共同工作的地方，main 則代表目前認可的正式版本。之後的新修改應先在工作 Branch 完成，不必再靠檔名猜版本。','Correct. The Repository is the team workspace, while main is the currently accepted official version. New changes should begin on a working Branch instead of relying on filenames.'],
+    {B:s5('檔名一直加 final 仍然無法知道誰改了什麼，也容易同時出現多份最終版。','Adding another final still does not show who changed what, and multiple final files can continue to appear.'),C:s5('每人一個 Repository 會讓資料更分散，團隊仍然缺少共同正式版本。','A repository per person spreads the work out and still leaves the team without one shared official version.'),D:s5('直接修改 main 可能讓未完成或未檢查的內容立刻進入正式版。下一題會回顧更安全的修改方式。','Editing main directly can put unfinished or unchecked content into the official version. The next question revisits a safer way to edit.')},
+    ['先想想：一個共同工作區和一個目前認可的正式版本，如何取代檔名猜測？','Think about how one shared workspace and one accepted official version can replace guessing from filenames.'],
+    ['白話說，Repository 像小組共同使用的資料室，main 像目前準備交給教授的正式企劃書。','In plain language, the Repository is like the team’s shared room for files, and main is like the proposal currently ready for the professor.']),
+  task:stage5Single(2,'task','taskTracking',['Issue','Assignee','Project'],
+    ['這張工作要怎麼分？','How should this task be assigned?'],
+    ['團隊發現企劃書缺少「18–24 歲目標客群的資料來源」，Jamie 負責在星期三前補完，目前正在處理。','The team found that the proposal is missing sources for the 18–24 target audience. Jamie owns the work by Wednesday and is currently working on it.'],
+    ['哪一個安排最能讓全組知道「要做什麼、誰負責、目前做到哪裡」？','Which setup best shows what needs to be done, who owns it, and its current status?'],
+    [stage5Option('A','建立 Issue「補上 18–24 歲目標客群資料來源」，Assignee 指定 Jamie，並在 Project 標為 In progress。','Create an Issue called “Add sources for the 18–24 target audience,” assign Jamie, and mark it In progress on the Project.'),stage5Option('B','在 LINE 留言「有人記得補資料」，不指定負責人。','Post “Does anyone remember to add the sources?” in LINE without assigning an owner.'),stage5Option('C','建立名稱只有「報告」的 Issue，不寫完成條件，直接放到 Done。','Create an Issue named only “Report,” omit the completion criteria, and put it straight in Done.'),stage5Option('D','把企劃書上傳到 Project，看板就會自動知道誰要修改。','Upload the proposal to the Project and expect the board to know who should edit it automatically.')],
+    ['對。Issue 說明具體工作與完成條件，Assignee 標示主要負責人，Project 則讓全組看到這張工作目前的狀態。','Correct. An Issue describes the task and completion criteria, Assignee shows the main owner, and the Project lets everyone see the current status.'],
+    {B:s5('只有模糊留言，沒有人能確認誰應該負責，也不知道怎樣才算完成。','A vague message does not identify who owns the work or what counts as complete.'),C:s5('名稱太模糊且狀態不符合實際進度，容易讓團隊誤以為工作已完成。','The name is vague and the status is inaccurate, so the team may think the work is already done.'),D:s5('Project 是追蹤工作進度的看板，不會只靠上傳檔案自動理解分工內容。','A Project tracks work status; uploading a file does not automatically explain ownership or the task.')},
+    ['把三個問題分開想：工作內容寫在哪裡？主要負責人標在哪裡？多件工作的狀態看在哪裡？','Separate the three questions: where is the task described, where is the owner shown, and where can many task statuses be seen?'],
+    ['Issue 說清楚要做什麼，Assignee 表示誰主要跟進，Project 讓全組看見進度。這題不需要 Due date、Label 或 automation 設定。','Issue explains what to do, Assignee shows who follows it up, and Project shows progress to the team. This question does not require due dates, labels, or automation settings.']),
+  branch:stage5Single(3,'branch','safeChanges',['Branch','main'],
+    ['怎麼修改才不會弄亂正式版？','How can you edit without disrupting the official version?'],
+    ['你要修改 market-plan.md 的目標客群段落，但 main 是全組目前認可、準備繳交的版本。','You need to edit the target-audience section of market-plan.md, but main is the version the team currently accepts for submission.'],
+    ['你應該先怎麼做？','What should you do first?'],
+    [stage5Option('A','從 main 建立工作 Branch，例如 update-target-audience，再到這個 Branch 修改或上傳檔案。','Create a working Branch from main, such as update-target-audience, and edit or upload the file there.'),stage5Option('B','直接在 main 修改，改錯再請大家想辦法恢復。','Edit main directly and ask everyone to restore it if something goes wrong.'),stage5Option('C','下載檔案並改名為 market-plan-final-v8.md，再傳到 LINE。','Download the file, rename it market-plan-final-v8.md, and send it in LINE.'),stage5Option('D','請其他組員先不要工作，等你改完再說。','Ask the other teammates to stop working until you are done.')],
+    ['對。Branch 讓你在不影響正式版的情況下完成修改；等隊友檢查通過後，才把成果合併到 main。','Correct. A Branch lets you edit without affecting the official version; after teammates review it, the result can be merged into main.'],
+    {B:s5('未完成內容會直接進入正式版，其他組員也可能同時受到影響。','Unfinished content enters the official version immediately, and other teammates can be affected.'),C:s5('重新依賴檔名管理版本，會回到一開始的版本混亂。','Managing versions through filenames returns the team to the original version confusion.'),D:s5('GitHub 協作的目的就是讓不同工作能安全並行，不需要讓全組停工。','The point of GitHub collaboration is to let work proceed safely in parallel; the whole team does not need to stop.')},
+    ['正式版要保持可用；想像一個可以先試做、檢查，再決定是否採用的工作空間。','The official version should stay usable. Imagine a work space where you can try and review a change before adopting it.'],
+    ['Branch 是從 main 分出的安全工作版本。修改完成並經過檢查前，不要直接讓內容影響 main。','A Branch is a safe working version split from main. Do not let the change affect main before it is complete and reviewed.']),
+  commit:stage5Single(4,'commit','safeChanges',['Branch','Commit'],
+    ['怎麼留下隊友看得懂的版本？','How can you leave a version teammates can understand?'],
+    ['你已切換到 update-target-audience，並準備上傳修改後的 market-plan.md。','You are on update-target-audience and are ready to upload the edited market-plan.md.'],
+    ['哪一個做法最能讓隊友之後查得懂這次修改？','Which action leaves a version record that teammates can understand later?'],
+    [stage5Option('A','確認目前在工作 Branch，上傳或修改檔案，並用「補上 18–24 歲目標客群與資料來源」作為 Commit message。','Confirm you are on the working Branch, upload or edit the file, and use “Add the 18–24 target audience and sources” as the Commit message.'),stage5Option('B','切回 main 上傳檔案，Commit message 只寫 update。','Switch back to main, upload the file, and use only “update” as the Commit message.'),stage5Option('C','只在自己電腦按儲存，不在 GitHub 留下 Commit。','Save only on your own computer without leaving a Commit on GitHub.'),stage5Option('D','把檔名改成 market-plan-final-final.md，不需要說明改了什麼。','Rename the file market-plan-final-final.md and do not explain what changed.')],
+    ['對。Commit 是一筆可追蹤的版本紀錄；具體的 Commit message 可以讓隊友快速知道這次修改的內容，不用打開每個檔案猜測。','Correct. A Commit is a traceable version record; a specific Commit message tells teammates what changed without making them open every file to guess.'],
+    {B:s5('直接在 main 修改不安全，而且 update 無法讓隊友理解改動內容。','Editing main directly is unsafe, and update does not explain what changed.'),C:s5('電腦上的普通儲存不會自動成為 GitHub 的版本紀錄，隊友也看不到這次修改。','Saving a file on your computer does not automatically create a GitHub version record, so teammates cannot see the change.'),D:s5('改檔名無法取代版本紀錄與修改說明，仍可能形成多個最終版。','Renaming a file cannot replace a version record and change description; it can still create multiple final files.')},
+    ['先確認是在安全的工作 Branch，再用一句具體話說明這次完成了什麼。','First confirm the safe working Branch, then describe what was completed in one specific sentence.'],
+    ['普通儲存只是把檔案內容寫入；Commit 才是在 GitHub 留下一筆隊友之後查得到的版本紀錄。','Ordinary saving writes file content; a Commit leaves a version record on GitHub that teammates can find later.']),
+  'pull-request':stage5Single(5,'pullRequest','reviewMerge',['PR','main','Review'],
+    ['怎麼請隊友採用修改？','How can you ask teammates to adopt a change?'],
+    ['update-target-audience 上的內容已完成，你希望隊友檢查後把它放進正式版。','The work on update-target-audience is complete, and you want teammates to review it before it enters the official version.'],
+    ['下一步怎麼做最合適？','What is the best next step?'],
+    [stage5Option('A','建立從 update-target-audience 到 main 的 Pull Request，寫清楚改了什麼、為什麼要改，以及希望隊友檢查什麼。','Open a Pull Request from update-target-audience to main and explain what changed, why, and what teammates should check.'),stage5Option('B','在 LINE 說「我改好了」，請別人自行下載並複製到正式檔。','Say “I am done” in LINE and ask others to download and copy the change into the official file.'),stage5Option('C','不經過隊友檢查，直接把自己的 Branch Merge 到 main。','Merge your Branch into main without team review.'),stage5Option('D','再建立一個新的 Repository 存放修改後的檔案。','Create a new Repository for the modified files.')],
+    ['對。Pull Request 不是單純通知「我做完了」，而是把修改內容、原因與需要檢查的地方整理給隊友，讓團隊能在合併前討論。','Correct. A Pull Request is more than “I am done”: it organizes the change, the reason, and the review request so the team can discuss it before merging.'],
+    {B:s5('回到手動複製與傳檔流程，容易漏掉修改，也沒有集中審查紀錄。','Manual copying and file transfer can miss changes and do not keep one review record.'),C:s5('未經檢查就合併，可能讓錯誤直接進入正式版。','Merging without review can put errors directly into the official version.'),D:s5('修改應留在同一個專案的工作 Branch，不需要為每次修改建立新 Repository。','The change belongs in a working Branch of the same project; a new Repository is not needed for every change.')},
+    ['想想看：你要把工作 Branch 的修改交給誰看？要在哪裡集中說明與討論？','Ask where you can hand the working Branch to teammates and keep the explanation and discussion together.'],
+    ['Pull Request 是從工作 Branch 指向 main 的審查入口；它讓隊友在合併前查看並討論修改。','A Pull Request is the review entry from a working Branch to main. It lets teammates inspect and discuss the change before merging.'])
+  ,
+  review:{number:6,id:'review',domain:'reviewMerge',domains:['reviewMerge'],type:'review',termKeys:['Review','PR','Merge'],
+    title:s5('發現錯誤後怎麼審查？','How should you review after finding an error?'),
+    scenario:s5('隊友查看 Pull Request 時發現：活動預算寫成「場地費 5」，但應該是「場地費 5,000 元」。這個錯誤若不修正，企劃書不能繳交。','While reviewing the Pull Request, a teammate finds that the budget says “Venue fee 5” but should say “Venue fee 5,000.” The proposal cannot be submitted with this error.'),
+    steps:[
+      {id:'reviewStep1',question:s5('審查者現在最適合怎麼做？','What should the reviewer do now?'),correct:'A',
+       options:[stage5Option('A','在有問題的修改旁留下具體說明，並選擇 Request changes，要求修正後再審查。','Leave a specific comment beside the problematic change and choose Request changes so it is reviewed again after the fix.'),stage5Option('B','選擇 Approve，因為至少對方有完成工作。','Choose Approve because the teammate completed some work.'),stage5Option('C','只在 LINE 說「怪怪的」，不在 Pull Request 留下紀錄。','Say “something feels off” only in LINE and leave no record in the Pull Request.'),stage5Option('D','直接 Merge，之後有空再改。','Merge directly and fix it later when there is time.')],
+       successFeedback:s5('對。這是合併前必須修正的問題，應指出具體位置與正確內容，並用 Request changes 清楚表達「修正後才能通過」。','Correct. This problem must be fixed before merging. Point to the exact place and correct content, and use Request changes to make that condition clear.'),
+       wrongFeedbackByOption:{B:s5('Approve 代表你認為目前修改可以採用，與「這個錯誤必須先修正」矛盾。','Approve means you believe the current change is ready to adopt, which conflicts with “this error must be fixed first.”'),C:s5('只在 LINE 留言會讓問題和修改紀錄分散，也不容易確認是否已處理。','A LINE message separates the problem from the change record and makes it harder to confirm it was handled.'),D:s5('已知錯誤不應先進入正式版。','A known error should not enter the official version first.')},
+       hint:s5('問題已經很具體：場地費缺少三個零。請在修改紀錄旁說清楚，並要求修正後再看。','The problem is specific: the venue fee is missing three zeros. State it beside the change record and ask for a fix before reviewing again.'),
+       explanation:s5('第一步是保護正式成果：指出場地費 5,000 元的要求，Request changes，等修正後再審查。','The first step protects the deliverable: specify 5,000, request changes, and review again after the fix.')},
+      {id:'reviewStep2',question:s5('修正送出後，審查者下一步應該怎麼做？','After the fix is submitted, what should the reviewer do next?'),correct:'A',
+       options:[stage5Option('A','重新查看 Pull Request 的最新修改，確認場地費 5,000 元已正確，再選擇 Approve。','Review the latest Pull Request change, confirm that the venue fee says 5,000, and then choose Approve.'),stage5Option('B','沿用修正前的印象直接 Approve，不必再看內容。','Approve from the earlier impression without looking at the content again.'),stage5Option('C','因為曾經 Request changes，所以這個 Pull Request 永遠不能通過。','Because Request changes was used once, this Pull Request can never pass.'),stage5Option('D','只要看到新增版本，就代表內容一定正確，可以直接 Merge。','Seeing a new version proves the content is correct, so merge directly.')],
+       successFeedback:s5('對。重點不是記住任何版本代碼，而是知道「內容改過後，要重新看最新修改」，確認原本要求修正的問題已經解決。','Correct. The point is not to memorize a version code; after content changes, review the latest change and confirm the original problem is solved.'),
+       wrongFeedbackByOption:{B:s5('內容已經改變，審查結論應建立在目前最新修改上。','The content changed, so the review decision must be based on the current latest change.'),C:s5('Request changes 是要求修正，不是永久否決；問題解決後仍然可以通過。','Request changes asks for a fix; it is not a permanent rejection. Once the problem is solved, the work can pass.'),D:s5('新增版本只代表內容有改動，不代表改動一定正確。','A new version only proves that something changed; it does not prove the change is correct.')},
+       hint:s5('不要只看見「有新增」；請重新查看內容，確認場地費真的寫成 5,000 元，再核准。','Do not stop at seeing that something was added. Reopen the content, verify the venue fee really says 5,000, and then approve.'),
+       explanation:s5('第二步先重新看最新內容，再判斷問題是否解決。只有確認場地費 5,000 元後，Approve 才有意義。','The second step is to review the latest content and decide whether the problem is solved. Approve only after confirming the venue fee is 5,000.')}
+    ],
+    successFeedback:s5('兩個步驟都完成了。重點是針對實際內容提出修正，修正後重新查看最新內容，再決定是否核准。','Both steps are complete. The key is to request a concrete correction, review the updated content, and then decide whether to approve.'),
+    hint:s5('Review 要對準實際修改內容；要求修正後，別忘了重新查看修正結果。','A review should focus on the actual change. After requesting a fix, remember to inspect the result again.'),
+    explanation:s5('Request changes 表示目前內容還不能採用；Approve 則表示你重新查看後認為目前內容可以採用。','Request changes means the current content is not ready to adopt; Approve means you checked again and believe the current content is ready.')
+  },
+  workflow:{number:7,id:'workflow',domain:'fullWorkflow',domains:['taskTracking','safeChanges','reviewMerge','fullWorkflow'],type:'order',termKeys:['Issue','Assignee','Branch','Commit','PR','Review','Merge','Project'],
+    title:s5('從接到任務到正式完成','From receiving a task to official completion'),
+    scenario:s5('團隊要完成「修正活動預算」這項工作。請把下面七張卡片排成合理順序。','The team needs to complete “Fix the event budget.” Arrange the seven cards in a sensible order.'),
+    question:s5('請用完整流程排列：從說清楚工作，到確認正式進度。','Arrange the complete workflow from clarifying the work to confirming official progress.'),
+    correctOrder:['issue','branch','commit','pullRequest','review','merge','workflow'],
+    options:[stage5Option('issue','建立 Issue，寫清楚工作與完成條件，並指定主要負責人。','Create an Issue with the task and completion criteria, and assign the main owner.'),stage5Option('branch','從 main 建立工作 Branch。','Create a working Branch from main.'),stage5Option('commit','在工作 Branch 修改或上傳檔案，建立有清楚說明的 Commit。','Edit or upload files on the working Branch and create a clear Commit.'),stage5Option('pullRequest','建立 Pull Request，請隊友查看這次修改。','Create a Pull Request and ask teammates to review the change.'),stage5Option('review','隊友 Review；若發現問題就 Request changes，修改者修正後再重新確認。','Teammates Review; if they find a problem, Request changes, then recheck after the author fixes it.'),stage5Option('merge','確認修改可採用後 Approve，並 Merge 到 main。','After confirming the change is ready, Approve and Merge it into main.'),stage5Option('workflow','確認 Issue 與 Project 顯示的進度符合實際狀況；需要時手動更新。','Confirm that Issue and Project status matches reality, and update it manually when needed.')],
+    successFeedback:s5('完成。你已經把 GitHub 當成一套小組協作流程，而不是一堆分散按鈕：Issue 說清楚工作，Branch 保護正式版，Commit 留下版本，Pull Request 集中討論，Review 確認品質，Merge 更新正式版，Project 反映進度。','Complete. You connected GitHub as a team workflow rather than a set of buttons: Issue clarifies the work, Branch protects the official version, Commit records it, Pull Request concentrates discussion, Review checks quality, Merge updates the official version, and Project reflects progress.'),
+    hint:s5('先確認任務與負責人，再安全修改、留下紀錄、請隊友審查，最後才合併並確認進度。','Start with the task and owner, then edit safely, record the change, ask for review, merge last, and confirm progress.'),
+    explanation:s5('這七步把「工作說清楚、分工、修改、紀錄、審查、整合、追蹤進度」串成一條可以實際使用的路線。','These seven steps connect clarifying work, ownership, editing, recording, review, integration, and progress tracking into one usable workflow.')
   }
-  return r;
+};
+let stage5FocusFeedback=false;
+let stage5FocusSelector=null;
+let stage5DraggedId='';
+let stage5DropTargetId='';
+function stage5RouteIsCurrent(route){return Array.isArray(route)&&route.length===stage5Route.length&&route.every(function(item,index){return item===stage5Route[index]})}
+function ensureReviewRoute(){
+  if(!state.review){state.review=baseReview();persist();return state.review}
+  const current=normalizeReview(state.review);
+  if(!Array.isArray(current.answers.workflow)||current.answers.workflow.length!==7)current.answers.workflow=stage5DefaultWorkflow();
+  if(Number(current.schemaVersion)!==STAGE5_SCHEMA_VERSION||!stage5RouteIsCurrent(current.route)){state.review=baseReview();state.review.migrationNotice=true;persist();return state.review}
+  state.review=current;return state.review;
 }
-function reviewPage(){const r=ensureReviewRoute();return r.route[r.cursor]||'footprint'}
-function reviewPageDomain(page){if(page.indexOf('version')===0)return 'versionRelations';if(page.indexOf('pr')===0)return 'prMergeGate';if(page.indexOf('tracking')===0)return 'workTracking';if(page==='explain')return 'explanation';return null}
-function reviewPageLabel(page){
-  const map={
-    footprint:['學習足跡','Learning footprint'],
-    version:['版本關係','Version relations'],
-    'version-repair':['版本補強','Version repair'],
-    pr:['PR 合併判斷','PR merge judgment'],
-    'pr-repair':['PR 補強','PR repair'],
-    tracking:['Issue 與 Project','Issue and Project'],
-    'tracking-repair':['追蹤補強','Tracking repair'],
-    explain:['用自己的話說明','Explain in your own words'],
-    report:['個人回顧報告','Personal review report']
-  };
-  return map[page]||['綜合回顧','Adaptive review'];
+function reviewPage(){const r=ensureReviewRoute();return r.route[r.cursor]||'intro'}
+function stage5PageKey(page){return page==='pull-request'?'pullRequest':page}
+function stage5QuestionPage(questionId){return questionId==='pullRequest'?'pull-request':questionId}
+function stage5QuestionForPage(page){return stage5Questions[page]||null}
+function stage5ResultFromAttempts(wrongAttempts){return wrongAttempts===0?'mastered':wrongAttempts===1?'clarified':'needs-review'}
+function stage5StatusRank(status){return status==='needs-review'?2:status==='clarified'?1:0}
+function stage5MinimumResult(ids){const values=ids.map(function(id){return state.review.results[id]||state.review.stepResults[id]||'needs-review'});return values.sort(function(a,b){return stage5StatusRank(b)-stage5StatusRank(a)})[0]||'needs-review'}
+function stage5Text(copy){return tx(copy[0],copy[1])}
+function stage5SelectedKey(questionId){return questionId==='review'?(state.review.reviewStep===1?'reviewStep1':'reviewStep2'):stage5PageKey(questionId)}
+function stage5Choose(questionId,value){const r=state.review;r.answers[stage5SelectedKey(questionId)]=value;r.feedback=null;persist()}
+function stage5SetFeedback(questionId,kind,message,stepId){
+  const r=state.review,key=stepId||stage5SelectedKey(questionId);
+  r.feedback={questionId:questionId,kind:kind,message:message,stepId:stepId||null,attempts:Number(r.attempts[key])||0};stage5FocusFeedback=true;persist();draw();
 }
-function reviewDomainStatus(domain){
-  const result=state.review?.domainResults?.[domain],score=reviewWeakness(state.learningEvidence||baseLearningEvidence())[domain];
-  if(result==='mastered')return ['已掌握','Mastered','ready'];
-  if(result==='clarified')return ['已釐清','Clarified','ready'];
-  if(result==='needs-review')return ['建議回顧','Review again','weak'];
-  if(score>=3)return ['會多做一個釐清步驟','One repair step','weak'];
-  return ['準備回顧','Ready to review',''];
+function stage5RecordWrong(key){const r=state.review;r.attempts[key]=(Number(r.attempts[key])||0)+1;r.wrongAttempts[key]=(Number(r.wrongAttempts[key])||0)+1}
+function stage5RecordCorrect(key){const r=state.review,wrong=Number(r.wrongAttempts[key])||0;r.attempts[key]=(Number(r.attempts[key])||0)+1;const result=stage5ResultFromAttempts(wrong);r.stepResults[key]=result;return result}
+function stage5CheckSingle(q){
+  const key=stage5PageKey(q.id),selected=state.review.answers[key];
+  if(!selected){stage5SetFeedback(q.id,'error',s5('請先選一個答案，再按「檢查答案」。','Choose an answer before selecting “Check answer.”'));return}
+  const page=stage5QuestionPage(q.id);
+  if(selected===q.correct){state.review.results[key]=stage5RecordCorrect(key);stage5SetFeedback(page,'success',q.successFeedback);return}
+  stage5RecordWrong(key);stage5SetFeedback(page,'error',q.wrongFeedbackByOption[selected]||q.hint);
 }
-
+function stage5CheckReview(q){
+  const r=state.review,step=r.reviewStep===1?q.steps[0]:q.steps[1],key=step.id,selected=r.answers[key];
+  if(!selected){stage5SetFeedback('review','error',s5('請先選一個答案，再按「檢查答案」。','Choose an answer before selecting “Check answer.”'),key);return}
+  if(selected===step.correct){const result=stage5RecordCorrect(key);if(step.id==='reviewStep1'){r.reviewStep=2;stage5SetFeedback('review','success',step.successFeedback,key);return}r.results.review=stage5MinimumResult(['reviewStep1','reviewStep2']);stage5SetFeedback('review','success',step.successFeedback,key);return}
+  stage5RecordWrong(key);stage5SetFeedback('review','error',step.wrongFeedbackByOption[selected]||step.hint,key);
+}
+function stage5WorkflowIssue(order){
+  const rank={issue:1,branch:2,commit:3,pullRequest:4,review:5,merge:6,workflow:7},q=stage5Questions.workflow;
+  for(let i=0;i<order.length-1;i++){const a=order[i],b=order[i+1];if((rank[a]||0)>=(rank[b]||0)){
+    const messages={'merge-review':s5('Merge 被放在 Review 前：還沒讓隊友檢查，就把內容放進正式版了。先找出應該發生在 Merge 前的步驟。','Merge is before Review: the change entered the official version before teammates checked it. Find the step that belongs before Merge.'),'commit-branch':s5('Commit 被放在 Branch 前：Commit 是記錄已完成的修改；先建立工作 Branch，再完成檔案變更。','Commit is before the Branch: a Commit records a completed change. Create the working Branch and make the file change first.'),'pullRequest-branch':s5('Pull Request 被放在 Branch 前：Pull Request 要交出工作 Branch 的修改，因此先建立 Branch 並完成修改。','The Pull Request is before the Branch: it submits a working-Branch change, so create the Branch and make the change first.'),'workflow-issue':s5('Project 更新被放在流程最前面：進度狀態應反映真實工作，先說清楚任務再開始協作。','Project status is at the start: progress should reflect real work, so clarify the task before collaboration begins.')};
+    if(messages[a+'-'+b])return messages[a+'-'+b];const la=q.options.find(function(x){return x.id===a}),lb=q.options.find(function(x){return x.id===b});return s5('「'+(la?la.label[0]:a)+'」不應緊接在「'+(lb?lb.label[0]:b)+'」前面；先把前後依賴排好。','The relationship between “'+a+'” and “'+b+'” is out of order; put the dependent steps in place first.');
+  }}
+  return s5('請讓流程從任務與負責人開始，最後才確認正式進度。','Start with the task and owner, and confirm official progress last.');
+}
+function stage5CheckWorkflow(q){
+  const r=state.review,order=r.answers.workflow||[];
+  if(order.length!==q.correctOrder.length||order.some(function(item,index){return item!==q.correctOrder[index]})){stage5RecordWrong('workflow');stage5SetFeedback('workflow','error',stage5WorkflowIssue(order));return}
+  r.results.workflow=stage5RecordCorrect('workflow');stage5SetFeedback('workflow','success',q.successFeedback);
+}
+function stage5CheckCurrent(){
+  const page=reviewPage(),q=stage5Questions[page];if(page==='intro'){reviewNext();return}if(page==='report'){reviewJumpToReport();return}if(q.type==='single')stage5CheckSingle(q);else if(q.type==='review')stage5CheckReview(q);else stage5CheckWorkflow(q);
+}
+function stage5CurrentComplete(page){const r=state.review;if(page==='intro'||page==='report')return true;const key=page==='review'?'review':stage5PageKey(page);return Boolean(r.results[key])}
 function reviewAdvance(){
-  const r=state.review;
-  r.error=null;
-  r.cursor=Math.min(r.cursor+1,r.route.length-1);
-  r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);
+  const r=state.review;r.feedback=null;r.cursor=Math.min(r.cursor+1,r.route.length-1);r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);
+  if(r.route[r.cursor]==='report'){r.status='completed';r.completed=true;r.report=reviewBuildReport();state.unlocked=Math.max(state.unlocked,5)}
   persist();draw();topNow();
 }
-function reviewFail(page,title,body){
-  const r=state.review,attempt=(Number(r.attempts[page])||0)+1;
-  r.attempts[page]=attempt;
-  r.error={page:page,title:title,body:body};
-  const repairMap={version:'version-repair',pr:'pr-repair',tracking:'tracking-repair'},repair=repairMap[page];
-  if(repair&&attempt===1&&!r.route.includes(repair))r.route.splice(r.route.indexOf(page)+1,0,repair);
-  persist();draw();
-}
-function reviewReveal(page){
-  const r=state.review;
-  if((Number(r.attempts[page])||0)<2)return;
-  r.revealed[page]=true;r.answers[page].revealed=true;r.domainResults[reviewPageDomain(page)]='needs-review';r.error=null;reviewAdvance();
-}
-function reviewFeedback(page){
-  const r=state.review,e=r.error;
-  if(!e||e.page!==page)return'';
-  const reveal=(Number(r.attempts[page])||0)>=2?'<button type=\"button\" class=\"btn\" onclick=\"reviewReveal(\''+page+'\')\">'+tx('看解釋並繼續','Read the explanation and continue')+'</button>':'';
-  return '<div class=\"review-feedback error\" role=\"alert\" aria-live=\"assertive\"><b>'+tx(...e.title)+'</b><p>'+tx(...e.body)+'</p>'+reveal+'</div>';
-}
-function reviewSuccess(page){
-  const r=state.review;
-  if(r.error&&r.error.page===page)return'';
-  const d=reviewPageDomain(page),result=d&&r.domainResults[d];
-  if(result==='mastered'||result==='clarified')return '<div class=\"review-feedback success\" role=\"status\">'+tx(result==='mastered'?'這一段已經通過。':'你完成了補強，這一段已釐清。',result==='mastered'?'This checkpoint is complete.':'You completed the repair; this checkpoint is clarified.')+'</div>';
-  return'';
-}
-function reviewSetChoice(group,key,value){state.review.answers[group][key]=value;state.review.error=null;save()}
-function reviewSetField(group,key,value){
-  if(group==='version'&&key.indexOf('order[')===0){
-    const index=Number((key.match(/\d+/)||['0'])[0]);
-    state.review.answers.version.order[index]=value
-  }else state.review.answers[group][key]=value
-  state.review.error=null;
-  persist()
-}
-function reviewSetArrayItem(group,key,index,value){const arr=[...(state.review.answers[group][key]||[])];arr[index]=value;state.review.answers[group][key]=arr;state.review.error=null;persist()}
-function reviewToggleArray(group,key,value,checked){
-  const nested=state.review.answers[group]&&typeof state.review.answers[group]==='object'&&!Array.isArray(state.review.answers[group]);
-  const target=nested?state.review.answers[group]:state.review.answers;
-  const arr=[...(target[key]||[])],next=checked?[...new Set(arr.concat(value))]:arr.filter(function(x){return x!==value});
-  target[key]=next;
-  state.review.error=null;
-  persist()
-}
-function reviewChoice(group,key,value,label,selected){return '<button type=\"button\" class=\"review-choice '+(selected===value?'selected':'')+'\" aria-pressed=\"'+(selected===value)+'\" onclick=\"reviewSetChoice(\''+group+'\',\''+key+'\',\''+value+'\')\">'+label+'</button>'}
-function reviewSelect(group,key,value,options){return '<select class=\"select\" onchange=\"reviewSetField(\''+group+'\',\''+key+'\',this.value)\"><option value=\"\">'+tx('請選擇','Choose one')+'</option>'+options.map(function(o){return '<option value=\"'+esc(o[0])+'\" '+(value===o[0]?'selected':'')+'>'+tx(o[1],o[2])+'</option>'}).join('')+'</select>'}
-function reviewCheck(group,key,value,checked,label){return '<label class=\"review-check\"><input type=\"checkbox\" '+(checked?'checked':'')+' onchange=\"reviewToggleArray(\''+group+'\',\''+key+'\',\''+value+'\',this.checked)\"><span>'+label+'</span></label>'}
-function reviewRouteList(){
-  const r=ensureReviewRoute();
-  return '<ol class=\"review-route-list\">'+r.route.map(function(page,i){const cls=i===r.cursor?'active':i<r.cursor?'done':'';const label='<i>'+(i+1)+'</i><span>'+tx(...reviewPageLabel(page))+'</span>';return '<li class=\"'+cls+' '+(page.indexOf('-repair')>-1?'repair':'')+'\">'+(alexTestMode?'<button type=\"button\" onclick=\"alexJumpReview('+i+')\" aria-label=\"'+esc(plain('跳到','Jump to')+' '+tx(...reviewPageLabel(page)))+'\">'+label+'</button>':label)+'</li>'}).join('')+'</ol>';
-}
-function reviewSidebar(){
-  const domains=[['versionRelations','版本與分支','Version and branches'],['prMergeGate','審查與合併','Review and merge'],['workTracking','任務與進度','Tasks and progress']];
-  return '<aside class=\"review-sidebar\"><section class=\"review-evidence-card\"><h3>'+tx('這次會回顧三個關係','Three relationships to revisit')+'</h3><ul class=\"review-domain-list\">'+domains.map(function(d){const s=reviewDomainStatus(d[0]);return '<li><span>'+tx(d[1],d[2])+'</span><span class=\"review-domain-status '+s[2]+'\">'+tx(s[0],s[1])+'</span></li>'}).join('')+'</ul></section><section class=\"review-sidebar-note\"><h3>'+tx('怎麼看結果','How to read the result')+'</h3><p>'+tx('這裡不算分數。系統只根據你實際判斷的過程安排回顧；開放題的內容品質仍需要真人抽查。','There is no score. The review route follows your actual decisions; the quality of open responses still needs human review.')+'</p></section></aside>';
-}
-function reviewSurface(title,description,body,page){
-  return '<section class=\"review-surface\"><header class=\"review-surface-head\"><span class=\"status-badge purple\">'+tx(...reviewPageLabel(page))+'</span><h2>'+title+'</h2><p>'+description+'</p></header><div class=\"review-surface-body\">'+body+reviewFeedback(page)+reviewSuccess(page)+'</div></section>';
-}
-function reviewField(label,body){return '<div class=\"review-field\"><label>'+label+'</label>'+body+'</div>'}
-function reviewVersionView(){
-  const a=state.review.answers.version,orderOptions=[['save','普通儲存','Save'],['commit','Commit','Commit'],['pr','Pull Request','Pull Request'],['merge','Merge','Merge']];
-  const order=[0,1,2,3].map(function(i){return reviewField(tx('第 '+(i+1)+' 個動作','Action '+(i+1)),reviewSelect('version','order['+i+']',a.order[i]||'',orderOptions).replace('onchange=\"reviewSetField(\'version\',\'order['+i+']\',this.value)\"','onchange=\"reviewSetArrayItem(\'version\',\'order\','+i+',this.value)\"'))}).join('');
-  const body='<div class=\"review-question\"><h3>'+tx('先把結構放對位置','Place the structure correctly')+'</h3><p>'+tx('這三個名稱都在同一個 Repository 裡，但各自代表不同層次。','These three names live in the same Repository but represent different levels.')+'</p><div class=\"review-field-grid\">'+reviewField('Repository',reviewSelect('version','repoPlacement',a.repoPlacement,[['repository','campus-market 是 Repository','campus-market is the Repository'],['main','main 是 Repository','main is the Repository'],['branch','fix-event-date 是 Repository','fix-event-date is the Repository']]))+reviewField('main',reviewSelect('version','mainPlacement',a.mainPlacement,[['repository','campus-market 是 Repository','campus-market is the Repository'],['main','main 是正式分支','main is the official branch'],['branch','fix-event-date 是工作分支','fix-event-date is the work branch']]))+reviewField('fix-event-date',reviewSelect('version','branchPlacement',a.branchPlacement,[['repository','campus-market 是 Repository','campus-market is the Repository'],['main','main 是正式分支','main is the official branch'],['branch','fix-event-date 是工作分支','fix-event-date is the work branch']]))+'</div></div><div class=\"review-question\"><h3>'+tx('把操作排成合理順序','Put the actions in a sensible order')+'</h3><div class=\"review-field-grid\">'+order+'</div></div><div class=\"review-question\"><h3>'+tx('Commit 和普通儲存差在哪裡？選兩項','How is a Commit different from saving? Choose two')+'</h3><div class=\"review-check-list\">'+reviewCheck('version','reasons','trace',a.reasons.includes('trace'),tx('Commit 會在目前 Branch 留下可追蹤的版本紀錄。','A Commit leaves a traceable version record on the current Branch.'))+reviewCheck('version','reasons','working-file',a.reasons.includes('working-file'),tx('普通儲存代表目前工作檔案已被寫入，但不等於 Git 已建立版本紀錄。','Saving writes the current working file; it does not by itself create a Git version record.'))+reviewCheck('version','reasons','same',a.reasons.includes('same'),tx('普通儲存和 Commit 在 Git 裡完全是同一件事。','Saving and Commit are exactly the same thing in Git.'))+'</div></div><div class=\"review-question\"><h3>'+tx('Upload files 和 Push 是同一件事嗎？','Are Upload files and Push the same thing?')+'</h3><div class=\"review-choice-grid\">'+reviewChoice('version','upload','web-commit',tx('Upload files：從瀏覽器加入檔案，頁面流程會建立 Commit。','Upload files: add files in the browser; the page flow creates a Commit.'),a.upload)+reviewChoice('version','upload','push',tx('Upload files 就是在執行 git push。','Upload files is the same as running git push.'),a.upload)+'</div><div class=\"review-choice-grid\" style=\"margin-top:9px\">'+reviewChoice('version','push','local-remote',tx('Push：把本機已建立的 Commit 傳到遠端 Repository。','Push: send local Commits to the remote Repository.'),a.push)+reviewChoice('version','push','save-only',tx('Push 只是普通儲存檔案。','Push is just saving a file.'),a.push)+'</div></div><div class=\"review-actions\"><p class=\"field-help\">'+tx('完成四個小題後，按上方或這裡的「檢查目前答案」。','After the four small questions, check your answer above or here.')+'</p><button type=\"button\" class=\"btn primary\" onclick=\"reviewNext()\">'+tx('檢查目前答案','Check this checkpoint')+'</button></div>';
-  return reviewSurface(tx('Repository 裡的版本關係','Version relationships inside a Repository'),tx('請把情境中的工作區、分支與版本操作串起來。','Connect the workspace, branches, and version actions in this scenario.'),body,'version');
-}
-function reviewVersionRepairView(){
-  const a=state.review.answers.versionRepair;
-  const body='<div class=\"review-question\"><h3>'+tx('再看一次「儲存」與「Commit」的差異','Look again at save versus Commit')+'</h3><p>'+tx('Alex 按下儲存後，檔案內容變了；但隊友要查到這次變更，還需要看到哪一組證據？','Alex saved the file and its content changed. What evidence would teammates need to find this change?')+'</p><div class=\"review-choice-grid\">'+reviewChoice('versionRepair','choice','working-file',tx('只有目前畫面上的文字','Only the text currently on screen'),a.choice)+reviewChoice('versionRepair','choice','committed',tx('Commit message、作者與 SHA 都留下來了','The Commit message, author, and SHA are recorded'),a.choice)+'</div><div class=\"review-check-list\" style=\"margin-top:10px\">'+reviewCheck('versionRepair','evidence','message',a.evidence.includes('message'),tx('我有看到一段描述這次變更的 Commit message。','I can see a Commit message describing this change.'))+reviewCheck('versionRepair','evidence','sha',a.evidence.includes('sha'),tx('我有看到可以用來辨認版本的 SHA。','I can see a SHA that identifies the version.'))+reviewCheck('versionRepair','evidence','autosave',a.evidence.includes('autosave'),tx('瀏覽器自動儲存就等於 Commit。','Browser autosave is the same as a Commit.'))+'</div></div><div class=\"review-actions\"><button type=\"button\" class=\"btn primary\" onclick=\"reviewNext()\">'+tx('檢查補強答案','Check repair answer')+'</button></div>';
-  return reviewSurface(tx('把版本證據說清楚','Make the version evidence explicit'),tx('這一頁只補強 Commit 與普通儲存的差異。','This page only reinforces the difference between a Commit and ordinary saving.'),body,'version-repair');
-}
-function reviewPrLineText(sha){
-  if(sha==='f4e5d6a')return '<button type=\"button\" class=\"review-diff-line add '+(state.review.answers.pr.selectedLine==='date-line'?'selected':'')+'\" aria-pressed=\"'+(state.review.answers.pr.selectedLine==='date-line')+'\" onclick=\"reviewSelectPrLine(\'date-line\')\">+ 活動日期：11/23</button><button type=\"button\" class=\"review-diff-line\" aria-pressed=\"false\">  活動網站與企劃書同步更新</button>';
-  return '<button type=\"button\" class=\"review-diff-line del\">- 活動日期：11/16</button><button type=\"button\" class=\"review-diff-line\">  活動網站與企劃書同步更新</button>';
-}
-function reviewOpenPrDiff(sha){const a=state.review.answers.pr;a.diffViewedSha=sha;if(sha!=='f4e5d6a'){a.selectedLine='';a.fixConfirmed=false}state.review.error=null;save()}
-function reviewSelectPrLine(id){const a=state.review.answers.pr;if(a.diffViewedSha!=='f4e5d6a'){reviewFail('pr',['還沒看到最新版本','The latest version is not open'],['先切換到 f4e5d6a 的最新 Diff，再指出修正的那一行。','Open the latest Diff for f4e5d6a before pointing to the corrected line.']);return}a.selectedLine=id;state.review.error=null;save()}
-function reviewTogglePrBlocker(value,checked){reviewToggleArray('pr','blockers',value,checked)}
-function reviewConfirmPrFix(){const a=state.review.answers.pr;if(a.diffViewedSha!=='f4e5d6a'||a.selectedLine!=='date-line'){reviewFail('pr',['修正還沒被確認','The fix has not been verified'],['請打開最新 Diff，選出 11/23 的修正行，再確認目前版本。','Open the latest Diff, select the 11/23 correction, then confirm the current version.']);return}a.fixConfirmed=true;state.review.error=null;save()}
-function reviewApprovePr(){const a=state.review.answers.pr;if(!a.fixConfirmed||a.diffViewedSha!=='f4e5d6a'){reviewFail('pr',['不能核准舊內容','Cannot approve the old content'],['Approve 必須建立在最新 Diff 已查看且修正已確認的基礎上。','Approve only after opening the latest Diff and confirming the fix.']);return}a.approvedSha='f4e5d6a';state.review.error=null;save()}
-function reviewMergePr(){const a=state.review.answers.pr;if(a.approvedSha!=='f4e5d6a'||a.approvedSha!==a.diffViewedSha||!a.fixConfirmed||a.mergeDecision!=='not-yet'){reviewFail('pr',['這個 PR 還不能合併','This PR is not ready to merge'],['請確認最新 SHA 已經 Approve，且 Request changes 已透過修正與重新審查解決；一般 Comment 不會自動阻擋。','Confirm that the latest SHA is approved and the Request changes was resolved by the fix and re-review; an ordinary Comment does not automatically block.']);return}a.merged=true;state.review.error=null;save()}
-function reviewPrView(){
-  const a=state.review.answers.pr;
-  const blockers='<div class=\"review-check-list\">'+reviewCheck('pr','blockers','latest-review',a.blockers.includes('latest-review'),tx('最後一次審查必須對應目前最新版本。','The latest review must correspond to the current version.'))+reviewCheck('pr','blockers','request-changes',a.blockers.includes('request-changes'),tx('目前仍有未解決的 Request changes。','There is still an unresolved Request changes.'))+reviewCheck('pr','blockers','comment-only',a.blockers.includes('comment-only'),tx('一般 Comment 本身就一定會阻擋 Merge。','An ordinary Comment always blocks Merge.'))+'</div>';
-  const diff='<div class=\"review-diff\"><div class=\"review-diff-head\"><div class=\"review-diff-tabs\"><button type=\"button\" class=\"review-diff-tab '+(a.diffViewedSha==='a1c2d3e'?'selected':'')+'\" onclick=\"reviewOpenPrDiff(\'a1c2d3e\')\">'+tx('舊 Diff a1c2d3e','Old Diff a1c2d3e')+'</button><button type=\"button\" class=\"review-diff-tab '+(a.diffViewedSha==='f4e5d6a'?'selected':'')+'\" onclick=\"reviewOpenPrDiff(\'f4e5d6a\')\">'+tx('最新 Diff f4e5d6a','Latest Diff f4e5d6a')+'</button></div><code>'+(a.diffViewedSha||tx('尚未查看','Not viewed'))+'</code></div>'+(a.diffViewedSha?reviewPrLineText(a.diffViewedSha):'<p class=\"field-help\" style=\"padding:12px\">'+tx('先選擇一個 Diff。','Choose a Diff first.')+'</p>')+'</div>';
-  const body='<div class=\"review-pr-grid\"><section class=\"review-pr-timeline\"><h3>alex / campus-market · PR #4</h3><div class=\"review-timeline-item\"><strong>'+tx('a1c2d3e · 建立 PR','a1c2d3e · Pull Request opened')+'</strong>'+tx('base main ← fix-event-date','base main ← fix-event-date')+'</div><div class=\"review-timeline-item warn\"><strong>'+tx('Reviewer · Request changes','Reviewer · Request changes')+'</strong>'+tx('活動日期仍是 11/16。請修正後再審。','The event date is still 11/16. Fix it before review.')+'</div><div class=\"review-timeline-item good\"><strong>'+tx('f4e5d6a · 修正 Commit','f4e5d6a · Fix commit')+'</strong>'+tx('活動日期改為 11/23。','The event date is changed to 11/23.')+'</div></section>'+diff+'</div><div class=\"review-question\"><h3>'+tx('先做合併判斷','Make the merge judgment first')+'</h3><p>'+tx('目前畫面最後看過的 Diff 還是舊 SHA。此刻可以 Merge 嗎？','The last Diff viewed is still the old SHA. Can you merge now?')+'</p><div class=\"review-choice-grid\">'+reviewChoice('pr','mergeDecision','not-yet',tx('還不行：要先重新查看最新 Diff。','Not yet: reopen the latest Diff first.'),a.mergeDecision)+reviewChoice('pr','mergeDecision','yes',tx('可以：Approve 過就能 Merge。','Yes: an approval means it can merge.'),a.mergeDecision)+'</div></div><div class=\"review-question\"><h3>'+tx('如果選「還不行」，阻擋原因是什麼？','If you chose “not yet,” what blocks it?')+'</h3>'+blockers+'</div><div class=\"review-question\"><h3>'+tx('重新看最新 Diff，指出問題已修正的地方','Reopen the latest Diff and point to the corrected line')+'</h3><p>'+tx('選 f4e5d6a，再點擊綠色的 11/23 行。舊 Diff 的按鈕不能完成這一步。','Choose f4e5d6a, then click the green 11/23 line. The old Diff cannot complete this step.')+'</p><div class=\"review-actions\"><button type=\"button\" class=\"btn '+(a.fixConfirmed?'':'primary')+'\" onclick=\"reviewConfirmPrFix()\" '+(a.diffViewedSha==='f4e5d6a'&&a.selectedLine==='date-line'?'':'disabled')+'>'+tx(a.fixConfirmed?'已確認修正':'確認最新修正','Fix verified','Confirm latest fix')+'</button><button type=\"button\" class=\"btn primary\" onclick=\"reviewApprovePr()\" '+(a.fixConfirmed?'':'disabled')+'>'+tx('Approve 最新版本','Approve latest version')+'</button><button type=\"button\" class=\"btn primary\" onclick=\"reviewMergePr()\" '+(a.approvedSha==='f4e5d6a'&&!a.merged?'':'disabled')+'>'+tx('Merge','Merge')+'</button></div><div class=\"review-snapshot\"><article><b>Diff</b><span>'+esc(a.diffViewedSha||plain('尚未查看','Not viewed'))+'</span></article><article><b>Review</b><span>'+esc(a.approvedSha?plain('Approved 最新 SHA','Approved latest SHA'):plain('尚未 Approve','Not approved'))+'</span></article><article><b>Merge</b><span>'+tx(a.merged?'已合併':'尚未合併',a.merged?'Merged':'Not merged')+'</span></article></div></div><div class=\"review-actions\"><p class=\"field-help\">'+tx('完成最新 Diff、確認修正、Approve 和 Merge 後，再檢查這個 checkpoint。','After the latest Diff, fix verification, Approve, and Merge are complete, check this checkpoint.')+'</p><button type=\"button\" class=\"btn primary\" onclick=\"reviewNext()\">'+tx('檢查目前答案','Check this checkpoint')+'</button></div>';
-  return reviewSurface(tx('這個 PR 現在能不能合併？','Can this PR merge now?'),tx('你必須根據最新 Diff 和最新 Review 狀態判斷，不能沿用舊版本的核准。','Judge from the latest Diff and review status; an old approval is not enough.'),body,'pr');
-}
-function reviewPrRepairView(){
-  const a=state.review.answers.prRepair;
-  const body='<div class=\"review-question\"><h3>'+tx('哪一個 PR 狀態真的可以 Merge？','Which PR state is actually ready to merge?')+'</h3><div class=\"review-choice-grid\">'+reviewChoice('prRepair','choice','a',tx('A：Approve 舊 SHA 後，又新增一個 Commit。','A: an approval on the old SHA, then a new Commit.'),a.choice)+reviewChoice('prRepair','choice','b',tx('B：新增 Commit 後看最新 Diff，並以最新 SHA Approve。','B: after the new Commit, the latest Diff was reviewed and the latest SHA approved.'),a.choice)+'</div></div><div class=\"review-check-list\" style=\"margin-top:10px\">'+reviewCheck('prRepair','reasons','sha',a.reasons.includes('sha'),tx('Approve 必須對應最新 SHA。','Approve must correspond to the latest SHA.'))+reviewCheck('prRepair','reasons','changes',a.reasons.includes('changes'),tx('未解決的 Request changes 不能被忽略。','Unresolved Request changes cannot be ignored.'))+reviewCheck('prRepair','reasons','position',a.reasons.includes('position'),tx('只要按鈕位置一樣，舊核准仍然有效。','An old approval remains valid as long as the button is in the same place.'))+'</div><div class=\"review-actions\"><button type=\"button\" class=\"btn primary\" onclick=\"reviewNext()\">'+tx('檢查補強答案','Check repair answer')+'</button></div>';
-  return reviewSurface(tx('不要把舊核准當成新證據','Do not treat an old approval as new evidence'),tx('這一頁補強「最新 Diff → 最新 Review → Merge」的關係。','This page reinforces the relationship between latest Diff, latest Review, and Merge.'),body,'pr-repair');
-}
-function reviewTrackingView(){
-  const a=state.review.answers.tracking;
-  const body='<div class=\"review-question\"><h3>'+tx('把用途放到對的位置','Place each purpose correctly')+'</h3><div class=\"review-field-grid\">'+reviewField(tx('修正活動日期的具體工作','The concrete date-fix task'),reviewSelect('tracking','issuePlacement',a.issuePlacement,[['issue','Issue','Issue'],['project','Project','Project'],['workflow','Project workflow','Project workflow']]))+reviewField(tx('查看多件工作目前在哪個狀態','See the status of many tasks'),reviewSelect('tracking','projectPlacement',a.projectPlacement,[['issue','Issue','Issue'],['project','Project','Project'],['workflow','Project workflow','Project workflow']]))+reviewField(tx('決定事件後是否自動移動卡片','Decide whether events move cards automatically'),reviewSelect('tracking','automationPlacement',a.automationPlacement,[['issue','Issue','Issue'],['project','Project','Project'],['workflow','Project workflow','Project workflow']]))+reviewField('Assignee',reviewSelect('tracking','assignee',a.assignee,[['Alex','Alex','Alex'],['Jamie','Jamie','Jamie'],['none','尚未指派','Unassigned']]))+'</div></div><div class=\"review-question\"><h3>'+tx('Merge 後 Issue 和 Project 一定會一起更新嗎？','Do Issue and Project always update after Merge?')+'</h3><div class=\"review-choice-grid\">'+reviewChoice('tracking','automationDecision','not-always',tx('不一定：要看關聯與 workflow 設定。','Not always: it depends on links and workflow settings.'),a.automationDecision)+reviewChoice('tracking','automationDecision','always',tx('一定會：Merge 會自動把所有東西變 Done。','Always: Merge automatically makes everything Done.'),a.automationDecision)+'</div></div><div class=\"review-question\"><h3>'+tx('哪些設定可能讓狀態自動更新？選兩項','Which settings can automate the status? Choose two')+'</h3><div class=\"review-check-list\">'+reviewCheck('tracking','automationConditions','closes',a.automationConditions.includes('closes'),tx('PR 用關閉關鍵字正確連結 Issue。','The PR links the Issue with a closing keyword.'))+reviewCheck('tracking','automationConditions','workflow',a.automationConditions.includes('workflow'),tx('Project 啟用對應的 workflow 或 automation。','The Project enables the corresponding workflow or automation.'))+reviewCheck('tracking','automationConditions','merge-only',a.automationConditions.includes('merge-only'),tx('只要 Merge，不需要任何關聯或設定。','Merge alone is enough; no link or setting is needed.'))+'</div></div><div class=\"review-actions\"><button type=\"button\" class=\"btn primary\" onclick=\"reviewNext()\">'+tx('檢查目前答案','Check this checkpoint')+'</button></div>';
-  return reviewSurface(tx('Issue、Assignee 與 Project 各自負責什麼？','What do Issue, Assignee, and Project each do?'),tx('同一個工作可以同時出現在 Issue 和 Project，但它們不是同一種東西。','The same work can appear in an Issue and a Project, but they are not the same thing.'),body,'tracking');
-}
-function reviewTrackingRepairView(){
-  const a=state.review.answers.trackingRepair;
-  const body='<div class=\"review-question\"><h3>'+tx('PR 已 Merge，但 Issue 還是 Open、Project 還在 In progress。先檢查哪些地方？','A PR merged, but the Issue is still Open and Project is still In progress. What should you check first?')+'</h3><div class=\"review-check-list\">'+reviewCheck('trackingRepair','reasons','link',a.reasons.includes('link'),tx('PR 是否用關閉關鍵字正確連結 Issue。','Whether the PR used a closing keyword to link the Issue.'))+reviewCheck('trackingRepair','reasons','workflow',a.reasons.includes('workflow'),tx('Project 是否啟用對應的 workflow automation。','Whether the Project enabled the relevant workflow automation.'))+reviewCheck('trackingRepair','reasons','broken',a.reasons.includes('broken'),tx('只要狀態沒動，就代表 Merge 一定失敗。','If the status did not move, the Merge must have failed.'))+'</div></div><div class=\"review-actions\"><button type=\"button\" class=\"btn primary\" onclick=\"reviewNext()\">'+tx('檢查補強答案','Check repair answer')+'</button></div>';
-  return reviewSurface(tx('自動更新不是必然發生','Automation is not automatic by default'),tx('這一頁把 GitHub Project 的 workflow 限制說清楚。','This page clarifies the limits of GitHub Project workflows.'),body,'tracking-repair');
-}
-function reviewDraftText(key,value){state.review.answers[key]=value;state.review.error=null;persist()}
-function reviewExplanationView(){
-  const a=state.review.answers,first=a.explain1||'',second=a.explain2||'',c1=a.explain1Checks||[],c2=a.explain2Checks||[];
-  const body='<div class=\"review-question\"><h3>'+tx('情境一：有人說「按過 Approve 就可以直接 Merge」','Scenario 1: someone says “I approved it, so it can merge directly”')+'</h3><p>'+tx('請說明新 Commit 後還要檢查什麼。至少寫 20 個非空白字元。','Explain what still needs to be checked after a new Commit. Write at least 20 non-space characters.')+'</p><textarea class=\"textarea\" rows=\"4\" oninput=\"reviewDraftText(\'explain1\',this.value)\" placeholder=\"'+esc(plain('我會先……','I would first...'))+'\">'+esc(first)+'</textarea><div class=\"review-check-list\" style=\"margin-top:9px\">'+reviewCheck('explain1','explain1Checks','new-diff',c1.includes('new-diff'),tx('我有提到要查看最新 Diff。','I mentioned checking the latest Diff.'))+reviewCheck('explain1','explain1Checks','sha',c1.includes('sha'),tx('我有提到 Approve 必須對應目前最新版本。','I mentioned that Approve must match the latest version.'))+reviewCheck('explain1','explain1Checks','changes',c1.includes('changes'),tx('我有提到 Request changes 必須先解決。','I mentioned that Request changes must be resolved first.'))+'</div></div><div class=\"review-question\"><h3>'+tx('情境二：PR 合併了，但 Project 卡片沒有變 Done','Scenario 2: the PR merged, but the Project card did not become Done')+'</h3><p>'+tx('請提出兩個先檢查的地方。至少寫 20 個非空白字元。','Give two places you would check first. Write at least 20 non-space characters.')+'</p><textarea class=\"textarea\" rows=\"4\" oninput=\"reviewDraftText(\'explain2\',this.value)\" placeholder=\"'+esc(plain('我會檢查……','I would check...'))+'\">'+esc(second)+'</textarea><div class=\"review-check-list\" style=\"margin-top:9px\">'+reviewCheck('explain2','explain2Checks','link',c2.includes('link'),tx('我有檢查 PR 是否正確連結或關閉 Issue。','I checked whether the PR correctly links or closes the Issue.'))+reviewCheck('explain2','explain2Checks','workflow',c2.includes('workflow'),tx('我有檢查 Project workflow 或 automation 是否啟用。','I checked whether the Project workflow or automation is enabled.'))+reviewCheck('explain2','explain2Checks','not-fixed-rule',c2.includes('not-fixed-rule'),tx('我沒有把 Merge 後一定 Done 當成固定規則。','I did not treat “Done after Merge” as a fixed rule.'))+'</div></div><div class=\"review-verify-note\">'+tx('這兩題會保存給你自己或教師回看。單一 HTML 不會假裝能自動判定語意完全正確。','These answers are saved for you or a teacher to review. A single HTML file will not pretend to judge meaning perfectly.')+'</div><div class=\"review-actions\"><button type=\"button\" class=\"btn primary\" onclick=\"reviewNext()\">'+tx('完成自己的話說明','Complete my explanations')+'</button></div>';
-  return reviewSurface(tx('把判斷理由說出來','Explain your reasoning'),tx('不要只選對；試著把最新 Diff、Review、Merge 和 Project automation 串成一段話。','Do more than choose correctly; connect the latest Diff, Review, Merge, and Project automation in your own words.'),body,'explain');
-}
-function reviewTextLooksInvalid(value){
-  const normalized=String(value||'').replace(/\s+/g,'').trim();
-  if(normalized.length<20)return true;
-  if(/^(.)\1+$/.test(normalized))return true;
-  if(normalized.length>8&&new Set(normalized.split('')).size<=3)return true;
-  return false;
-}
-function reviewValidateExplanation(){
-  const a=state.review.answers;
-  return !reviewTextLooksInvalid(a.explain1)&&!reviewTextLooksInvalid(a.explain2)&&(a.explain1Checks||[]).length>=2&&(a.explain2Checks||[]).length>=2;
-}
-function reviewBuildReport(){
-  const r=state.review;
-  return {versionRelations:r.domainResults.versionRelations,prMergeGate:r.domainResults.prMergeGate,workTracking:r.domainResults.workTracking,explanation:'self-check',explain1:r.answers.explain1,explain2:r.answers.explain2,createdAt:new Date().toISOString()};
-}
-function reviewReturnToDomain(domain){
-  const step=domain==='prMergeGate'?7:domain==='workTracking'?2:0;
-  state.phase=4;
-  state.practice.step=step;
-  state.practice.prediction='';
-  state.practice.predictionOK=false;
-  state.practice.error=null;
-  state.practice.result=null;
-  state.practice.reflection='';
-  state.review.error=null;
-  save()
-}
-function reviewReportReturnButton(domain,result){
-  if(result!=='needs-review')return '';
-  return '<div class="review-result-actions"><button type="button" class="btn" onclick="reviewReturnToDomain(\''+domain+'\')">'+reviewReportLink(domain)+'</button></div>'
-}
-function reviewResultCard(domain,title,description){
-  const result=state.review.domainResults[domain]||'needs-review',labels={mastered:['已掌握','Mastered'],clarified:['已釐清','Clarified'],'needs-review':['建議回顧','Review again'],unassessed:['尚未完成','Not assessed']},label=labels[result]||labels['needs-review'];
-  return '<article class=\"review-result '+(result==='needs-review'?'needs-review':result)+'\"><h3>'+title+' <span class=\"review-domain-status\">'+tx(...label)+'</span></h3><p>'+description+'</p>'+reviewReportReturnButton(domain,result)+'</article>';
-}
-function reviewReportView(){
-  const r=state.review;
-  const body='<div class=\"review-result-grid\">'+reviewResultCard('versionRelations',tx('版本與分支','Versions and branches'),tx('Repository、main、Branch、Commit、普通儲存、Upload files 與 Push。','Repository, main, Branch, Commit, saving, Upload files, and Push.'))+reviewResultCard('prMergeGate',tx('審查與合併','Review and merge'),tx('最新 Diff、Review、Request changes、Approve 與 Merge。','Latest Diff, Review, Request changes, Approve, and Merge.'))+reviewResultCard('workTracking',tx('任務與進度','Tasks and progress'),tx('Issue、Assignee、Project 與 Project status automation。','Issue, Assignee, Project, and Project status automation.'))+'</div><div class=\"review-answer-review\"><article><h3>'+tx('你的第一段說明','Your first explanation')+'</h3><p>'+esc(r.answers.explain1||plain('尚未填寫','Not written'))+'</p></article><article><h3>'+tx('你的第二段說明','Your second explanation')+'</h3><p>'+esc(r.answers.explain2||plain('尚未填寫','Not written'))+'</p></article></div><div class=\"review-verify-note\" style=\"margin-top:14px\">'+tx('開放題已完成結構化自我核對；文字內容是否真的表達正確理解，仍需要真人驗證。','The open responses completed a structured self-check; whether the wording shows correct understanding still needs human validation.')+'</div><div class=\"review-actions\"><button type=\"button\" class=\"btn\" onclick=\"reviewReset()\">'+tx('重新做一次綜合回顧','Redo the adaptive review')+'</button><button type=\"button\" class=\"btn primary\" onclick=\"gotoPhase(4)\">'+tx('回到 Stage 4 複習','Return to Stage 4')+'</button></div>';
-  return '<section class=\"review-report\"><span class=\"status-badge green\">'+tx('回顧完成','Review complete')+'</span><h2>'+tx('這次你已經能判斷什麼？','What can you judge now?')+'</h2><p>'+tx('這份報告不給分數，只把你在不同概念上的狀態與下一步整理出來。','This report does not give a score. It summarizes your concept status and next steps.')+'</p>'+body+'</section>';
-}
-function reviewReportLink(domain){
-  if(domain==='versionRelations')return tx('回到 Stage 4 的版本與 Branch 操作','Return to Stage 4 version and Branch practice');
-  if(domain==='prMergeGate')return tx('回到 Stage 4 的 Diff 與 Review 操作','Return to Stage 4 Diff and Review practice');
-  return tx('回到 Stage 4 的 Issue 與 Project 操作','Return to Stage 4 Issue and Project practice');
-}
-function reviewValidateVersion(){
-  const a=state.review.answers.version,order=(a.order||[]).join(',');
-  return a.repoPlacement==='repository'&&a.mainPlacement==='main'&&a.branchPlacement==='branch'&&order==='save,commit,pr,merge'&&a.reasons.includes('trace')&&a.reasons.includes('working-file')&&!a.reasons.includes('same')&&a.upload==='web-commit'&&a.push==='local-remote';
-}
-function reviewValidateVersionRepair(){
-  const a=state.review.answers.versionRepair;
-  return a.choice==='committed'&&a.evidence.includes('message')&&a.evidence.includes('sha')&&!a.evidence.includes('autosave');
-}
-function reviewValidatePr(){
-  const a=state.review.answers.pr;
-  return a.mergeDecision==='not-yet'&&a.blockers.includes('latest-review')&&a.blockers.includes('request-changes')&&!a.blockers.includes('comment-only')&&a.diffViewedSha==='f4e5d6a'&&a.selectedLine==='date-line'&&a.fixConfirmed&&a.approvedSha==='f4e5d6a'&&a.approvedSha===a.diffViewedSha&&a.merged;
-}
-function reviewValidatePrRepair(){
-  const a=state.review.answers.prRepair;
-  return a.choice==='b'&&a.reasons.includes('sha')&&a.reasons.includes('changes')&&!a.reasons.includes('position');
-}
-function reviewValidateTracking(){
-  const a=state.review.answers.tracking;
-  return a.issuePlacement==='issue'&&a.projectPlacement==='project'&&a.automationPlacement==='workflow'&&a.assignee==='Alex'&&a.automationDecision==='not-always'&&a.automationConditions.includes('closes')&&a.automationConditions.includes('workflow')&&!a.automationConditions.includes('merge-only');
-}
-function reviewValidateTrackingRepair(){
-  const a=state.review.answers.trackingRepair;
-  return a.reasons.includes('link')&&a.reasons.includes('workflow')&&!a.reasons.includes('broken');
-}
-function reviewMarkPassed(page){
-  const d=reviewPageDomain(page),r=state.review,attempt=Number(r.attempts[page])||0;
-  if(d)r.domainResults[d]=attempt>0||page.indexOf('-repair')>-1?'clarified':'mastered';
-}
 function reviewNext(){
-  const r=ensureReviewRoute(),page=reviewPage();
-  if(alexTestMode){
-    alexSeedReviewAnswers();
-    if(page==='report'){alexCompleteReview();return}
-    reviewAdvance();
-    return;
-  }
-  if(page==='footprint'){r.status='in-progress';reviewAdvance();return}
-  if(page==='version'){if(!reviewValidateVersion()){reviewFail(page,['先把版本關係補完整','Complete the version relationships'],['請確認 Repository 裡有 main 和工作 Branch；再檢查操作順序、Commit／儲存，以及 Upload files／Push 的差異。','Confirm that main and the work Branch are inside the Repository, then check the order, Commit versus saving, and Upload files versus Push.']);return}reviewMarkPassed(page);reviewAdvance();return}
-  if(page==='version-repair'){if(!reviewValidateVersionRepair()){reviewFail(page,['還需要更多版本證據','More version evidence is needed'],['請找出 Commit message 和 SHA；普通儲存本身不會留下這兩項 Git 紀錄。','Look for the Commit message and SHA; ordinary saving does not create those Git records by itself.']);return}state.review.repairsCompleted[page]=true;state.review.domainResults.versionRelations='clarified';reviewAdvance();return}
-  if(page==='pr'){if(!reviewValidatePr()){reviewFail(page,['PR 還沒通過最新版本檢查','The PR has not passed the latest-version check'],['請選「還不行」、指出 Request changes 與舊 SHA 的阻擋，打開 f4e5d6a 的最新 Diff，確認修正後才 Approve 和 Merge。','Choose “not yet,” identify Request changes and the old SHA as blockers, open the f4e5d6a latest Diff, verify the fix, then Approve and Merge.']);return}reviewMarkPassed(page);reviewAdvance();return}
-  if(page==='pr-repair'){if(!reviewValidatePrRepair()){reviewFail(page,['還沒抓到舊核准的問題','The old approval problem is not clear yet'],['只有新增 Commit 後重新看最新 Diff，並以最新 SHA Approve，才是可以合併的狀態。','Only a latest-Diff review followed by approval on the latest SHA is ready to merge.']);return}state.review.repairsCompleted[page]=true;state.review.domainResults.prMergeGate='clarified';reviewAdvance();return}
-  if(page==='tracking'){if(!reviewValidateTracking()){reviewFail(page,['Issue 和 Project 的分工還沒對上','Issue and Project roles are not matched yet'],['Issue 記錄具體工作與負責人；Project 集中看多件工作；自動更新還要看關聯和 workflow 設定。','An Issue records a concrete task and owner; a Project tracks many tasks; automation still depends on links and workflow settings.']);return}reviewMarkPassed(page);reviewAdvance();return}
-  if(page==='tracking-repair'){if(!reviewValidateTrackingRepair()){reviewFail(page,['還需要檢查自動化設定','The automation checks are incomplete'],['先查 PR 與 Issue 的關聯，再查 Project 是否啟用 workflow automation；Merge 本身不保證狀態移動。','Check the PR-Issue link, then check whether the Project enables workflow automation; Merge alone does not guarantee a status move.']);return}state.review.repairsCompleted[page]=true;state.review.domainResults.workTracking='clarified';reviewAdvance();return}
-  if(page==='explain'){if(!reviewValidateExplanation()){reviewFail(page,['再把理由寫完整一點','Make the reasoning more complete'],['兩段都要有足夠的情境文字，並各自核對至少兩項具體理由；不要只貼題目或重複字元。','Both responses need enough scenario text and at least two concrete checks each; do not paste the prompt or repeat characters.']);return}state.review.domainResults.explanation='self-check';r.report=reviewBuildReport();r.completed=true;r.status='completed';state.unlocked=Math.max(state.unlocked,5);reviewAdvance();return}
+  const r=ensureReviewRoute(),page=reviewPage();if(alexTestMode){alexSeedReviewAnswers();if(page==='report'){alexCompleteReview();return}reviewAdvance();return}
+  if(page==='intro'){r.status='in-progress';reviewAdvance();return}if(page==='report'){reviewJumpToReport();return}if(!stage5CurrentComplete(page)){stage5CheckCurrent();return}reviewAdvance();
 }
-function reviewReset(){if(!confirm(plain('重新做一次綜合回顧？前四階段不會被清除。','Redo the adaptive review? Stages 1–4 will not be cleared.')))return;state.review=baseReview();state.termsOpen=false;ensureReviewRoute();focusRequested=true;save();topNow()}
+function reviewReset(){if(!confirm(plain('重新做一次綜合回顧？前四階段不會被清除。','Redo the integrated review? Stages 1–4 will not be cleared.')))return;state.review=baseReview();state.termsOpen=false;focusRequested=true;save();topNow()}
 
 /* Evidence instrumentation and Stage 5 course shell */
 function inspectScenarioBubble(bubbleId,problemId){
@@ -1405,61 +1321,164 @@ function confirmResetPhase(){
   if(state.phase===5)state.review=baseReview();
   focusRequested=true;save();topNow();
 }
-function reviewTermKeys(){return ['Git','GitHub','Repository','main','Branch','Commit','Upload','Push','PR','Review','Merge','Issue','Assignee','Project','ProjectAutomation'].filter(function(k){return terms[k]})}
+function reviewTermKeys(){
+  const keys=[];Object.values(stage5Questions).forEach(function(q){(q.termKeys||[]).forEach(function(k){if(k!=='Push'&&k!=='ProjectAutomation'&&!keys.includes(k))keys.push(k)})});
+  return keys.filter(function(k){return terms[k]});
+}
+function reviewPageLabel(page){
+  const map={intro:['綜合回顧','Integrated review'],workspace:['共同工作區','Shared workspace'],task:['任務分工','Task ownership'],branch:['安全修改','Safe changes'],commit:['版本紀錄','Version record'],'pull-request':['提出修改','Propose a change'],review:['審查與修正','Review and fix'],workflow:['完整協作流程','Complete workflow'],report:['回顧報告','Review report']};
+  return map[page]||map.intro;
+}
+function stage5Progress(page){
+  const q=stage5Questions[page],number=q?q.number:7,step=page==='review'?state.review.reviewStep:0;
+  return '<div class="stage5-progress" aria-label="'+esc(plain('第 '+number+' 題，共 7 題','Question '+number+' of 7'))+'"><span>'+tx('第 '+number+' 題，共 7 題','Question '+number+' of 7')+'</span>'+(page==='review'?'<b>'+tx('步驟 '+step+'／2','Step '+step+' of 2')+'</b>':'')+'</div>';
+}
 function reviewHeading(page){
-  const r=ensureReviewRoute(),index=r.cursor,total=r.route.length,label=reviewPageLabel(page),title=page==='footprint'?tx('先看看你走過的學習路線','Review the learning path you have taken'):tx('5.'+(index+1)+' '+label[0],'5.'+(index+1)+' '+label[1]),desc=page==='footprint'?tx('這不是另一場考試；系統會把前面做過的判斷串起來，必要時多給你一個釐清步驟。','This is not another exam. The route connects your earlier decisions and adds a repair step only when needed.'):page==='explain'?tx('請用自己的話說明判斷理由，讓理解不只停在按鈕位置。','Explain your reasoning so understanding does not stop at button positions.'):page==='report'?tx('回看你在版本、審查合併、任務進度上的狀態。','Review your status across versions, review and merge, and task progress.'):tx('做出判斷後，讀懂回饋，再決定下一步。','Make a judgment, read the feedback, and decide what comes next.');
-  return stageHeading('STAGE 5 · ADAPTIVE REVIEW',title,desc,index,total)+alexReviewTools();
+  const q=stage5Questions[page],label=reviewPageLabel(page),title=page==='intro'?tx('綜合回顧','Integrated review'):page==='report'?tx('回顧報告','Review report'):tx(...label),desc=page==='intro'?tx('這裡不考英文名詞背誦，而是確認你能不能把 GitHub 用在一次真實的小組協作中。七個題組會從分工、修改、留下版本，一路走到審查與正式合併。','This is not an English vocabulary test. It checks whether you can use GitHub in a real team collaboration, from ownership and editing through review and merging.'):page==='report'?tx('這份報告整理五個能力面向，不用分數或排名告訴你下一步。','This report summarizes five ability areas without scores or rankings.'):tx('閱讀情境，做出判斷，再用「檢查答案」查看具體回饋。','Read the scenario, make a judgment, then use “Check answer” to see specific feedback.');
+  return '<header class="stage-heading stage5-heading"><div><div class="stage-kicker">STAGE 5 · INTEGRATED REVIEW</div><h1>'+title+'</h1><p>'+desc+'</p></div><div class="stage5-heading-side">'+(q?stage5Progress(page):page==='report'?stage5Progress('workflow'):'<span class="stage5-time">'+tx('約 5–8 分鐘','About 5–8 minutes')+'</span>')+'</div></header>'+alexReviewTools();
+}
+function stage5MigrationNotice(){
+  const r=state.review;if(!r.migrationNotice)return '';
+  return '<div class="notice stage5-migration" role="status" aria-live="polite"><p>'+tx('Stage 5 已更新為新的綜合回顧，你前四階段的進度仍然保留。','Stage 5 has been updated to a new integrated review. Your Stage 1–4 progress is preserved.')+'</p><button type="button" class="btn" onclick="dismissStage5Migration()">'+tx('知道了','Got it')+'</button></div>';
+}
+function dismissStage5Migration(){state.review.migrationNotice=false;persist();draw()}
+function renderStage5Intro(){
+  const route=stage5Route.filter(function(p){return p!=='intro'&&p!=='report'}),r=ensureReviewRoute();
+  return '<div class="review-page"><section class="review-intro stage5-intro"><article class="review-brief" aria-labelledby="stage5-intro-title"><span class="status-badge purple">'+tx('綜合回顧','Integrated review')+'</span><h2 id="stage5-intro-title">'+tx('把 GitHub 當成一套小組協作流程','Use GitHub as a team collaboration workflow')+'</h2><p>'+tx('你會從 Issue 分工開始，走過 Branch、Commit、Pull Request、Review 與 Merge，最後確認工作進度。這裡不考英文名詞背誦，而是確認你能不能完成一次真實的小組協作。','You will start with Issue ownership, move through Branch, Commit, Pull Request, Review, and Merge, and finish by checking progress. This is not an English vocabulary test; it checks whether you can complete a real team collaboration.')+'</p><div class="review-actions"><button type="button" class="btn primary" onclick="reviewNext()">'+tx('開始綜合回顧','Start integrated review')+'</button></div></article><aside class="review-route-card"><h3>'+tx('固定七個題組','Seven-question route')+'</h3><ol class="review-route-list">'+route.map(function(p){const q=stage5Questions[p];return '<li><i>'+q.number+'</i><span>'+tx(...q.title)+'</span></li>'}).join('')+'</ol><p class="field-help">'+tx('每題答錯會留在原題，讀過提示後再試；不會插入重複補強頁。','A wrong answer stays on the question with a useful hint; no duplicate repair pages are inserted.')+'</p></aside></div>'+stage5MigrationNotice();
+}
+function stage5OptionMarkup(questionId,options,selected){
+  return '<div class="stage5-options">'+options.map(function(o){return '<label class="stage5-option '+(selected===o.id?'selected':'')+'"><input type="radio" name="stage5-'+questionId+'" value="'+esc(o.id)+'" '+(selected===o.id?'checked':'')+' onchange="stage5Choose(\''+questionId+'\',this.value)"><span><b>'+esc(o.id)+'</b><span>'+stage5Text(o.label)+'</span></span></label>'}).join('')+'</div>';
+}
+function renderStage5SingleChoice(q){
+  const key=stage5PageKey(q.id),selected=state.review.answers[key];
+  return '<fieldset class="stage5-fieldset"><legend>'+stage5Text(q.question)+'</legend>'+stage5OptionMarkup(q.id,q.options,selected)+'</fieldset>';
+}
+function renderStage5ReviewScenario(q){
+  const r=state.review,step=r.reviewStep===1?q.steps[0]:q.steps[1];
+  return '<div class="stage5-step-banner"><span class="status-badge purple">'+tx('Q6 · Review 情境','Q6 · Review scenario')+'</span><b>'+tx('步驟 '+r.reviewStep+'／2','Step '+r.reviewStep+' of 2')+'</b></div><fieldset class="stage5-fieldset"><legend>'+stage5Text(step.question)+'</legend>'+stage5OptionMarkup('review',step.options,r.answers[step.id])+'</fieldset>';
+}
+function renderStage5OrderingQuestion(q){
+  const r=state.review,order=r.answers.workflow||[],labelFor=function(id){const o=q.options.find(function(item){return item.id===id});return o?stage5Text(o.label):id};
+  const handle='<span class="stage5-drag-handle" aria-hidden="true"><svg viewBox="0 0 24 36" focusable="false"><circle cx="6" cy="6" r="2.4"></circle><circle cx="18" cy="6" r="2.4"></circle><circle cx="6" cy="18" r="2.4"></circle><circle cx="18" cy="18" r="2.4"></circle><circle cx="6" cy="30" r="2.4"></circle><circle cx="18" cy="30" r="2.4"></circle></svg></span>';
+  return '<fieldset class="stage5-fieldset"><legend>'+stage5Text(q.question)+'</legend><p class="field-help">'+tx('按住卡片拖到想要的位置；聚焦卡片後，也可以用鍵盤的 ↑／↓ 調整順序。','Drag a card to the position you want. You can also focus a card and use ↑/↓ on the keyboard.')+'</p><div class="stage5-order-list" role="list">'+order.map(function(id,index){return '<article id="stage5-order-card-'+esc(id)+'" data-workflow-id="'+esc(id)+'" class="stage5-order-card" role="listitem" tabindex="0" draggable="true" aria-grabbed="false" aria-label="'+esc(plain('第 '+(index+1)+' 項，共 7 項：'+labelFor(id),'Item '+(index+1)+' of 7: '+labelFor(id)))+'" onkeydown="stage5OrderKey(\''+esc(id)+'\',event)" ondragstart="stage5DragStart(\''+esc(id)+'\',event)" ondragover="stage5DragOver(\''+esc(id)+'\',event)" ondragleave="stage5DragLeave(event)" ondrop="stage5DropOrder(\''+esc(id)+'\',event)" ondragend="stage5DragEnd(event)">'+handle+'<div class="stage5-order-position">'+tx('第 '+(index+1)+' 項，共 7 項','Item '+(index+1)+' of 7')+'</div><p>'+labelFor(id)+'</p></article>'}).join('')+'</div></fieldset>';
+}
+function renderStage5Feedback(questionId){
+  const f=state.review.feedback;if(!f||f.questionId!==questionId)return '';
+  const q=stage5Questions[questionId],step=q&&q.type==='review'?q.steps.find(function(s){return s.id===f.stepId}):q;
+  const title=f.kind==='success'?s5('這一步已完成','This step is complete'):s5('先看這個選擇會造成什麼','See what this choice causes first');
+  const extra=f.kind==='error'&&f.attempts>=2?'<div class="stage5-feedback-detail"><strong>'+tx('白話提示','Plain-language tip')+'</strong><p>'+stage5Text(step?.hint||q.hint)+'</p><p><strong>'+tx('再想想','Think again')+'</strong>：'+stage5Text(step?.explanation||q.explanation)+'</p></div>':'';
+  return '<section class="stage5-feedback '+(f.kind==='success'?'success':'error')+'" role="status" aria-live="polite"><h3 tabindex="-1" class="stage5-feedback-title">'+tx(...title)+'</h3><p>'+stage5Text(f.message)+'</p>'+extra+'</section>';
+}
+function renderStage5Question(questionId){
+  const q=stage5Questions[questionId],r=state.review;
+  const body=q.type==='single'?renderStage5SingleChoice(q):q.type==='review'?renderStage5ReviewScenario(q):renderStage5OrderingQuestion(q);
+  return '<section class="review-surface stage5-question-surface" aria-labelledby="stage5-question-title"><header class="review-surface-head"><span class="status-badge purple">'+tx('第 '+q.number+' 題','Question '+q.number)+'</span><h2 id="stage5-question-title">'+tx(...q.title)+'</h2><div class="stage5-scenario"><strong>'+tx('情境','Scenario')+'</strong><p>'+tx(...q.scenario)+'</p></div></header><div class="review-surface-body">'+body+renderStage5Feedback(questionId)+'<div class="review-actions"><button type="button" class="btn primary" onclick="stage5CheckCurrent()">'+tx('檢查答案','Check answer')+'</button>'+(stage5CurrentComplete(questionId)?'<button type="button" class="btn" onclick="reviewNext()">'+tx('下一題','Next question')+'</button>':'')+'</div></div></section>';
+}
+function stage5CommitWorkflowOrder(order,focusId){
+  const r=state.review;r.answers.workflow=order;r.feedback=null;stage5FocusSelector='#stage5-order-card-'+focusId;persist();draw();
+}
+function stage5MoveOrder(id,direction){
+  const order=(state.review.answers.workflow||[]).slice(),index=order.indexOf(id),next=index+direction;
+  if(index<0||next<0||next>=order.length)return;
+  [order[index],order[next]]=[order[next],order[index]];stage5CommitWorkflowOrder(order,id);
+}
+function stage5OrderKey(id,event){
+  if(event.key!=='ArrowUp'&&event.key!=='ArrowDown')return;
+  event.preventDefault();stage5MoveOrder(id,event.key==='ArrowUp'?-1:1);
+}
+function stage5DragStart(id,event){
+  stage5DraggedId=id;stage5DropTargetId='';event.currentTarget.classList.add('dragging');event.currentTarget.setAttribute('aria-grabbed','true');
+  if(event.dataTransfer){event.dataTransfer.effectAllowed='move';event.dataTransfer.setData('text/plain',id)}
+}
+function stage5DragOver(id,event){
+  event.preventDefault();if(!stage5DraggedId||stage5DraggedId===id)return;
+  if(event.dataTransfer)event.dataTransfer.dropEffect='move';
+  if(stage5DropTargetId!==id){document.querySelectorAll('.stage5-order-card.drag-over').forEach(function(card){card.classList.remove('drag-over')});event.currentTarget.classList.add('drag-over');stage5DropTargetId=id}
+}
+function stage5DragLeave(event){
+  const card=event.currentTarget;if(event.relatedTarget&&card.contains(event.relatedTarget))return;
+  card.classList.remove('drag-over');if(stage5DropTargetId===card.dataset.workflowId)stage5DropTargetId='';
+}
+function stage5DropOrder(targetId,event){
+  event.preventDefault();
+  const dragged=stage5DraggedId||(event.dataTransfer&&event.dataTransfer.getData('text/plain'))||'',order=(state.review.answers.workflow||[]).slice(),from=order.indexOf(dragged),target=order.indexOf(targetId);
+  if(!dragged||from<0||target<0||dragged===targetId){stage5DragEnd();return}
+  const targetCard=event.currentTarget,after=event.clientY>targetCard.getBoundingClientRect().top+targetCard.getBoundingClientRect().height/2;
+  order.splice(from,1);let insertIndex=target;if(from<target)insertIndex--;if(after)insertIndex++;insertIndex=Math.max(0,Math.min(order.length,insertIndex));order.splice(insertIndex,0,dragged);
+  stage5CommitWorkflowOrder(order,dragged);stage5DragEnd();
+}
+function stage5DragEnd(){
+  document.querySelectorAll('.stage5-order-card.dragging,.stage5-order-card.drag-over').forEach(function(card){card.classList.remove('dragging','drag-over');card.setAttribute('aria-grabbed','false')});stage5DraggedId='';stage5DropTargetId='';
+}
+function reviewSidebar(){
+  const domains=[['workspace','共同工作區與正式版本','Shared workspace and official version'],['taskTracking','任務分工與進度','Task ownership and progress'],['safeChanges','安全修改與版本紀錄','Safe changes and version records'],['reviewMerge','提出修改與團隊審查','Proposing and reviewing changes'],['fullWorkflow','完整協作流程','Complete collaboration workflow']];
+  return '<aside class="review-sidebar"><section class="review-evidence-card"><h3>'+tx('五個能力面向','Five ability areas')+'</h3><ul class="review-domain-list">'+domains.map(function(d){const result=stage5DomainStatus(d[0]);return '<li><span>'+tx(d[1],d[2])+'</span><span class="review-domain-status '+(result==='needs-review'?'weak':result==='mastered'?'ready':'')+'">'+tx(...stage5StatusLabel(result))+'</span></li>'}).join('')+'</ul></section><section class="review-sidebar-note"><h3>'+tx('怎麼看回饋','How to read feedback')+'</h3><p>'+tx('這裡不算分數。答錯時會先看到實際後果與白話提示，再由你自己重新判斷。','There is no score. A wrong answer shows its real consequence and a plain-language hint before you decide again.')+'</p></section></aside>';
+}
+const stage5Domains={
+  workspace:{title:['共同工作區與正式版本','Shared workspace and official version'],ids:['workspace'],returnTo:'workspace',description:['Repository 是共同工作區，main 是目前認可的正式版本。','The Repository is the shared workspace and main is the currently accepted official version.']},
+  taskTracking:{title:['任務分工與進度','Task ownership and progress'],ids:['task','workflow'],returnTo:'taskTracking',description:['Issue 說清楚工作，Assignee 表示負責人，Project 反映進度。','Issue clarifies work, Assignee shows the owner, and Project reflects progress.']},
+  safeChanges:{title:['安全修改與版本紀錄','Safe changes and version records'],ids:['branch','commit','workflow'],returnTo:'safeChanges',description:['Branch 保護正式版，Commit 留下可追蹤的版本紀錄。','Branch protects the official version and Commit leaves a traceable record.']},
+  reviewMerge:{title:['提出修改與團隊審查','Proposing and reviewing changes'],ids:['pullRequest','review','workflow'],returnTo:'reviewMerge',description:['Pull Request 集中討論，Review 與修正後才合併。','Pull Request concentrates discussion; review and fix before merging.']},
+  fullWorkflow:{title:['完整協作流程','Complete collaboration workflow'],ids:['workflow'],returnTo:'fullWorkflow',description:['把前面的理解串成一套能實際使用的流程。','Connect the earlier ideas into a workflow the team can use.']}
+};
+function stage5StatusLabel(result){return result==='mastered'?['已掌握','Mastered']:result==='clarified'?['經提示後已釐清','Clarified']:['建議再回顧','Review again']}
+function stage5DomainStatus(domain){const d=stage5Domains[domain];return d?stage5MinimumResult(d.ids):'needs-review'}
+function reviewBuildReport(){
+  const report={};Object.keys(stage5Domains).forEach(function(domain){report[domain]=stage5DomainStatus(domain)});report.createdAt=new Date().toISOString();return report;
+}
+function reviewReturnToDomain(domain){
+  const r=state.review;
+  if(domain==='workspace'){gotoPhase(1);return}
+  if(domain==='taskTracking'){state.phase=4;state.practice.step=2}
+  else if(domain==='safeChanges'){state.phase=4;state.practice.step=4}
+  else if(domain==='reviewMerge'){state.phase=4;state.practice.step=6}
+  else if(domain==='fullWorkflow'){r.cursor=stage5Route.indexOf('workflow');r.feedback=null;persist();draw();topNow();return}
+  state.practice.prediction=null;state.practice.predictionOK=false;state.practice.error=null;state.practice.result=null;state.practice.reflection=null;save();topNow();
+}
+function reviewReportLink(domain){const d=stage5Domains[domain];return d?tx('精準回顧：'+d.title[0],'Review precisely: '+d.title[1]):tx('精準回顧','Review precisely')}
+function reviewReportReturnButton(domain){return '<div class="review-result-actions"><button type="button" class="btn" onclick="reviewReturnToDomain(\''+domain+'\')">'+reviewReportLink(domain)+'</button></div>'}
+function renderStage5Report(){
+  const r=state.review,report=r.report||reviewBuildReport();
+  return '<section class="review-report"><span class="status-badge green">'+tx('綜合回顧完成','Integrated review complete')+'</span><h2>'+tx('這次你已經能判斷什麼？','What can you judge now?')+'</h2><p>'+tx('這份報告不給百分比或排名，只整理五個能力面向的下一步。','This report gives no percentage or ranking; it summarizes the next step for five ability areas.')+'</p><div class="review-result-grid stage5-result-grid">'+Object.keys(stage5Domains).map(function(domain){const d=stage5Domains[domain],result=report[domain]||'needs-review';return '<article class="review-result '+result+'"><h3>'+tx(...d.title)+' <span class="review-domain-status">'+tx(...stage5StatusLabel(result))+'</span></h3><p>'+tx(...d.description)+'</p>'+reviewReportReturnButton(domain)+'</article>'}).join('')+'</div><div class="review-verify-note"><p>'+tx('你不需要背完所有 GitHub 英文名詞。重點是知道每一步在團隊中解決什麼問題：先說清楚工作、在安全版本修改、留下紀錄、請隊友檢查，再把確認過的內容放進正式版。','You do not need to memorize every GitHub term. The point is knowing what problem each step solves: clarify the work, edit a safe version, leave a record, ask teammates to check, and then put confirmed work into the official version.')+'</p></div><div class="review-actions"><button type="button" class="btn" onclick="reviewReset()">'+tx('重新做一次綜合回顧','Redo the integrated review')+'</button><button type="button" class="btn primary" onclick="gotoPhase(4)">'+tx('回到 Stage 4 複習','Return to Stage 4 practice')+'</button></div></section>';
+}
+function reviewReportView(){return renderStage5Report()}
+function stage5AnswerAll(){
+  const r=state.review;r.answers.workspace='A';r.answers.task='A';r.answers.branch='A';r.answers.commit='A';r.answers.pullRequest='A';r.answers.reviewStep1='A';r.answers.reviewStep2='A';r.answers.workflow=stage5Questions.workflow.correctOrder.slice();r.reviewStep=2;
+  r.wrongAttempts={};r.attempts={};r.stepResults={reviewStep1:'mastered',reviewStep2:'mastered'};r.results={workspace:'mastered',task:'mastered',branch:'mastered',commit:'mastered',pullRequest:'mastered',review:'mastered',workflow:'mastered'};r.status='in-progress';r.completed=false;r.feedback=null;r.report=reviewBuildReport();
+}
+function alexAnswerCurrent(){
+  if(!alexTestMode)return;const page=reviewPage(),r=state.review;
+  if(page==='report'||page==='intro')return;
+  if(page==='workflow')r.answers.workflow=stage5Questions.workflow.correctOrder.slice();
+  else if(page==='review')r.answers[r.reviewStep===1?'reviewStep1':'reviewStep2']='A';
+  else r.answers[stage5PageKey(page)]='A';
+  r.feedback=null;persist();draw();
 }
 function alexSeedReviewAnswers(){
-  if(!alexTestMode)return;
-  const r=state.review||baseReview();
-  r.route=['footprint','version','version-repair','pr','pr-repair','tracking','tracking-repair','explain','report'];
-  r.cursor=Math.min(Number(r.cursor)||0,r.route.length-1);
-  r.maxVisitedCursor=Math.max(Number(r.maxVisitedCursor)||0,r.cursor);
-  r.status='in-progress';r.error=null;r.attempts={};r.revealed={};r.repairsCompleted={};
-  r.answers={
-    version:{repoPlacement:'repository',mainPlacement:'main',branchPlacement:'branch',order:['save','commit','pr','merge'],reasons:['trace','working-file'],upload:'web-commit',push:'local-remote'},
-    versionRepair:{choice:'committed',evidence:['message','sha']},
-    pr:{mergeDecision:'not-yet',blockers:['latest-review','request-changes'],diffViewedSha:'f4e5d6a',selectedLine:'date-line',fixConfirmed:true,approvedSha:'f4e5d6a',merged:true},
-    prRepair:{choice:'b',reasons:['sha','changes']},
-    tracking:{issuePlacement:'issue',projectPlacement:'project',automationPlacement:'workflow',assignee:'Alex',automationDecision:'not-always',automationConditions:['closes','workflow']},
-    trackingRepair:{reasons:['link','workflow']},
-    explain1:tx('我會先查看最新 Diff，確認修正後的 SHA，確定 Request changes 已解決，再核准目前版本。','I would first check the latest Diff and SHA, make sure Request changes is resolved, and then approve the current version.'),
-    explain1Checks:['new-diff','sha','changes'],
-    explain2:tx('我會檢查 PR 是否正確連結 Issue，也會確認 Project 的 workflow automation 是否啟用；Merge 不代表一定會變成 Done。','I would check the PR-Issue link and whether Project workflow automation is enabled; Merge does not always make a task Done.'),
-    explain2Checks:['link','workflow','not-fixed-rule']
-  };
-  r.domainResults={versionRelations:'mastered',prMergeGate:'mastered',workTracking:'mastered',explanation:'self-check'};
-  state.review=r;
-  r.report=reviewBuildReport();
+  if(!alexTestMode)return;stage5AnswerAll();state.review.cursor=Math.min(state.review.cursor,stage5Route.length-1);state.review.maxVisitedCursor=Math.max(state.review.maxVisitedCursor,state.review.cursor);state.review.report=reviewBuildReport();
 }
-function alexJumpReview(index){
-  if(!alexTestMode)return;
-  alexSeedReviewAnswers();
-  const r=state.review;r.cursor=Math.max(0,Math.min(Number(index)||0,r.route.length-1));r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);r.error=null;
-  if(r.cursor===r.route.length-1){r.status='completed';r.completed=true;r.report=reviewBuildReport()}
-  draw();topNow();
+function alexSetReportMode(mode){
+  if(!alexTestMode)return;stage5AnswerAll();const r=state.review;
+  if(mode==='mixed'){r.results.task='clarified';r.results.commit='clarified';r.results.review='clarified'}
+  if(mode==='needs-review'){r.results.branch='needs-review';r.results.review='needs-review';r.results.workflow='needs-review'}
+  r.report=reviewBuildReport();r.cursor=stage5Route.indexOf('report');r.maxVisitedCursor=r.cursor;r.completed=true;r.status='completed';draw();topNow();
 }
-function alexCompleteReview(){
-  if(!alexTestMode)return;
-  alexSeedReviewAnswers();
-  const r=state.review;r.cursor=r.route.length-1;r.maxVisitedCursor=r.cursor;r.status='completed';r.completed=true;r.report=reviewBuildReport();r.error=null;
-  draw();topNow();
+function alexJumpReview(target){
+  if(!alexTestMode)return;alexSeedReviewAnswers();const r=state.review,index=typeof target==='number'?target:stage5Route.indexOf(String(target));r.cursor=Math.max(0,Math.min(index<0?0:index,stage5Route.length-1));r.feedback=null;draw();topNow();
 }
+function alexCompleteReview(){if(!alexTestMode)return;alexSetReportMode('mastered')}
 function alexReviewAnswerKey(){
-  if(!alexTestMode)return'';
-  return '<details class=\"review-qa-key\" open><summary>'+tx('ALEX 答案總表','ALEX answer key')+'</summary><ul><li>'+tx('版本結構：campus-market 是 Repository；main 是正式分支；fix-event-date 是工作 Branch。','Version structure: campus-market is the Repository; main is the official branch; fix-event-date is the work Branch.')+'</li><li>'+tx('操作順序：普通儲存 → Commit → Pull Request → Merge。','Action order: saving → Commit → Pull Request → Merge.')+'</li><li>'+tx('Commit 會留下可追蹤紀錄；Upload files 會走網頁 Commit；Push 會把本機 Commit 傳到遠端。','A Commit leaves a traceable record; Upload files creates a web Commit; Push sends a local Commit to the remote.')+'</li><li>'+tx('版本補強：要看到 Commit message、作者與 SHA；瀏覽器自動儲存不算 Commit。','Version repair: look for the Commit message, author, and SHA; browser autosave is not a Commit.')+'</li><li>'+tx('PR：先查看最新 Diff f4e5d6a，確認 11/23 修正、解決 Request changes，再 Approve 最新版本並 Merge。','PR: open the latest Diff f4e5d6a, verify the 11/23 fix, resolve Request changes, then Approve the latest version and Merge.')+'</li><li>'+tx('PR 補強：新增 Commit 後要用最新 SHA 重新審查；不是因為按鈕位置或舊核准仍然有效。','PR repair: review again with the latest SHA after a new Commit; an old approval or button position is not enough.')+'</li><li>'+tx('Issue 記錄具體工作與負責人；Project 看多件工作的狀態；狀態自動更新取決於 Issue 關聯與 Project workflow。','Issue records a concrete task and owner; Project tracks many task states; automation depends on the Issue link and Project workflow.')+'</li><li>'+tx('追蹤補強：先檢查 PR 是否連結 Issue，再檢查 Project workflow；狀態沒動不代表 Merge 一定失敗。','Tracking repair: check the PR-Issue link, then the Project workflow; a status that did not move does not prove Merge failed.')+'</li><li>'+tx('開放題關鍵理由：最新 Diff、最新 SHA、Request changes、Issue 連結與 Project workflow。','Open-response key points: latest Diff, latest SHA, Request changes, the Issue link, and Project workflow.')+'</li></ul></details>';
+  if(!alexTestMode)return '';
+  const answers=['Repository 與 main','Issue、Assignee 與 Project','Branch','Commit message','Pull Request','Request changes → 修正 → 最新內容 → Approve','Issue → Branch → Commit → Pull Request → Review → Merge → 確認進度'];
+  return '<details class="review-qa-key" open><summary>'+tx('ALEX 答案總表','ALEX answer key')+'</summary><ol>'+answers.map(function(a){return '<li>'+tx(a,a)+'</li>'}).join('')+'</ol></details>';
 }
 function alexReviewTools(){
-  if(!alexTestMode)return'';
-  return '<div class=\"review-qa-tools\" role=\"region\" aria-label=\"ALEX test controls\"><strong>ALEX · QA</strong><span>'+tx('答案已預填，可直接跳到任一回顧頁。','Answers are prefilled; jump to any review page.')+'</span><button type=\"button\" onclick=\"alexSeedReviewAnswers();draw();topNow()\">'+tx('顯示所有答案','Show all answers')+'</button><button type=\"button\" onclick=\"alexCompleteReview()\">'+tx('直接完成 Stage 5','Complete Stage 5')+'</button></div>'+alexReviewAnswerKey();
-}
-function reviewFootprintView(){
-  return '<div class="review-intro"><article class="review-brief"><span class="status-badge purple">'+tx('自適應回顧','Adaptive review')+'</span><h2>'+tx('我真的懂了嗎？','Do I really understand it?')+'</h2><p>'+tx('你會重新整理三個最重要的關係：版本與分支、審查與合併、任務與進度。系統會參考前面留下的學習紀錄，但不把看過示範或使用自動填寫當成已掌握。','You will connect three important relationships: versions and branches, review and merge, and tasks and progress. Earlier learning evidence guides the route, but watching a demo or using auto-fill is not treated as mastery.')+'</p><div class="review-actions"><button type="button" class="btn primary" onclick="reviewNext()">'+tx('開始回顧','Start review')+'</button></div></article><aside class="review-route-card"><h3>'+tx('這次的回顧路線','This review route')+'</h3>'+reviewRouteList()+'<p class="field-help">'+tx('有弱項時會多一個釐清頁，最多兩頁。','Weak concepts add a repair page, up to two.')+'</p></aside></div>';
+  if(!alexTestMode)return '';
+  return '<div class="review-qa-tools" role="region" aria-label="ALEX test controls"><strong>ALEX · QA</strong><button type="button" onclick="alexAnswerCurrent()">'+tx('填入目前題目正確答案','Fill current answer')+'</button><button type="button" onclick="alexSeedReviewAnswers();draw()">'+tx('填入所有新版答案','Fill all new answers')+'</button><label>'+tx('跳到題目','Jump to question')+' <select onchange="alexJumpReview(this.value)"><option value="">—</option>'+stage5Route.map(function(p){return '<option value="'+p+'">'+tx(...reviewPageLabel(p))+'</option>'}).join('')+'</select></label><button type="button" onclick="alexSetReportMode(\'mastered\')">'+tx('全部已掌握報告','All mastered report')+'</button><button type="button" onclick="alexSetReportMode(\'mixed\')">'+tx('混合狀態報告','Mixed-status report')+'</button><button type="button" onclick="alexSetReportMode(\'needs-review\')">'+tx('含建議回顧報告','Needs-review report')+'</button><button type="button" onclick="alexCompleteReview()">'+tx('完成新版 Stage 5','Complete new Stage 5')+'</button></div>'+alexReviewAnswerKey();
 }
 function renderReviewPage(){
-  const page=reviewPage(),body=page==='footprint'?reviewFootprintView():page==='version'?reviewVersionView():page==='version-repair'?reviewVersionRepairView():page==='pr'?reviewPrView():page==='pr-repair'?reviewPrRepairView():page==='tracking'?reviewTrackingView():page==='tracking-repair'?reviewTrackingRepairView():page==='explain'?reviewExplanationView():reviewReportView();
-  const content=reviewHeading(page)+(page==='footprint'?body:page==='report'?'<div class="review-page">'+body+'</div>':'<div class="review-workbench">'+reviewSidebar()+body+'</div>');
+  const page=reviewPage(),body=page==='intro'?renderStage5Intro():page==='report'?renderStage5Report():renderStage5Question(page);
+  const content=reviewHeading(page)+(page==='intro'||page==='report'?body:'<div class="review-workbench">'+reviewSidebar()+body+'</div>');
   return redesignPage(content,reviewTermKeys(),redesignActionBar('gotoPhase(4)',null,null,false));
 }
 function redesignChallengePage(){return renderReviewPage()}
@@ -1467,19 +1486,22 @@ function headerCourseActionState(){
   if(state.phase===1){if(state.scenarioIntro)return alexTestMode?{prev:null,next:'gotoPhase(2)',label:tx('跳到引導思考','Skip to guided thinking'),showNext:true}:{prev:null,next:null,label:null,showNext:false};const ready=state.scenarioFound.length===pains.length;return {prev:'showScenarioIntro()',next:alexTestMode?'gotoPhase(2)':ready?'unlock(2)':null,label:tx('進入引導思考','Continue to guided thinking'),showNext:true}}
   if(state.phase===2){const ready=Object.keys(state.thinking).length===pains.length;return {prev:'gotoPhase(1)',next:alexTestMode?'gotoPhase(3)':ready?'unlock(3)':null,label:tx('觀看完整示範','Watch the complete demonstration'),showNext:true}}
   if(state.phase===3){markDemoViewed(state.demo.index);return {prev:'gotoPhase(2)',next:alexTestMode?'gotoPhase(4)':state.demo.played?'unlock(4)':null,label:tx('開始引導練習','Start guided practice'),showNext:true}}
-  if(state.phase===4){const p=state.practice,ready=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return {prev:'gotoPhase(3)',next:alexTestMode?'gotoPhase(5)':ready?'unlock(5)':null,label:tx('開始綜合回顧','Start adaptive review'),showNext:true}}
-  const page=reviewPage(),r=state.review;
+  if(state.phase===4){const p=state.practice,ready=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return {prev:'gotoPhase(3)',next:alexTestMode?'gotoPhase(5)':ready?'unlock(5)':null,label:tx('開始綜合回顧','Start integrated review'),showNext:true}}
+  const page=reviewPage();
+  if(page==='intro')return {prev:'gotoPhase(4)',next:'reviewNext()',label:tx('開始綜合回顧','Start integrated review'),showNext:true};
   if(page==='report')return {prev:'gotoPhase(4)',next:'reviewJumpToReport()',label:tx('重看回顧報告','Review the report again'),showNext:true};
-  const label=page==='footprint'?tx('開始回顧','Start review'):r.error&&r.error.page===page?tx('再檢查一次','Check again'):tx('檢查目前答案','Check this checkpoint');
-  return {prev:'gotoPhase(4)',next:'reviewNext()',label:label,showNext:true};
+  const complete=stage5CurrentComplete(page);
+  return {prev:'gotoPhase(4)',next:complete?'reviewNext()':'stage5CheckCurrent()',label:complete?tx('下一題','Next question'):tx('檢查答案','Check answer'),showNext:true};
 }
-function reviewJumpToReport(){const r=ensureReviewRoute(),index=r.route.indexOf('report');if(index>=0){r.cursor=index;r.error=null;save()}}
+function reviewJumpToReport(){const r=ensureReviewRoute(),index=stage5Route.indexOf('report');r.cursor=index;r.maxVisitedCursor=index;r.completed=true;r.status='completed';r.report=reviewBuildReport();r.feedback=null;save()}
 function draw(){
   const app=document.getElementById('app'),content=state.phase===1?redesignScenarioPage():state.phase===2?redesignThinkingPage():state.phase===3?redesignDemoPage():state.phase===4?redesignPracticePage():redesignChallengePage();
   app.innerHTML=redesignHeader()+'<div class="course-shell">'+redesignCourseRail()+'<div class="course-content">'+content+'</div></div>'+modalView();
   requestAnimationFrame(function(){
     if(state.modal){const first=document.querySelector('.modal button,.modal input,.modal textarea,.modal select');if(first)first.focus();return}
     if(focusRequested){const heading=document.querySelector('main h1,main h2');if(heading){heading.setAttribute('tabindex','-1');heading.focus()}focusRequested=false}
+    if(stage5FocusFeedback){const feedbackHeading=document.querySelector('.stage5-feedback-title');if(feedbackHeading)feedbackHeading.focus();stage5FocusFeedback=false}
+    if(stage5FocusSelector){const target=document.querySelector(stage5FocusSelector);if(target)target.focus();stage5FocusSelector=null}
   });
 }
 /* Local QA shortcut: intentionally invisible in the course UI and never persisted. */
@@ -1502,11 +1524,11 @@ function gotoPhase(n){
   navReturnFocus=null;navReturnFocusSelector=null;focusRequested=true;save();topNow();
 }
 function phaseName(index){
-  const names=[['真實情境','Real context'],['引導思考','Guided thinking'],['完整示範','Watch once'],['引導練習','Guided practice'],['綜合回顧','Adaptive review']];
+  const names=[['真實情境','Real context'],['引導思考','Guided thinking'],['完整示範','Watch once'],['引導練習','Guided practice'],['綜合回顧','Integrated review']];
   return tx(...(names[index-1]||names[0]));
 }
 function phaseNameText(index){
-  const names=[['真實情境','Real context'],['引導思考','Guided thinking'],['完整示範','Watch once'],['引導練習','Guided practice'],['綜合回顧','Adaptive review']],n=names[index-1]||names[0];
+  const names=[['真實情境','Real context'],['引導思考','Guided thinking'],['完整示範','Watch once'],['引導練習','Guided practice'],['綜合回顧','Integrated review']],n=names[index-1]||names[0];
   return state.lang==='en'?n[1]:n[0];
 }
 function redesignCourseNavItems(){
