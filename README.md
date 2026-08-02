@@ -22,16 +22,11 @@
 
 ---
 
-## 🛣️ 雙軌實戰學習路線 (Two Collaboration Routes)
+## 🛣️ 實戰學習路線 (Web-Only Route)
 
-本練習場提供兩條獨立的實戰演練路線，滿足不同學習階段與教學場景的需求：
+本練習場只保留適合零基礎學習者的 GitHub 網頁操作路線：從瀏覽器建立與上傳檔案，理解 Commit、Branch、Pull Request、Review、Merge、Issue 與 Project。終端機 Git 指令不屬於本教材的學習關卡。
 
-| 學習路線 | 操作方式 | 核心工作流 | 適用場景 |
-| :--- | :--- | :--- | :--- |
-| 🌐 **純網頁版 (Web-Only)** | 100% 在 GitHub 網頁操作 | 網頁建立/上傳檔案 ➔ GitHub 自動 Commit ➔ PR ➔ Merge | 零基礎初學者、臨時使用他人電腦、少量文件與網站修改 |
-| 💻 **本機 Git 指令版 (Local CLI)** | 終端機指令 + GitHub 網頁 | 本機編輯 ➔ `git add` ➔ `git commit` ➔ `git push` ➔ PR | 頻繁修改、大量程式碼與檔案、配合 AI Coding 開發 |
-
-> 💡 **關鍵觀念辨識**：網頁版的「Upload files」**不是** Push；Push 是把本機 Git 已建立的 Commit 推送到遠端倉庫。不論選擇哪條路線，最後都會在 GitHub 上留下完整的 Git Commit 版本歷史紀錄。
+> 💡 **關鍵觀念辨識**：網頁版的「Upload files」**不是** Push。Push 是另一種本機 Git 工作流程；本教材只在第五階段用回顧題說明兩者差異，不安排終端機練習。
 
 ---
 
