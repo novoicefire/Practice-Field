@@ -26,8 +26,9 @@
   --red-soft:#fff0f4;
   --warning:#8a6517;
   --warning-soft:#fff8df;
-  --header-h:64px;
-  --rail-w:164px;
+  --sidebar-expanded:260px;
+  --sidebar-collapsed:76px;
+  --sidebar-w:var(--sidebar-expanded);
   --action-h:0px;
   --radius-sm:6px;
   --radius-md:8px;
@@ -47,46 +48,59 @@ p{color:var(--body)}
 .en-only{display:block}
 
 /* Application frame */
-.app-header{position:sticky;top:0;z-index:90;height:var(--header-h);border-bottom:1px solid var(--line);background:rgba(247,247,244,.98)}
-.header-main{height:100%;display:grid;grid-template-columns:minmax(250px,1fr) auto auto;align-items:center;gap:20px;padding:0 30px}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}
-.brand-mark{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--primary);color:#fff;font-size:18px;font-weight:600}
-.brand-title{font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
-.brand-sub{font-size:11px;color:var(--muted)}
-.header-spacer{display:none}
-.header-btn,.course-nav-close{min-height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);padding:0 14px;font-size:14px;font-weight:500}
-.header-course-actions{display:flex;align-items:center;justify-content:center;gap:8px}
-.header-course-actions .btn{min-height:40px;white-space:nowrap}
-.header-course-actions .header-course-next{min-width:150px}
-.header-actions{justify-self:end;display:flex;align-items:center;gap:8px}
-.language-control{display:flex;align-items:center;gap:9px}
-.language-control label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.language-control select{height:40px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);padding:0 32px 0 12px}
-.header-btn:hover,.course-nav-close:hover{border-color:var(--ink);background:var(--canvas-soft)}
-.course-shell{display:flex;min-height:calc(100dvh - var(--header-h));align-items:flex-start}
-.course-content{min-width:0;flex:1}
+.course-shell{min-height:100vh;min-height:100dvh;--sidebar-w:var(--sidebar-expanded)}
+.course-shell.rail-collapsed{--sidebar-w:var(--sidebar-collapsed)}
+.course-content{width:calc(100% - var(--sidebar-w));min-width:0;margin-left:var(--sidebar-w);transition:width .24s ease,margin-left .24s ease}
 
-/* Course rail */
-.course-rail{position:sticky;top:var(--header-h);z-index:30;display:flex;flex:0 0 var(--rail-w);width:var(--rail-w);height:calc(100dvh - var(--header-h));flex-direction:column;border-right:1px solid var(--line);background:var(--canvas);transition:width .18s ease,flex-basis .18s ease}
-.course-rail.collapsed{width:64px;flex-basis:64px}
-.course-rail-head{padding:24px 18px 12px;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
-.course-nav-list{display:grid;gap:0}
-.course-rail .course-nav-list{position:relative;overflow:auto;padding:4px 10px}
-.course-nav-item{display:grid;grid-template-columns:30px minmax(0,1fr);align-items:center;gap:8px;width:100%;min-height:88px;border:0;background:transparent;color:var(--muted);padding:8px 4px;text-align:left}
-.course-nav-item:not(:last-child){border-bottom:1px solid var(--line-soft)}
-.course-nav-item:hover:not(:disabled){color:var(--ink)}
-.course-nav-item.current{color:var(--ink)}
+/* Fixed learning navigation */
+.course-rail{position:fixed;inset:0 auto 0 0;z-index:80;display:grid;width:var(--sidebar-w);height:100vh;height:100dvh;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;border-right:1px solid var(--line);background:var(--canvas-soft);transition:width .24s ease,transform .24s ease}
+.course-rail-brand{display:grid;grid-template-columns:38px minmax(0,1fr) 40px;align-items:center;gap:10px;min-height:82px;border-bottom:1px solid var(--line);padding:14px 12px}
+.brand-mark{display:grid;width:36px;height:36px;place-items:center;border-radius:50%;background:var(--primary);color:#fff;font-size:17px;font-weight:700}
+.brand-title{overflow:hidden;color:var(--ink);font-size:15px;font-weight:650;line-height:1.25;white-space:nowrap}
+.brand-sub{overflow:hidden;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.3;white-space:nowrap}
+.rail-collapse,.course-rail-close{display:grid;width:40px;height:40px;place-items:center;border:1px solid transparent;border-radius:var(--radius-md);background:transparent;color:var(--muted);padding:0}
+.rail-collapse:hover,.course-rail-close:hover{border-color:var(--line-strong);background:var(--surface);color:var(--ink)}
+.rail-collapse svg,.course-rail-close svg,.sidebar-restart svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8}
+.course-rail-close{display:none}
+.course-nav-list{display:block;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;padding:12px 10px;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
+.course-nav-list::-webkit-scrollbar{width:8px}
+.course-nav-list::-webkit-scrollbar-thumb{border:2px solid transparent;border-radius:999px;background:var(--line-strong);background-clip:padding-box}
+.course-nav-list::-webkit-scrollbar-track{background:transparent}
+.course-nav-item{position:relative;display:grid;width:100%;min-height:68px;grid-template-columns:34px minmax(0,1fr);align-items:center;gap:10px;border:1px solid transparent;border-radius:var(--radius-md);background:transparent;color:var(--muted);padding:8px 9px;text-align:left}
+.course-nav-item+.course-nav-item{margin-top:3px}
+.course-nav-item:hover:not(:disabled){border-color:var(--line);background:var(--surface);color:var(--ink)}
+.course-nav-item:disabled{opacity:.68}
+.course-nav-item.current{border-color:#ffd2bd;background:var(--primary-soft);color:var(--ink)}
+.course-nav-item.current::before{position:absolute;inset:9px auto 9px -1px;width:3px;border-radius:0 3px 3px 0;background:var(--primary);content:''}
 .course-nav-item.done{color:var(--green)}
 .course-nav-item.locked{color:var(--muted-soft)}
-.phase-no{display:grid;place-items:center;width:30px;height:30px;border:1px solid currentColor;border-radius:50%;background:var(--canvas);font-size:12px;font-variant-numeric:tabular-nums}
-.course-nav-item.current .phase-no{border:2px solid var(--primary);color:var(--ink)}
-.course-nav-item b{display:block;font-size:13px;font-weight:500;line-height:1.35}
-.course-nav-item small{display:block;margin-top:4px;color:var(--muted);font-size:11px}
-.course-nav-item.current small{color:var(--primary);font-weight:600}
-.rail-collapse{margin:auto 10px 16px;min-height:44px;border:0;border-top:1px solid var(--line);background:transparent;color:var(--muted);padding:12px 5px 0;text-align:left;font-size:12px}
-.rail-collapse:hover{color:var(--ink)}
-.course-rail.collapsed .course-rail-head,.course-rail.collapsed .course-nav-item>span:last-child,.course-rail.collapsed .rail-collapse span:last-child{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.course-rail.collapsed .course-nav-item{grid-template-columns:1fr;justify-items:center}
+.phase-no{display:grid;width:32px;height:32px;place-items:center;border:1px solid currentColor;border-radius:50%;background:var(--canvas-soft);font-size:12px;font-weight:650;font-variant-numeric:tabular-nums}
+.course-nav-item.current .phase-no{border:2px solid var(--primary);background:var(--surface);color:var(--ink)}
+.course-nav-item b{display:block;color:inherit;font-size:13px;font-weight:600;line-height:1.3}
+.course-nav-item small{display:block;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.3}
+.course-nav-item.current small{color:var(--primary);font-weight:650}
+.course-nav-divider{margin:12px 8px 4px;border-top:1px solid var(--line);padding:13px 2px 4px;color:var(--muted);font-size:10px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+.course-nav-dashboard{min-height:62px}
+.course-nav-dashboard .phase-no{border-radius:var(--radius-sm);font-size:14px}
+.course-rail-footer{display:grid;gap:10px;border-top:1px solid var(--line);background:var(--canvas-soft);padding:12px}
+.sidebar-setting{display:grid;gap:6px}
+.sidebar-label{color:var(--muted);font-size:10px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+.language-toggle{display:grid;grid-template-columns:1fr 1fr;gap:3px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);padding:3px}
+.language-toggle button{min-width:0;min-height:34px;border:0;border-radius:6px;background:transparent;color:var(--muted);padding:0 7px;font-size:12px;font-weight:600}
+.language-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.language-short{display:none}
+.sidebar-restart{display:flex;min-height:40px;align-items:center;gap:9px;border:1px solid transparent;border-radius:var(--radius-md);background:transparent;color:var(--muted);padding:7px 9px;text-align:left;font-size:12px;font-weight:550}
+.sidebar-restart:hover{border-color:var(--line);background:var(--surface);color:var(--ink)}
+.course-rail.collapsed .course-rail-brand{grid-template-columns:1fr;justify-items:center;gap:7px;padding-inline:8px}
+.course-rail.collapsed .sidebar-copy,.course-rail.collapsed .nav-copy,.course-rail.collapsed .course-nav-divider,.course-rail.collapsed .sidebar-label,.course-rail.collapsed .restart-copy{display:none}
+.course-rail.collapsed .course-nav-item{grid-template-columns:1fr;justify-items:center;padding-inline:5px}
+.course-rail.collapsed .course-rail-footer{padding-inline:8px}
+.course-rail.collapsed .language-toggle{gap:2px;padding:2px}
+.course-rail.collapsed .language-toggle button{min-height:32px;padding:0 2px;font-size:10px}
+.course-rail.collapsed .language-long{display:none}
+.course-rail.collapsed .language-short{display:inline}
+.course-rail.collapsed .sidebar-restart{justify-content:center;padding-inline:0}
+.mobile-nav-trigger,.course-nav-scrim{display:none}
 /* Shared lesson layout */
 .learning-page{width:100%;max-width:1680px;margin:0 auto;padding:30px clamp(24px,2.5vw,46px) calc(var(--action-h) + 34px)}
 .stage-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;margin-bottom:20px}
@@ -114,7 +128,7 @@ p{color:var(--body)}
 .section-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:48px 0 16px}
 .section-heading h2{margin:0;font-size:25px;line-height:1.25}
 .section-heading p{max-width:440px;margin:0;color:var(--muted);font-size:13px}
-.scenario-intro{display:grid;min-height:calc(100dvh - var(--header-h) - var(--action-h) - 48px);align-content:center;max-width:1180px;margin:0 auto;padding:72px 8px 88px}
+.scenario-intro{display:grid;min-height:calc(100dvh - var(--action-h) - 48px);align-content:center;max-width:1180px;margin:0 auto;padding:72px 8px 88px}
 .scenario-intro .stage-kicker{color:var(--primary);animation:intro-rise .55s ease both}
 .scenario-intro h1{max-width:980px;margin:0 0 24px;font-size:clamp(48px,5.4vw,72px);font-weight:400;line-height:1.08;letter-spacing:-.05em;animation:intro-rise .65s .08s ease both}
 .scenario-intro-copy{max-width:760px;margin:0 0 28px;color:var(--body);font-size:17px;line-height:1.65;animation:intro-rise .65s .16s ease both}
@@ -256,26 +270,55 @@ p{color:var(--body)}
 .notice.success{border-left-color:var(--green);background:var(--green-soft)}
 
 /* Stage 2: mapping decisions */
-.mapping-workbench{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;align-items:start}
-.problem-index{align-self:start;overflow:hidden}
-.problem-index button{display:grid;grid-template-columns:28px 1fr;gap:10px;width:100%;min-height:68px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);padding:11px 13px;text-align:left}
-.problem-index button:last-child{border-bottom:0}
+.mapping-workbench{display:grid;gap:14px;align-items:start}
+.mapping-route-head{display:flex;align-items:end;justify-content:space-between;gap:24px;padding:0 2px}
+.mapping-route-head h2{margin:3px 0 0;font-size:20px;font-weight:400;line-height:1.25}
+.mapping-route-label{color:var(--muted);font-family:ui-monospace,Consolas,monospace;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.mapping-route-progress{margin:0;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mapping-route-progress b{color:var(--ink);font-weight:650}
+.problem-index{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-self:start;overflow:hidden}
+.problem-index button{position:relative;display:grid;min-width:0;min-height:104px;grid-template-columns:30px minmax(0,1fr);align-items:start;gap:9px;border:0;border-right:1px solid var(--line);background:transparent;color:var(--ink);padding:15px 13px;text-align:left}
+.problem-index button:last-child{border-right:0}
+.problem-index button::before{position:absolute;inset:0 0 auto;height:3px;background:transparent;content:''}
+.problem-index button:hover:not(:disabled){background:var(--canvas-soft)}
 .problem-index button.active{background:var(--primary-soft)}
+.problem-index button.active::before{background:var(--primary)}
+.problem-index button.done::before{background:var(--green)}
+.problem-index button.active.done::before{background:var(--primary)}
 .problem-index button.done .index-state{border-color:var(--green);color:var(--green)}
-.index-state{display:grid;place-items:center;width:27px;height:27px;border:1px solid var(--line-strong);border-radius:50%;font-size:11px}
-.problem-index b{display:block;font-size:13px;font-weight:600}
-.problem-index small{display:block;margin-top:2px;color:var(--muted);font-size:11px}
-.decision-canvas{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);column-gap:24px;align-items:start;padding:22px}
-.decision-canvas .status-badge,.decision-canvas h2,.decision-canvas>p{grid-column:1}
-.decision-canvas .status-badge{align-self:start}
-.decision-canvas h2{margin:10px 0 7px;font-size:25px}
-.decision-canvas>p{margin-bottom:0}
-.decision-question{grid-column:2;grid-row:1;margin:0 0 10px;padding:0;border:0;align-self:end}
-.need-options{display:grid;grid-column:2;grid-row:2 / span 3;grid-template-columns:1fr 1fr;gap:8px;margin:0}
+.problem-index button.active .index-state{border-color:var(--primary);background:var(--surface);color:var(--ink)}
+.index-state{display:grid;place-items:center;width:29px;height:29px;border:1px solid var(--line-strong);border-radius:50%;font-size:11px;font-weight:650;font-variant-numeric:tabular-nums}
+.problem-index b{display:block;font-size:12px;font-weight:600;line-height:1.4}
+.problem-index small{display:block;margin-top:6px;color:var(--muted);font-size:10px;line-height:1.35}
+.problem-index button.active small{color:var(--primary);font-weight:600}
+.problem-index button.done:not(.active) small{color:var(--green)}
+.decision-canvas{display:grid;min-height:340px;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);overflow:hidden;padding:0}
+.decision-context,.decision-answer{min-width:0;padding:clamp(24px,2.2vw,34px)}
+.decision-context{display:flex;flex-direction:column;border-right:1px solid var(--line);background:var(--canvas-soft)}
+.decision-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:42px}
+.decision-counter{color:var(--muted);font-family:ui-monospace,Consolas,monospace;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.decision-context h2{max-width:460px;margin:0 0 12px;font-size:clamp(27px,2.2vw,35px);font-weight:400;line-height:1.16;letter-spacing:-.025em}
+.decision-context>p{max-width:520px;margin:0;color:var(--body);font-size:15px;line-height:1.7}
+.decision-context-foot{margin-top:auto;padding-top:28px;color:var(--muted);font-size:11px;line-height:1.5}
+.decision-answer{display:flex;flex-direction:column;justify-content:center;background:var(--surface)}
+.decision-question{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 18px;padding:0;border:0}
+.decision-question-copy{min-width:0}
+.decision-question-label{display:block;margin-bottom:7px;color:var(--primary);font-family:ui-monospace,Consolas,monospace;font-size:10px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+.decision-question h3{margin:0 0 5px;font-size:21px;font-weight:500;line-height:1.35}
+.decision-question p{margin:0;color:var(--muted);font-size:12px}
+.need-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
 .need-option,.predict-option{min-height:48px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);padding:11px 13px;text-align:left}
+.decision-canvas .need-option{display:grid;min-height:92px;grid-template-columns:30px minmax(0,1fr);align-items:start;gap:11px;padding:16px}
+.decision-canvas .need-option b{align-self:center;font-size:14px;font-weight:600;line-height:1.45}
+.need-option-key{display:grid;width:28px;height:28px;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--muted);font-family:ui-monospace,Consolas,monospace;font-size:10px;font-weight:650}
 .need-option:hover,.predict-option:hover{border-color:var(--ink)}
 .need-option.correct{border-color:var(--green);background:var(--green-soft);color:var(--ink)}
+.need-option.correct .need-option-key{border-color:var(--green);background:var(--surface);color:var(--green)}
 .need-option:disabled{cursor:default;opacity:1}
+.thinking-next-prompt{display:flex;flex:0 0 auto;align-items:center;gap:10px;margin:0;padding:0}
+.thinking-next-copy{color:var(--green);font-size:12px;font-weight:650;letter-spacing:.04em;white-space:nowrap}
+.thinking-next-button{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;gap:8px}
+.thinking-next-button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8}
 .predict-option{display:block;width:100%;margin-top:7px}
 .predict-option.correct{border-color:var(--green);background:var(--green-soft)}
 .predict-option.wrong{border-color:var(--red);background:var(--red-soft)}
@@ -290,7 +333,7 @@ p{color:var(--body)}
 
 /* Stages 3–5: course workspace */
 .course-workbench{display:grid;grid-template-columns:minmax(340px,380px) minmax(0,1fr);gap:12px;align-items:start}
-.task-console{position:sticky;top:calc(var(--header-h) + 14px);display:flex;height:clamp(520px,calc(100dvh - var(--header-h) - var(--action-h) - 28px),606px);min-height:0;max-height:none;flex-direction:column;overflow:auto;padding:17px}
+.task-console{position:sticky;top:14px;display:flex;height:clamp(520px,calc(100dvh - var(--action-h) - 28px),606px);min-height:0;max-height:none;flex-direction:column;overflow:auto;padding:17px}
 .task-console-header{padding-bottom:14px;border-bottom:1px solid var(--line)}
 .task-console h2{margin:7px 0 0;font-size:23px;line-height:1.25;font-weight:600}
 .task-section{padding:14px 0;border-bottom:1px solid var(--line)}
@@ -301,7 +344,7 @@ p{color:var(--body)}
 .task-checklist li{margin:4px 0}
 .task-console-actions{position:sticky;bottom:-17px;display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding:14px 0 1px;border-top:1px solid var(--line);background:var(--surface)}
 .workspace-surface{position:relative;min-width:0}
-.workspace-lock{display:grid;height:clamp(520px,calc(100dvh - var(--header-h) - var(--action-h) - 28px),606px);place-items:center;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--canvas-soft);padding:28px;text-align:center}
+.workspace-lock{display:grid;height:clamp(520px,calc(100dvh - var(--action-h) - 28px),606px);place-items:center;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--canvas-soft);padding:28px;text-align:center}
 .workspace-lock-inner{max-width:440px}
 .workspace-lock-label{display:inline-block;margin-bottom:12px;color:var(--primary);font-family:ui-monospace,Consolas,monospace;font-size:11px;font-weight:600;letter-spacing:.08em}
 .workspace-lock h2{margin-bottom:8px;font-size:25px}
@@ -345,15 +388,15 @@ p{color:var(--body)}
 .term-card p{display:-webkit-box;margin:0;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.35;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2}
 .term-where{margin-top:5px;border-radius:var(--radius-sm);background:var(--canvas);padding:5px 6px;font-size:10px}
 .mobile-terms{display:none;position:fixed;right:14px;bottom:calc(var(--action-h) + 12px);z-index:70}
-.course-workbench .gh-window{height:clamp(520px,calc(100dvh - var(--header-h) - var(--action-h) - 28px),606px);min-height:0;overflow:auto}
+.course-workbench .gh-window{height:clamp(520px,calc(100dvh - var(--action-h) - 28px),606px);min-height:0;overflow:auto}
 
 /* Stage 1 desktop viewport: keep the whole exercise in view while allowing
    the evidence panels to handle their own overflow. The mobile layout keeps
    normal document scrolling. */
 @media(min-width:1024px){
   html:has(.scenario-hunt-layout),body:has(.scenario-hunt-layout){overflow:hidden}
-  .course-shell:has(.scenario-hunt-layout),.course-shell:has(.scenario-intro){min-height:calc(100dvh - var(--header-h) - var(--action-h))}
-  .course-content:has(.scenario-hunt-layout){height:calc(100dvh - var(--header-h) - var(--action-h));overflow:hidden}
+  .course-shell:has(.scenario-hunt-layout),.course-shell:has(.scenario-intro){min-height:calc(100dvh - var(--action-h))}
+  .course-content:has(.scenario-hunt-layout){height:calc(100dvh - var(--action-h));overflow:hidden}
   .learning-page:has(.scenario-hunt-layout){height:100%;min-height:0;overflow:hidden;padding-bottom:18px}
   .learning-page:has(.scenario-hunt-layout) .lesson-main{height:100%;min-height:0}
   .scenario-hunt-layout{height:100%;min-height:0;align-items:stretch}
@@ -375,7 +418,7 @@ p{color:var(--body)}
 
   /* The introduction is a single slide on desktop as well. */
   html:has(.scenario-intro),body:has(.scenario-intro){overflow:hidden}
-  .course-content:has(.scenario-intro){height:calc(100dvh - var(--header-h) - var(--action-h));overflow:hidden}
+  .course-content:has(.scenario-intro){height:calc(100dvh - var(--action-h));overflow:hidden}
   .learning-page:has(.scenario-intro){height:100%;min-height:0;overflow:hidden;padding-bottom:18px}
   .learning-page:has(.scenario-intro) .lesson-main{height:100%;min-height:0}
   .scenario-intro{height:100%;min-height:0}
@@ -387,25 +430,75 @@ p{color:var(--body)}
 
 /* Modals */
 .modal-wrap{position:fixed;inset:0;z-index:110;display:grid;place-items:center;background:rgba(38,37,30,.55);padding:18px}.modal{width:100%;max-width:680px;max-height:88vh;overflow:auto;border:1px solid var(--line-strong);border-radius:var(--radius-lg);background:var(--surface)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line)}.modal-head h2{margin:0;font-size:22px}.modal-body{padding:18px}.modal-close{min-width:44px;min-height:44px;border:0;background:transparent;font-size:24px}
+.stage-completion-card{max-width:560px}
+.stage-completion-card .modal-head{align-items:flex-start;padding:20px 22px 16px}
+.stage-completion-card .modal-head h2{font-size:26px;font-weight:400;line-height:1.25;letter-spacing:-.325px}
+.stage-completion-eyebrow{display:block;margin-bottom:9px;color:var(--green);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.stage-completion-body{display:grid;gap:20px;padding:22px}
+.stage-completion-lead{margin:0;color:var(--ink);font-size:16px;line-height:1.5}
+.stage-completion-note{margin:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;color:var(--body);font-size:14px;line-height:1.55}
+.stage-completion-note b{color:var(--ink);font-weight:600}
+.stage-completion-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stage-completion-actions .btn{min-height:40px}
+.stage-completion-actions .stage-complete-restart{border-color:var(--line-strong);background:var(--surface);color:var(--ink)}
+.stage-completion-actions .stage-complete-restart:hover{border-color:var(--ink);background:var(--canvas-soft)}
+.stage-completion-actions .stage-complete-next{border-color:var(--primary);background:var(--primary);color:#fff}
+.stage-completion-actions .stage-complete-next:hover{background:var(--primary-active)}
+.thinking-feedback-card{max-width:640px}
+.thinking-feedback-card .modal-head{align-items:flex-start;padding:22px 24px 18px}
+.thinking-feedback-card .modal-head h2{margin:3px 0 0;font-size:28px;font-weight:400;line-height:1.25;letter-spacing:-.325px}
+.thinking-feedback-eyebrow{display:block;color:var(--primary);font-family:ui-monospace,Consolas,monospace;font-size:10px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+.thinking-feedback-body{display:grid;gap:20px;padding:22px 24px 24px}
+.thinking-feedback-lead{max-width:540px;margin:0;color:var(--body);font-size:15px;line-height:1.6}
+.thinking-feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.thinking-feedback-item{min-width:0;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--canvas-soft);padding:16px}
+.thinking-feedback-item.current{border-color:var(--line-strong);background:var(--surface)}
+.thinking-feedback-label{display:block;margin-bottom:9px;color:var(--muted);font-family:ui-monospace,Consolas,monospace;font-size:10px;font-weight:650;letter-spacing:.07em;text-transform:uppercase}
+.thinking-feedback-item.current .thinking-feedback-label{color:var(--primary)}
+.thinking-feedback-item strong{display:block;margin-bottom:7px;color:var(--ink);font-size:15px;font-weight:600;line-height:1.45}
+.thinking-feedback-item p{margin:0;color:var(--body);font-size:12px;line-height:1.55}
+.thinking-feedback-coach{margin:0;border-top:1px solid var(--line);padding-top:16px;color:var(--body);font-size:13px;line-height:1.6}
+.thinking-feedback-coach b{color:var(--ink);font-weight:600}
+.thinking-feedback-actions{display:flex;justify-content:flex-end}
+.thinking-feedback-action{min-height:40px}
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
 main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
 
 @media(max-width:1280px){
-  :root{--rail-w:148px}
-  .header-main{grid-template-columns:minmax(220px,1fr) auto auto;padding-inline:20px;gap:12px}
+  :root{--sidebar-expanded:248px}
   .diagnosis-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .course-workbench{grid-template-columns:minmax(300px,340px) minmax(0,1fr)}
 }
 @media(max-width:1023px){
-  .header-main{grid-template-columns:minmax(0,1fr) auto auto;gap:10px}
-  .course-rail{display:none}
+  body.nav-open{overflow:hidden}
+  body.nav-open .mobile-nav-trigger{display:none}
+  .course-shell,.course-shell.rail-collapsed{--sidebar-w:0px}
+  .course-content{width:100%;margin-left:0;transition:none}
+  .course-rail,.course-rail.collapsed{width:min(86vw,320px);transform:translateX(-102%);box-shadow:none}
+  .course-rail.mobile-open{transform:translateX(0);box-shadow:12px 0 32px rgba(38,37,30,.14)}
+  .course-rail .course-rail-brand,.course-rail.collapsed .course-rail-brand{grid-template-columns:38px minmax(0,1fr) 40px;justify-items:stretch;gap:10px;padding:14px 12px}
+  .course-rail .sidebar-copy,.course-rail .nav-copy,.course-rail .course-nav-divider,.course-rail .sidebar-label,.course-rail .restart-copy{display:block}
+  .course-rail .course-nav-item,.course-rail.collapsed .course-nav-item{grid-template-columns:34px minmax(0,1fr);justify-items:stretch;padding-inline:9px}
+  .course-rail .course-rail-footer,.course-rail.collapsed .course-rail-footer{padding-inline:12px}
+  .course-rail .language-toggle,.course-rail.collapsed .language-toggle{gap:3px;padding:3px}
+  .course-rail .language-toggle button,.course-rail.collapsed .language-toggle button{min-height:34px;padding:0 7px;font-size:12px}
+  .course-rail .language-long{display:inline}
+  .course-rail .language-short{display:none}
+  .course-rail .sidebar-restart,.course-rail.collapsed .sidebar-restart{justify-content:flex-start;padding-inline:9px}
+  .rail-collapse{display:none}
+  .course-rail-close{display:grid}
+  .mobile-nav-trigger{position:fixed;top:12px;left:12px;z-index:85;display:flex;min-height:44px;align-items:center;gap:9px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);padding:0 12px;font-size:12px;font-weight:650;box-shadow:0 2px 10px rgba(38,37,30,.08)}
+  .mobile-nav-trigger svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-width:1.8}
+  .mobile-nav-trigger b{display:grid;min-width:24px;height:24px;place-items:center;border-radius:50%;background:var(--primary-soft);color:var(--primary);font-size:10px}
+  .course-nav-scrim{position:fixed;inset:0;z-index:75;display:block;border:0;background:rgba(38,37,30,.42);padding:0}
   .scenario-workbench{grid-template-columns:1fr}
   .scenario-hunt-layout{grid-template-columns:1fr}
   .scenario-device{height:520px;min-height:520px}
   .scenario-phone{height:auto;min-height:0}
   .scenario-phone-column{order:-1}
   .scenario-collection-area{order:0}
-  .mapping-workbench{grid-template-columns:220px minmax(0,1fr)}
+  .problem-index button{padding-inline:10px}
+  .decision-canvas{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr)}
   .course-workbench{grid-template-columns:1fr}
   .task-console{position:static;height:auto;min-height:0;max-height:none;overflow:visible}
   .task-console-actions{position:static}
@@ -413,15 +506,8 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
   .workspace-lock{height:auto;min-height:360px}
 }
 @media(max-width:760px){
-  :root{--header-h:60px;--action-h:0px}
-  .header-main{grid-template-columns:minmax(0,1fr) auto;padding-inline:12px}
-  .brand-sub,.language-control label,.header-start{display:none}
-  .brand-title{font-size:14px}
-  .header-course-actions{justify-self:end;gap:5px}
-  .header-course-actions .btn{min-height:36px;padding-inline:10px;font-size:12px}
-  .header-course-actions .header-course-next{min-width:118px}
-  .header-actions{display:none}
-  .learning-page{padding:22px 12px calc(var(--action-h) + 28px)}
+  :root{--action-h:0px}
+  .learning-page{padding:72px 12px calc(var(--action-h) + 28px)}
   .stage-heading{grid-template-columns:1fr;gap:14px}
   .stage-heading h1{font-size:28px}
   .stage-progress{min-width:0}
@@ -429,7 +515,7 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
   .editorial-hero{padding:24px 0}
   .editorial-hero h1{font-size:36px}
   .editorial-hero>p{font-size:15px}
-  .scenario-intro{min-height:calc(100dvh - var(--header-h) - var(--action-h) - 20px);padding:42px 0 72px}
+  .scenario-intro{min-height:calc(100dvh - var(--action-h) - 20px);padding:24px 0 72px}
   .scenario-intro h1{font-size:40px;letter-spacing:-.035em}
   .scenario-intro-copy{font-size:15px}
   .scenario-intro-rule{margin-top:48px}
@@ -457,9 +543,20 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
   .diagnosis-card:first-child .diagnosis-card-index{grid-row:auto;padding-top:0}
   .diagnosis-card:first-child .diagnosis-card-status{align-self:auto;padding:10px 0 0;white-space:normal}
   .diagnosis-grid,.need-options,.git-relation{grid-template-columns:1fr}
-  .mapping-workbench{grid-template-columns:1fr}
+  .mapping-route-head{display:block}
+  .mapping-route-progress{margin-top:6px;white-space:normal}
   .problem-index{display:flex;overflow:auto}
-  .problem-index button{min-width:225px;border-right:1px solid var(--line);border-bottom:0}
+  .problem-index button{min-width:210px;min-height:90px;border-right:1px solid var(--line);border-bottom:0}
+  .decision-canvas{grid-template-columns:1fr}
+  .decision-context{border-right:0;border-bottom:1px solid var(--line)}
+  .decision-context,.decision-answer{padding:22px 18px}
+  .decision-meta{margin-bottom:26px}
+  .decision-context h2{font-size:28px}
+  .decision-context-foot{padding-top:20px}
+  .decision-canvas .need-option{min-height:74px}
+  .decision-question{align-items:stretch;flex-direction:column}
+  .thinking-next-prompt{align-items:center;justify-content:space-between}
+  .thinking-next-button{min-height:44px}
   .course-workbench{gap:10px}
   .task-console{padding:15px}
   .task-console h2{font-size:21px}
@@ -476,9 +573,13 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
   .mobile-terms{display:block}
   .modal-wrap{padding:10px}
   .modal{max-height:94vh}
+  .stage-completion-card .modal-head,.stage-completion-body{padding-inline:18px}
+  .stage-completion-actions{grid-template-columns:1fr}
+  .thinking-feedback-card .modal-head,.thinking-feedback-body{padding-inline:18px}
+  .thinking-feedback-grid{grid-template-columns:1fr}
+  .thinking-feedback-action{width:100%;min-height:44px}
 }
 @media(max-width:430px){
-  .brand>div:last-child{display:none}
   .scenario-intro{padding-top:30px}
   .scenario-intro h1{font-size:35px}
   .scenario-intro-foot{display:block}
@@ -494,12 +595,10 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
 @media(min-width:1024px){
   html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
   html:has(.scenario-hunt-layout),body:has(.scenario-hunt-layout),html:has(.scenario-intro),body:has(.scenario-intro){height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
-  html{scroll-padding-top:calc(var(--header-h) + 16px)}
-  #app{height:auto;min-height:100dvh;overflow:visible;zoom:.8}
-  .course-shell,.course-content{height:auto;min-height:calc(100dvh - var(--header-h));overflow:visible}
+  html{scroll-padding-top:16px}
+  #app{height:auto;min-height:100dvh;overflow:visible;zoom:1}
+  .course-shell,.course-content{height:auto;min-height:100dvh;overflow:visible}
   .course-shell:has(.scenario-hunt-layout),.course-shell:has(.scenario-intro),.course-content:has(.scenario-hunt-layout),.course-content:has(.scenario-intro){height:auto;min-height:0;overflow:visible}
-  .course-rail{height:calc(100dvh - var(--header-h))}
-  .course-rail .course-nav-list{overflow:auto}
 
   .learning-page,.learning-page>.lesson-main{height:auto;min-height:0;display:block;overflow:visible}
   .learning-page{padding-bottom:34px}
@@ -522,12 +621,13 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
   .scenario-phone{height:auto;min-height:0}
   .scenario-conversation{overflow:auto}
   .learning-page:has(.scenario-hunt-layout),.learning-page:has(.scenario-intro),.learning-page:has(.scenario-hunt-layout) .lesson-main,.learning-page:has(.scenario-intro) .lesson-main{height:auto;min-height:0;overflow:visible}
-  .scenario-intro{height:auto;min-height:calc(100dvh - var(--header-h) - var(--action-h) - 48px)}
+  .scenario-intro{height:auto;min-height:calc(100dvh - var(--action-h) - 48px)}
 
   /* Stages 2–5: expand the lesson-side panels in normal document flow. */
   .mapping-workbench,.course-workbench{height:auto;min-height:0}
-  .problem-index,.decision-canvas,.task-console,.workspace-surface{height:auto;min-height:0;overflow:visible}
-  .task-console{position:sticky;top:calc(var(--header-h) + 14px);max-height:none}
+  .problem-index,.decision-canvas{height:auto;min-height:0}
+  .task-console,.workspace-surface{height:auto;min-height:0;overflow:visible}
+  .task-console{position:sticky;top:14px;max-height:none}
   .workspace-surface{display:flex;height:auto;min-height:0;flex-direction:column;overflow:visible}
   .workspace-surface>.gh-window,.workspace-surface>.workspace-lock{height:auto;min-height:520px;flex:none;overflow:auto}
   .workspace-surface>.gh-window{zoom:.82}
@@ -690,6 +790,106 @@ main h1[tabindex="-1"]:focus,main h2[tabindex="-1"]:focus{outline:none}
 .stage5-result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .stage5-result-grid .review-result{min-width:0}
 @media(max-width:700px){.stage5-heading-side{justify-items:start;min-width:0}.stage5-progress{text-align:left;justify-items:start}.stage5-migration{align-items:stretch;flex-direction:column}.stage5-result-grid{grid-template-columns:1fr}}
+
+/* Independent learning dashboard: evidence summary, not a sixth teaching stage. */
+.learning-dashboard{display:grid;width:100%;max-width:1240px;margin:0 auto;gap:16px}
+.dashboard-header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:start;border-bottom:1px solid var(--line);padding:6px 0 24px}
+.dashboard-header h1{max-width:900px;margin:0 0 10px;font-size:clamp(34px,3.25vw,48px);font-weight:400;line-height:1.1;letter-spacing:-.035em;text-wrap:balance}
+.dashboard-header p{max-width:820px;margin:0;color:var(--body);font-size:15px;line-height:1.65}
+.dashboard-header-side{display:grid;justify-items:end;gap:14px;min-width:210px;color:var(--muted);font-size:12px;text-align:right}
+.dashboard-header-side strong{display:block;margin-bottom:2px;color:var(--ink);font-size:12px;font-weight:600}
+.dashboard-header-actions,.dashboard-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.dashboard-header-actions .btn{min-height:40px}
+.dashboard-summary{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(330px,.9fr);gap:16px}
+.dashboard-progress-panel,.dashboard-capability-panel,.dashboard-section{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface)}
+.dashboard-progress-panel,.dashboard-capability-panel{min-width:0;padding:20px}
+.dashboard-panel-label{display:block;color:var(--body);font-size:14px;font-weight:600}
+.dashboard-progress-body{display:grid;grid-template-columns:150px minmax(0,1fr);gap:24px;align-items:center;margin-top:18px}
+.dashboard-progress-value{color:var(--ink);font-size:60px;font-weight:400;line-height:.95;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.dashboard-progress-value small{display:block;margin-top:12px;color:var(--body);font-size:13px;font-weight:400;line-height:1.4;letter-spacing:0}
+.dashboard-stage-rail{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.dashboard-stage-rail li{position:relative;display:grid;justify-items:center;gap:7px;min-width:0;color:var(--muted);font-size:11px;text-align:center}
+.dashboard-stage-rail li:not(:last-child)::after{position:absolute;z-index:0;top:14px;left:calc(50% + 16px);width:calc(100% - 32px);height:1px;background:var(--line-strong);content:''}
+.dashboard-stage-rail li.done:not(:last-child)::after{background:var(--green)}
+.dashboard-stage-node{position:relative;z-index:1;display:grid;width:30px;height:30px;place-items:center;border:1px solid var(--line-strong);border-radius:50%;background:var(--surface);color:var(--muted);font-size:11px;font-weight:600}
+.dashboard-stage-rail li.done .dashboard-stage-node{border-color:var(--green);color:var(--green)}
+.dashboard-stage-rail li.current .dashboard-stage-node{border:2px solid var(--primary);color:var(--primary)}
+.dashboard-stage-rail li.done{color:var(--ink)}
+.dashboard-capability-list{display:grid;margin:14px 0 0;padding:0;list-style:none}
+.dashboard-capability-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(112px,.75fr);gap:14px;align-items:baseline;border-top:1px solid var(--line);padding:9px 0}
+.dashboard-capability-row:last-child{padding-bottom:0}
+.dashboard-capability-row span{color:var(--body);font-size:13px}
+.dashboard-capability-row strong{color:var(--ink);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.dashboard-capability-row small{color:var(--muted);font-size:10px;line-height:1.35;text-align:right}
+.dashboard-report{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,.86fr);align-items:stretch;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);overflow:hidden}
+.dashboard-report>.dashboard-section{border:0;border-radius:0}
+.dashboard-report>.dashboard-section:first-child{border-right:1px solid var(--line)}
+.dashboard-section{min-width:0;padding:20px}
+.dashboard-section h2{margin:0 0 5px;font-size:22px;font-weight:400;line-height:1.25;letter-spacing:-.012em}
+.dashboard-section>p{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.55}
+.dashboard-chart-wrap{overflow:hidden;padding:4px 0 0}
+.dashboard-chart{display:block;width:100%;height:240px}
+.dashboard-chart-grid{stroke:var(--line);stroke-width:1}
+.dashboard-chart-axis{fill:var(--muted);font-size:12px}
+.dashboard-chart-line{fill:none;stroke:var(--primary);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.dashboard-chart-point{fill:var(--surface);stroke:var(--primary);stroke-width:3}
+.dashboard-chart-point:focus{outline:3px solid var(--primary);outline-offset:3px}
+.dashboard-chart-value{fill:var(--ink);font-size:12px;font-weight:600}
+.dashboard-chart-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;color:var(--muted);font-size:11px}
+.dashboard-chart-legend span{display:inline-flex;align-items:center;gap:6px}
+.dashboard-chart-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary)}
+.dashboard-chart-table{border-collapse:collapse}
+.dashboard-chart-table th,.dashboard-chart-table td{border:1px solid var(--line);padding:5px 7px;text-align:left}
+.dashboard-support{display:grid;grid-template-columns:minmax(210px,1.25fr) repeat(5,minmax(105px,1fr));gap:0;padding:0;overflow:hidden}
+.dashboard-support-intro{padding:17px 18px}
+.dashboard-support-intro h2{margin-bottom:4px;font-size:19px}
+.dashboard-support-intro p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}
+.dashboard-support-card{display:grid;align-content:center;min-width:0;border-left:1px solid var(--line);padding:16px 14px}
+.dashboard-support-card b{display:block;margin-bottom:3px;color:var(--ink);font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+.dashboard-support-card span{display:block;color:var(--muted);font-size:11px;line-height:1.4}
+.dashboard-evidence{padding:0;overflow:hidden}
+.dashboard-evidence-head{padding:20px 20px 14px}
+.dashboard-evidence-head h2{margin:0 0 5px;font-size:22px;font-weight:400}
+.dashboard-evidence-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.dashboard-competencies{display:grid;border-top:1px solid var(--line)}
+.dashboard-competency-table-head,.dashboard-competency{display:grid;grid-template-columns:minmax(230px,1.1fr) minmax(290px,1.6fr) 120px 136px;gap:16px;align-items:center;padding:11px 18px}
+.dashboard-competency-table-head{background:var(--canvas-soft);color:var(--muted);font-family:"JetBrains Mono","Fira Code",ui-monospace,Consolas,monospace;font-size:10px;letter-spacing:.05em;text-transform:uppercase}
+.dashboard-competency{min-width:0;border-top:1px solid var(--line);background:var(--surface)}
+.dashboard-competency:first-of-type{border-top:0}
+.dashboard-competency-title{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start}
+.dashboard-competency-index{display:grid;width:22px;height:22px;place-items:center;border:1px solid var(--line-strong);border-radius:50%;color:var(--muted);font-size:10px;font-weight:600}
+.dashboard-competency h3{margin:1px 0 3px;font-size:14px;font-weight:600;line-height:1.35}
+.dashboard-competency-title p,.dashboard-competency-evidence{margin:0;color:var(--muted);font-size:11px;line-height:1.45}
+.dashboard-competency-evidence strong{display:block;margin-bottom:2px;color:var(--ink);font-size:11px}
+.dashboard-status{display:inline-flex;justify-self:start;min-height:26px;align-items:center;border:1px solid var(--line-strong);border-radius:999px;padding:3px 8px;color:var(--body);font-size:11px;font-weight:600;white-space:nowrap}
+.dashboard-status.mastered{border-color:var(--green);background:var(--green-soft);color:var(--green)}
+.dashboard-status.clarified{border-color:var(--primary);background:var(--primary-soft);color:var(--primary)}
+.dashboard-status.needs-review{border-color:var(--ink);background:var(--canvas);color:var(--ink)}
+.dashboard-next-action{display:flex;justify-content:flex-end}
+.dashboard-next-action .btn{min-height:34px;padding:0 12px;font-size:11px;white-space:nowrap}
+.dashboard-timeline{height:100%}
+.dashboard-timeline-meta{display:grid;gap:7px;margin:0 0 18px;padding:0;list-style:none}
+.dashboard-timeline-meta li{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);padding-bottom:7px;color:var(--muted);font-size:11px}
+.dashboard-timeline-meta strong{color:var(--ink);font-weight:600;text-align:right}
+.dashboard-timeline-list{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.dashboard-timeline-item{position:relative;display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:0 0 14px}
+.dashboard-timeline-item:last-child{padding-bottom:0}
+.dashboard-timeline-item:before{content:'';position:absolute;top:20px;bottom:0;left:10px;border-left:1px solid var(--line-strong)}
+.dashboard-timeline-item:last-child:before{display:none}
+.dashboard-timeline-dot{position:relative;z-index:1;display:grid;place-items:center;width:21px;height:21px;border:1px solid var(--line-strong);border-radius:50%;background:var(--surface);color:var(--muted);font-size:10px}
+.dashboard-timeline-item.completed .dashboard-timeline-dot{border-color:var(--green);color:var(--green)}
+.dashboard-timeline-item.current .dashboard-timeline-dot{border-color:var(--primary);color:var(--primary)}
+.dashboard-timeline-item h3{margin:0 0 2px;font-size:13px;line-height:1.35}
+.dashboard-timeline-item p{margin:0;color:var(--muted);font-size:11px;line-height:1.4}
+.dashboard-timeline-time{display:block;margin-top:3px;color:var(--muted-soft);font-size:11px}
+.dashboard-recommendations{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.dashboard-recommendations li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;border-top:1px solid var(--line);padding:12px 0;color:var(--body);font-size:13px;line-height:1.5}
+.dashboard-recommendations strong{display:block;margin-bottom:3px;color:var(--ink)}
+.dashboard-empty{border-left:3px solid var(--line-strong);background:var(--canvas-soft);padding:11px 12px;color:var(--muted);font-size:13px;line-height:1.5}
+.dashboard-actions{border-top:1px solid var(--line);padding-top:14px}
+@media(max-width:1180px){.dashboard-report{grid-template-columns:minmax(0,1.45fr) minmax(280px,.9fr)}.dashboard-support{grid-template-columns:repeat(5,minmax(110px,1fr))}.dashboard-support-intro{grid-column:1/-1;border-bottom:1px solid var(--line)}.dashboard-support-card:first-of-type{border-left:0}.dashboard-competency-table-head,.dashboard-competency{grid-template-columns:minmax(210px,1fr) minmax(240px,1.35fr) 112px 124px;gap:12px}}
+@media(max-width:900px){.dashboard-summary,.dashboard-report{grid-template-columns:1fr}.dashboard-report>.dashboard-section:first-child{border-right:0;border-bottom:1px solid var(--line)}.dashboard-capability-row{grid-template-columns:minmax(0,1fr) auto}.dashboard-capability-row small{grid-column:1/-1;text-align:left}.dashboard-competency-table-head{display:none}.dashboard-competency{grid-template-columns:minmax(0,1fr) auto;gap:12px}.dashboard-competency-evidence{grid-column:1/-1}.dashboard-next-action{grid-column:1/-1;justify-content:flex-start}.dashboard-support{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-support-intro{grid-column:1/-1}.dashboard-support-card{border-top:1px solid var(--line)}.dashboard-support-card:nth-of-type(odd){border-left:0}}
+@media(max-width:640px){.learning-dashboard{gap:12px}.dashboard-header{grid-template-columns:1fr;gap:16px;padding-top:0}.dashboard-header h1{font-size:32px}.dashboard-header-side{justify-items:start;min-width:0;text-align:left}.dashboard-progress-body{grid-template-columns:1fr;gap:20px}.dashboard-progress-value{font-size:52px}.dashboard-stage-rail li{font-size:10px}.dashboard-capability-panel,.dashboard-progress-panel,.dashboard-section{padding:16px}.dashboard-report>.dashboard-section{padding:16px}.dashboard-chart{height:auto;min-height:190px}.dashboard-competency{grid-template-columns:1fr;padding:14px 16px}.dashboard-status,.dashboard-competency-evidence,.dashboard-next-action{grid-column:1}.dashboard-next-action .btn{width:100%;min-height:40px}.dashboard-recommendations li{grid-template-columns:1fr}.dashboard-support{grid-template-columns:1fr}.dashboard-support-intro{grid-column:1}.dashboard-support-card{border-left:0}.dashboard-header-actions,.dashboard-actions{align-items:stretch}.dashboard-header-actions .btn,.dashboard-actions .btn{width:100%;min-height:44px}.dashboard-timeline-meta li{display:grid;gap:2px}.dashboard-timeline-meta strong{text-align:left}}
 </style>
 </head>
 <body>
@@ -703,7 +903,8 @@ const PRACTICE_STORAGE_VERSION=1;
 const PRACTICE_STORAGE_VERSION_KEY='practiceFieldStateVersion';
 const PRACTICE_STORAGE_KEY='practiceFieldState';
 const STAGE5_SCHEMA_VERSION=2;
-const stage5Route=['intro','workspace','task','branch','commit','pull-request','review','workflow','report'];
+const DASHBOARD_SCHEMA_VERSION=1;
+const stage5Route=['intro','workspace','task','branch','commit','pull-request','review','workflow'];
 const ESC_MAP={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>ESC_MAP[c]);
 function tx(zh,en){return state.lang==='en'?`<span class="en-only">${en}</span>`:zh}
@@ -777,10 +978,13 @@ const demoSteps=[
 ];
 let state=load();
 let focusRequested=false;
+let thinkingNextFocusRequested=false;
+let thinkingQuestionFocusRequested=false;
 let modalReturnFocus=null;
 let modalReturnFocusSelector=null;
 let navReturnFocus=null;
 let navReturnFocusSelector=null;
+let scenarioConversationScrollTop=0;
 function draftPractice(key,value){state.practice.drafts[key]=value;persist()}
 const practiceAutofillExamples={
  repoName:{label:['Repository 名稱','repository name'],value:['campus-market','campus-market']},
@@ -802,20 +1006,31 @@ function practiceDraftValue(key){return state.practice.drafts[key]??''}
 function setLang(v){state.lang=v==='en'?'en':'zh';save()}
 function unlock(n){state.unlocked=Math.max(state.unlocked,n);state.phase=n;state.termsOpen=false;state.scenarioWrong='';focusRequested=true;save();topNow()}
 function resetAll(){if(confirm(plain('確定清除全部學習進度？這會重設五個階段與表單草稿。','Clear all learning progress and form drafts?'))){state=fresh();focusRequested=true;save();topNow()}}
-function resetPhase(){modalReturnFocus=document.activeElement;modalReturnFocusSelector='button.header-reset';state.modal={type:'reset-phase',title:['重新開始目前階段？','Restart this stage?'],body:['目前階段的進度與表單草稿會被清除，其他階段不受影響。','This stage’s progress and form drafts will be cleared. Other stages will remain unchanged.']};save()}
+function resetPhaseScope(){return {
+  1:['本關已找出的問題、目前選取與情境進度會被清除；其他 Stage 不受影響。','The problems found, current selection, and scenario progress in this stage will be cleared. Other stages are not affected.'],
+  2:['本關的配對答案與目前題目會被清除；其他 Stage 不受影響。','The matches and current prompt in this stage will be cleared. Other stages are not affected.'],
+  3:['本關的示範播放位置與觀看完成狀態會被清除；其他 Stage 不受影響。','The demo position and completion state in this stage will be cleared. Other stages are not affected.'],
+  4:['本關的操作進度、Repository 模擬資料與所有表單草稿會被清除；其他 Stage 不受影響。','The practice progress, simulated repository data, and all form drafts in this stage will be cleared. Other stages are not affected.'],
+  5:['本關的七題答案、作答次數與回饋結果會被清除；Stage 1–4 不受影響。','The seven answers, attempt counts, and feedback results in this stage will be cleared. Stages 1–4 are not affected.']
+}[state.phase]||['目前頁面不是可重啟的學習關卡。','This page is not a restartable learning stage.']}
+function resetPhase(){if(state.phase<1||state.phase>5)return;modalReturnFocus=document.activeElement;modalReturnFocusSelector='button.sidebar-restart';state.modal={type:'reset-phase',title:['重啟本關？','Restart this stage?'],body:resetPhaseScope()};save()}
 function toggleCourseNavigation(){state.navOpen=false;state.railCollapsed=!state.railCollapsed;save();requestAnimationFrame(()=>document.querySelector('.rail-collapse')?.focus())}
+function openCourseNavigation(){navReturnFocus=document.activeElement;navReturnFocusSelector='.mobile-nav-trigger';state.navOpen=true;save();requestAnimationFrame(()=>document.querySelector('.course-rail-close')?.focus())}
+function closeCourseNavigation(){if(!state.navOpen)return;const returnFocus=navReturnFocus,selector=navReturnFocusSelector;navReturnFocus=null;navReturnFocusSelector=null;state.navOpen=false;save();requestAnimationFrame(()=>{const target=returnFocus&&document.body.contains(returnFocus)?returnFocus:document.querySelector(selector||'.mobile-nav-trigger');if(target)target.focus()})}
 function resolveTermKey(k){return k==='Pull Request'?'PR':k}
 function termCard(k,active=false){const x=terms[k];if(!x)return'';return `<article class="term-card ${active?'active':''}"><h3><span class="term-en">${esc(x.en)}</span>｜${esc(x.zh)}</h3><p>${tx(esc(x.descZh),esc(x.descEn))}</p><div class="term-where">${tx(esc(x.whereZh),esc(x.whereEn))}</div></article>`}
-function closeModal(){const returnFocus=modalReturnFocus,selector=modalReturnFocusSelector;modalReturnFocus=null;modalReturnFocusSelector=null;state.modal=null;save();requestAnimationFrame(()=>{const target=returnFocus&&document.body.contains(returnFocus)?returnFocus:(selector?document.querySelector(selector):null);if(target)target.focus()})}
+function closeModal(){const returnFocus=modalReturnFocus,selector=modalReturnFocusSelector,completedStage=state.modal?.type==='stage-complete'?Number(state.modal.stage):0;if(completedStage)markStageCompletionSeen(completedStage);modalReturnFocus=null;modalReturnFocusSelector=null;state.modal=null;save();requestAnimationFrame(()=>{const target=returnFocus&&document.body.contains(returnFocus)?returnFocus:(selector?document.querySelector(selector):null);if(target)target.focus()})}
 /* stage 1 */
-function inspectPain(id){state.scenarioSelected=id;if(!state.scenarioFound.includes(id))state.scenarioFound.push(id);save()}
+function inspectPain(id){state.scenarioSelected=id;if(!state.scenarioFound.includes(id))state.scenarioFound.push(id);if(state.scenarioFound.length===pains.length)state.unlocked=Math.max(state.unlocked,2);save()}
 function startScenarioInvestigation(){state.scenarioIntro=false;state.scenarioSelected=null;save();topNow()}
 function showScenarioIntro(){state.scenarioIntro=true;save();topNow()}
 /* stage 2 */
 function selectThinking(id){state.thinkingCurrent=id;save()}
+function nextUnsolvedThinking(id){const start=pains.findIndex(function(item){return item.id===id});for(let offset=1;offset<=pains.length;offset++){const candidate=pains[(start+offset+pains.length)%pains.length];if(candidate&&!state.thinking[candidate.id])return candidate}return null}
+function goToNextThinking(id){const next=nextUnsolvedThinking(id);if(!next)return;state.thinkingCurrent=next.id;thinkingNextFocusRequested=false;thinkingQuestionFocusRequested=true;save()}
 function shuffleNeeds(id){const current=pains.find(p=>p.id===id);const others=pains.filter(p=>p.id!==id).slice(0,3);return [current,...others].sort((a,b)=>a.id.localeCompare(b.id))}
 function demoPrev(){state.demo.auto=false;state.demo.index=Math.max(0,state.demo.index-1);save();topNow()}
-function demoNext(){state.demo.auto=false;if(state.demo.index<demoSteps.length-1){state.demo.index++;save();topNow()}else{state.demo.played=true;save();topNow()}}
+function demoNext(){state.demo.auto=false;if(state.demo.index<demoSteps.length-1){state.demo.index++;save();topNow()}else{const firstCompletion=!state.demo.played;state.demo.played=true;state.unlocked=Math.max(state.unlocked,4);if(firstCompletion)openStageCompletion(3);save();topNow()}}
 function toggleDemoAuto(){
   state.demo.auto=!state.demo.auto;
   save();
@@ -824,7 +1039,7 @@ function toggleDemoAuto(){
   demoTimer=setInterval(function(){
     if(state.phase!==3||!state.demo.auto){clearInterval(demoTimer);return}
     if(state.demo.index<demoSteps.length-1){state.demo.index++;persist();draw();topNow()}
-    else{state.demo.auto=false;state.demo.played=true;clearInterval(demoTimer);save()}
+    else{const firstCompletion=!state.demo.played;state.demo.auto=false;state.demo.played=true;state.unlocked=Math.max(state.unlocked,4);if(firstCompletion)openStageCompletion(3);clearInterval(demoTimer);save()}
   },4500);
 }
 let demoTimer=null;
@@ -885,7 +1100,7 @@ function requestPracticeChanges(){const p=state.practice;p.review.status='change
 function approvePracticeReview(){const p=state.practice;p.review.status='approved';completePracticeAction();save()}
 function renderMergePractice(){const p=state.practice;if(!p.pr||!p.issue||!p.project)return `<div class="notice warn"><b>${tx('前面的步驟還沒完成','Required earlier work is missing')}</b><p>${tx('請先完成 Pull Request、Issue 與 Project。','Complete the Pull Request, Issue, and Project first.')}</p></div>`;if(p.pr?.status==='merged')return ghShell('Projects',`<div class="notice success"><h2>${tx('協作流程完成','Collaboration workflow complete')}</h2><p>${tx('main 已更新，Issue 關閉，Project 卡片已移至 Done。','main is updated, the issue is closed, and the project card is in Done.')}</p></div><div class="board"><div class="board-col"><b>Todo</b></div><div class="board-col"><b>In progress</b></div><div class="board-col"><b>Done</b><div class="board-card">✓ #1 ${esc(p.issue.title)}</div></div></div>`);return ghShell('Pull requests',`<span class="status-badge green">Approved</span><h2>${esc(p.pr.title)}</h2><p>${tx('這份修改已通過 Review，但尚未進入 main。','The change is approved but not yet in main.')}</p><button class="btn primary" onclick="mergePractice()">Merge pull request</button>`)}
 function mergePractice(){const p=state.practice;if(p.review.status!=='approved'){p.error={title:['這份 Pull Request 還沒通過 Review','The pull request is not approved'],body:['先完成 Review 和修正，才能合併。','Complete the review and fix before merging.'],recover:'dismiss'};save();return}p.pr.status='merged';p.issue.status='closed';p.project.status='Done';p.branch='main';completePracticeAction();save()}
-function completePracticeAction(){const p=state.practice;p.error=null;p.result=true;p.reflection=null;if(!p.completed.includes(p.step))p.completed.push(p.step)}
+function completePracticeAction(){const p=state.practice,s=ensurePracticeEvidence(p.step),wasCompleted=Boolean(s.completed);p.error=null;p.result=true;p.reflection=null;s.completed=true;if(!p.completed.includes(p.step))p.completed.push(p.step);if(!wasCompleted)appendLearningEvent({stage:4,concept:reviewConceptForPracticeStep(p.step),action:'practice-step-completed',itemId:'practice-step-'+p.step});if(stage4PracticeComplete())recordStageCompletion(4,'guidedPractice');}
 function practiceResult(){const p=state.practice,m=practiceMeta[p.step];const qs=[
  [['你建立了一個 Repository，讓專案有唯一工作區。','You created a repository, giving the project one shared workspace.'],['你建立了 Issue。','You created an issue.']],
  [['你透過網頁上傳並建立 Commit；這不是 push。','You uploaded through the web and created a commit; this was not a push.'],['你使用 git push 上傳。','You used git push.']],
@@ -896,9 +1111,9 @@ function practiceResult(){const p=state.practice,m=practiceMeta[p.step];const qs
  [['你建立 PR，讓修改進入審核流程。','You opened a PR so the change could be reviewed.'],['你建立了 Project。','You created a project.']],
  [['你查看差異、要求修正，確認後 Approve。','You inspected differences, requested a fix, and approved after verification.'],['你只看標題就 Approve。','You approved from the title alone.']],
  [['你把核准修改 Merge 至 main，並同步任務狀態。','You merged the approved change into main and synchronized task status.'],['你執行了網頁上傳。','You uploaded files.']]
- ][p.step];return `<article class="card result-card step-done"><span class="status-badge green">${tx('操作結果','Action result')}</span><h3>${tx('你已完成這一步。','You completed this step.')}</h3><p>${tx(...m.mission)}</p></article><article class="card reflection"><h3>${tx('用自己的話說說看：剛才做了什麼？','In your own words: what did you just do?')}</h3>${qs.map((q,i)=>`<button class="predict-option ${p.reflection===(i===0?'ok':'bad')?(i===0?'correct':'wrong'):''}" onclick="answerReflection('${i===0?'ok':'bad'}')">${tx(...q)}</button>`).join('')}${p.reflection==='ok'?`<div class="btn-row" style="margin-top:14px"><button class="btn primary" onclick="nextPracticeStep()">${p.step===practiceMeta.length-1?tx('完成引導練習','Finish guided practice'):tx('進入下一步','Next step')}</button></div>`:''}</article>`}
-function answerReflection(v){state.practice.reflection=v;if(v==='bad')state.practice.error={title:['回想剛才畫面和資料哪裡變了','Review what changed on screen'],body:['請根據剛才真正改變的資料重新回答。','Answer based on the data that actually changed.'],recover:'dismiss'};save()}
-function nextPracticeStep(){const p=state.practice;if(p.reflection!=='ok')return;if(p.step<practiceMeta.length-1){p.step++;p.prediction=null;p.predictionOK=false;p.hint=0;p.result=false;p.reflection=null;p.error=null;p.sub=0;save();topNow()}else{state.unlocked=Math.max(state.unlocked,5);state.phase=5;focusRequested=true;save();topNow()}}
+ ][p.step];return `<article class="card result-card step-done"><span class="status-badge green">${tx('操作結果','Action result')}</span><h3>${tx('你已完成這一步。','You completed this step.')}</h3><p>${tx(...m.mission)}</p></article><article class="card reflection"><h3>${tx('用自己的話說說看：剛才做了什麼？','In your own words: what did you just do?')}</h3>${qs.map((q,i)=>`<button class="predict-option ${p.reflection===(i===0?'ok':'bad')?(i===0?'correct':'wrong'):''}" onclick="answerReflection('${i===0?'ok':'bad'}')">${tx(...q)}</button>`).join('')}${p.reflection==='ok'&&p.step<practiceMeta.length-1?`<div class="btn-row" style="margin-top:14px"><button class="btn primary" onclick="nextPracticeStep()">${tx('進入下一步','Next step')}</button></div>`:''}</article>`}
+function answerReflection(v){const p=state.practice,firstCompletion=p.reflection!=='ok';p.reflection=v;if(v==='bad')p.error={title:['回想剛才畫面和資料哪裡變了','Review what changed on screen'],body:['請根據剛才真正改變的資料重新回答。','Answer based on the data that actually changed.'],recover:'dismiss'};else{p.error=null;if(p.step===practiceMeta.length-1&&firstCompletion)openStageCompletion(4)}save()}
+function nextPracticeStep(){const p=state.practice;if(p.reflection!=='ok')return;if(p.step<practiceMeta.length-1){p.step++;p.prediction=null;p.predictionOK=false;p.hint=0;p.result=false;p.reflection=null;p.error=null;p.sub=0;save();topNow()}else{openStageCompletion(4);save()}}
 
 /* practice draft-preserving renderers: later declarations intentionally replace the original renderers */
 function renderFilesPractice(){const p=state.practice,d=p.drafts;if(p.commits.length)return ghShell('Code',`${fileTable(false)}<div class="notice success">${tx('已建立 Commit：','Commit created:')} ${esc(p.commits[0].message)}</div>`);if(p.sub===0)return ghShell('Code',`<h2>Upload files</h2><p>${tx('請選擇要加入專案的檔案。','Select files to add to the project.')}</p><div class="upload-grid">${[['project-plan.md',true],['budget.xlsx',true],['index.html',true],['poster.png',true],['draft-notes.txt',false]].map(([name,req])=>`<label class="upload-item ${!req?'private':''}"><input type="checkbox" class="p-file" value="${name}" ${d.files.includes(name)?'checked':''} onchange="draftPracticeFiles()"> <span><b>${name}</b><br><small>${req?tx('必要檔案','Required file'):tx('含私人電話與未確認報價','Contains a private phone number and unconfirmed quote')}</small></span></label>`).join('')}</div><div class="btn-row" style="margin-top:14px"><button class="btn primary" onclick="selectPracticeFiles()">${tx('確認待上傳清單','Confirm upload list')}</button></div>`);return ghShell('Code',`<h2>${tx('確認檔案與 Commit','Review files and commit')}</h2><div class="file-table">${Object.keys(p.files).map(n=>`<div class="file-row"><span class="file-name">${esc(n)}</span><span>${tx('待上傳','Pending')}</span><span>✓</span></div>`).join('')}</div><div class="commit-box"><label for="p-commit-message"><b>Commit message</b></label>${practiceInputWithAutofill('p-commit-message','commitMessage',d.commitMessage,plain('建立校園市集初始檔案','Add initial campus-market files'))}<div class="btn-row" style="margin-top:10px"><button class="btn primary" onclick="commitPracticeFiles()">Commit changes</button></div></div>`)}
@@ -916,13 +1131,32 @@ function createPracticePR(){const d=state.practice.drafts,base=d.prBase,compare=
 function renderReviewPractice(){const p=state.practice,d=p.drafts;if(p.review.status==='approved')return ghShell('Pull requests',`<span class="status-badge green">Approved</span><div class="diff"><div class="diff-line del">- 攤位費：5000</div><div class="diff-line add">+ 攤位費：新台幣 5,000 元</div></div><div class="review-box">✓ ${tx('修正已確認','Fix verified')}</div>`);if(p.review.status==='changes_requested'&&!p.review.fixed)return ghShell('Pull requests',`<span class="status-badge orange">Changes requested</span><div class="review-box"><b>${tx('Review 留言','Review comment')}：</b>${tx('請補上幣別與單位。','Please add currency and unit.')}</div><div class="field" style="margin-top:14px"><label for="p-fix-editor">${tx('回到 Branch 修正內容','Fix the branch content')}</label>${practiceTextareaWithAutofill('p-fix-editor','fixContent',d.fixContent||p.files['competitor-research.md']?.content||'')}</div><button class="btn primary" onclick="fixPracticeReview()">${tx('建立修正 Commit','Create fix commit')}</button>`);if(p.review.status==='changes_requested'&&p.review.fixed)return ghShell('Pull requests',`<div class="diff"><div class="diff-line del">- 攤位費：5000</div><div class="diff-line add">+ 攤位費：新台幣 5,000 元</div></div><div class="review-box"><h3>${tx('送出 Review','Submit review')}</h3><button class="btn primary" onclick="approvePracticeReview()">Approve</button></div>`);return ghShell('Pull requests',`<h2>Files changed</h2><div class="diff"><div class="diff-line add">+ 競品 A：草悟道市集</div><div class="diff-line add spotlight">+ 攤位費：5000</div></div><div class="review-box"><label>${tx('審核結果','Review decision')}</label><div class="btn-row" style="margin-top:8px"><button class="btn" onclick="requestPracticeChanges()">Request changes</button><button class="btn primary" onclick="badApprovePractice()">Approve</button></div></div>`)}
 function fixPracticeReview(){const p=state.practice,content=(p.drafts.fixContent||'').trim();if(!/(?:新台幣\s*5,?000\s*元|(?:TWD|NT\$)\s*5,?000)/i.test(content)){p.error={title:['還沒依照 Review 留言修正','The review feedback is not resolved'],body:['請修改檔案，補上幣別和單位，再建立修正 Commit。','Edit the file, add the currency and unit, then create the fix commit.'],recover:'dismiss'};save();return}p.files['competitor-research.md'].content=content;p.commits.unshift({id:uid(),message:'補上攤位費幣別與單位',branch:p.branch});p.review.fixed=true;p.drafts.fixContent='';save();topNow()}
 /* modal generic */
-function genericModal(m){const good=m.type==='ok',reset=m.type==='reset-phase';return `<div class="modal-wrap" role="presentation" onclick="if(event.target===this)closeModal()"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="generic-modal-title"><div class="modal-head"><h2 id="generic-modal-title">${tx(...m.title)}</h2><button class="modal-close" onclick="closeModal()" aria-label="${plain('關閉','Close')}">×</button></div><div class="modal-body"><div class="notice ${good?'success':reset?'danger':'warn'}">${tx(...m.body)}</div><div class="btn-row" style="margin-top:16px">${reset?`<button class="btn" onclick="closeModal()">${tx('取消','Cancel')}</button><button class="btn danger" onclick="confirmResetPhase()">${tx('確認重設','Reset stage')}</button>`:`<button class="btn primary" onclick="closeModal()">${tx('了解','Continue')}</button>`}</div></div></div></div>`}
-function modalView(){if(!state.modal)return'';if(typeof state.modal==='object')return genericModal(state.modal);return''}
+function stageCompletionCopy(stage){return {
+  1:[['你已找出五個會讓小組專案失控的合作問題。','You found all five collaboration problems that can derail a team project.'],['本關的問題辨識會清除，其他 Stage 不受影響。','The problem findings in this stage will be cleared. Other stages are not affected.']],
+  2:[['你已完成五個問題與協作需求的配對。','You matched all five problems to the collaboration capabilities they need.'],['本關的配對答案會清除，其他 Stage 不受影響。','The matches in this stage will be cleared. Other stages are not affected.']],
+  3:[['你已看完整段 GitHub 協作流程示範。','You watched the complete GitHub collaboration workflow demonstration.'],['本關的播放位置與觀看狀態會清除，其他 Stage 不受影響。','The playback position and viewed state in this stage will be cleared. Other stages are not affected.']],
+  4:[['你已完成九個引導操作，並說明每一步造成的改變。','You completed all nine guided actions and explained what each one changed.'],['本關的操作資料與表單草稿會清除，其他 Stage 不受影響。','The practice data and form drafts in this stage will be cleared. Other stages are not affected.']]
+}[stage]||[['你已完成本關。','You completed this stage.'],['只會清除本關資料。','Only this stage will be cleared.']]}
+function markStageCompletionSeen(stage){if(!Array.isArray(state.stageCompletionSeen))state.stageCompletionSeen=[];if(!state.stageCompletionSeen.includes(stage))state.stageCompletionSeen.push(stage)}
+function clearStageCompletionSeen(stage){if(!Array.isArray(state.stageCompletionSeen))state.stageCompletionSeen=[];state.stageCompletionSeen=state.stageCompletionSeen.filter(function(item){return Number(item)!==Number(stage)})}
+function stageIsCompleteForCard(stage){if(stage===1)return state.scenarioFound.length===pains.length;if(stage===2)return pains.every(function(p){return Boolean(state.thinking[p.id])});if(stage===3)return Boolean(state.demo.played);if(stage===4){const p=state.practice;return p.step===practiceMeta.length-1&&Boolean(p.result)&&p.reflection==='ok'}return false}
+function ensureStageCompletionModal(){const stage=Number(state.phase);if(state.modal||stage<1||stage>4||!stageIsCompleteForCard(stage))return;if(!Array.isArray(state.stageCompletionSeen))state.stageCompletionSeen=[];if(!state.stageCompletionSeen.includes(stage))openStageCompletion(stage)}
+function openStageCompletion(stage){if(stage<1||stage>4)return;clearStageCompletionSeen(stage);state.unlocked=Math.max(Number(state.unlocked)||1,stage+1);modalReturnFocus=document.activeElement;modalReturnFocusSelector='.scenario-glossary-toggle';state.modal={type:'stage-complete',stage:stage}}
+function restartCompletedStage(){if(state.modal?.type!=='stage-complete')return;const stage=Number(state.modal.stage);clearStageCompletionSeen(stage);confirmResetPhase()}
+function continueCompletedStage(){if(state.modal?.type!=='stage-complete')return;const stage=Number(state.modal.stage),next=Math.min(5,stage+1);markStageCompletionSeen(stage);gotoPhase(next)}
+function stageCompletionModal(m){const stage=Number(m.stage)||state.phase,copy=stageCompletionCopy(stage);return `<div class="modal-wrap" role="presentation" onclick="if(event.target===this)closeModal()"><section class="modal stage-completion-card" role="dialog" aria-modal="true" aria-labelledby="stage-completion-title" aria-describedby="stage-completion-description"><div class="modal-head"><div><span class="stage-completion-eyebrow">STAGE ${stage} · ${tx('已完成','Complete')}</span><h2 id="stage-completion-title">${tx(`你完成了 Stage ${stage}`,`Stage ${stage} complete`)}</h2></div><button type="button" class="modal-close" onclick="closeModal()" aria-label="${plain('關閉完成卡片並查看關鍵術語','Close the completion card and review key terms')}">×</button></div><div class="stage-completion-body"><p id="stage-completion-description" class="stage-completion-lead">${tx(...copy[0])}</p><p class="stage-completion-note"><b>${tx('想先停一下？','Want to pause here?')}</b> ${tx('關閉這張卡片後，可以先查看右下角的關鍵術語，再決定何時前往下一關。','Close this card to review the key terms in the lower-right corner, then continue whenever you are ready.')}</p><div class="stage-completion-actions"><button type="button" class="btn stage-complete-restart" onclick="restartCompletedStage()" aria-label="${plain(`重新進行 Stage ${stage}`,`Restart Stage ${stage}`)}" title="${plain(...copy[1])}">${tx('重來','Restart')}</button><button type="button" class="btn primary stage-complete-next" onclick="continueCompletedStage()">${tx('進入下一關','Next stage')}</button></div></div></section></div>`}
+function thinkingWrongModal(m){const current=pains.find(function(item){return item.id===m.painId}),chosen=pains.find(function(item){return item.id===m.answerId});if(!current||!chosen)return genericModal(m);return `<div class="modal-wrap" role="presentation" onclick="if(event.target===this)closeModal()"><section class="modal thinking-feedback-card" role="dialog" aria-modal="true" aria-labelledby="thinking-feedback-title" aria-describedby="thinking-feedback-lead thinking-feedback-coach"><div class="modal-head"><div><span class="thinking-feedback-eyebrow">${tx('配對提示','Matching hint')}</span><h2 id="thinking-feedback-title">${tx('再想一次','Try once more')}</h2></div><button type="button" class="modal-close" onclick="closeModal()" aria-label="${plain('關閉提示並回到題目','Close the hint and return to the question')}">×</button></div><div class="thinking-feedback-body"><p id="thinking-feedback-lead" class="thinking-feedback-lead">${tx('這個選擇有它適合的情境，只是不是目前這一題最直接需要的協作方式。','This choice fits a real situation, but it is not the most direct collaboration need for the current question.')}</p><div class="thinking-feedback-grid"><article class="thinking-feedback-item"><span class="thinking-feedback-label">${tx('你剛才選的是','Your choice')}</span><strong>${tx(...chosen.need)}</strong><p>${tx('這個需求比較適合處理：','This need better addresses: ')}${tx(...chosen.title)}</p></article><article class="thinking-feedback-item current"><span class="thinking-feedback-label">${tx('目前正在解的情境','Current situation')}</span><strong>${tx(...current.title)}</strong><p>${tx(...current.body)}</p></article></div><p id="thinking-feedback-coach" class="thinking-feedback-coach"><b>${tx('再判斷一次：','Try this lens:')}</b> ${tx('哪一個需求能最直接消除目前情境裡的協作阻礙？','Which need most directly removes the collaboration obstacle in the current situation?')}</p><div class="thinking-feedback-actions"><button type="button" class="btn primary thinking-feedback-action" onclick="closeModal()">${tx('回到題目再試一次','Return and try again')}</button></div></div></section></div>`}
+function genericModal(m){const good=m.type==='ok',reset=m.type==='reset-phase';return `<div class="modal-wrap" role="presentation" onclick="if(event.target===this)closeModal()"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="generic-modal-title"><div class="modal-head"><h2 id="generic-modal-title">${tx(...m.title)}</h2><button class="modal-close" onclick="closeModal()" aria-label="${plain('關閉','Close')}">×</button></div><div class="modal-body"><div class="notice ${good?'success':reset?'danger':'warn'}">${tx(...m.body)}</div><div class="btn-row" style="margin-top:16px">${reset?`<button class="btn" onclick="closeModal()">${tx('取消','Cancel')}</button><button class="btn danger" onclick="confirmResetPhase()">${tx('重啟本關','Restart stage')}</button>`:`<button class="btn primary" onclick="closeModal()">${tx('了解','Continue')}</button>`}</div></div></div></div>`}
+function modalView(){if(!state.modal)return'';if(state.modal?.type==='stage-complete')return stageCompletionModal(state.modal);if(state.modal?.type==='wrong')return thinkingWrongModal(state.modal);if(typeof state.modal==='object')return genericModal(state.modal);return''}
 
-/* Redesigned course view layer. Existing state and GitHub simulator functions remain the source of truth. */
-function redesignCourseRail(){return `<aside id="course-rail" class="course-rail ${state.railCollapsed?'collapsed':''}" aria-label="${plain('課程進度','Course progress')}"><div class="course-rail-head">${tx('學習路徑','Learning path')}</div><nav class="course-nav-list">${redesignCourseNavItems()}</nav><button class="rail-collapse" onclick="toggleCourseNavigation()" aria-label="${state.railCollapsed?plain('展開課程進度','Expand course progress'):plain('收合課程進度','Collapse course progress')}"><span aria-hidden="true">${state.railCollapsed?'展開':'收合'}</span><span>${state.railCollapsed?'':tx('收合','Collapse')}</span></button></aside>`}
-function redesignHeaderCourseActions(){const action=headerCourseActionState();if(!action.prev&&!action.showNext)return'';return `<nav class="header-course-actions" aria-label="${plain('課程操作','Course actions')}">${action.prev?`<button class="btn header-course-prev" onclick="${action.prev}">${tx('上一步','Previous')}</button>`:''}${action.showNext?`<button class="btn primary header-course-next" ${action.next?`onclick="${action.next}"`:'disabled'}>${action.label||tx('下一步','Next')}</button>`:''}</nav>`}
-function redesignHeader(){return `<header class="app-header"><div class="header-main"><div class="brand"><div class="brand-mark" aria-hidden="true">G</div><div><div class="brand-title">${tx('GitHub 協作練習場','GitHub Collaboration Lab')}</div><div class="brand-sub">${tx('給商管學生的 GitHub 入門課','A beginner-friendly GitHub course for business students')}</div></div></div>${redesignHeaderCourseActions()}<div class="header-actions"><div class="language-control"><label for="course-language">${tx('教材語言','Language')}</label><select id="course-language" onchange="setLang(this.value)" aria-label="${plain('教材語言','Course language')}"><option value="zh" ${state.lang==='zh'?'selected':''}>繁體中文</option><option value="en" ${state.lang==='en'?'selected':''}>English</option></select></div><button class="header-btn header-start" onclick="gotoPhase(1)">${tx('回到起點','Start')}</button><button class="header-btn header-reset" onclick="resetPhase()">${tx('重新開始這一階段','Restart this stage')}</button></div></div></header>`}
+/* Course view layer. Existing state and simulator functions remain the source of truth. */
+function railIcon(direction){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${direction==='left'?'M15 5l-7 7 7 7':'M9 5l7 7-7 7'}"></path></svg>`}
+function closeIcon(){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>`}
+function menuIcon(){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>`}
+function restartIcon(){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8v5h5"></path><path d="M6.5 17a7 7 0 1 0-.5-8.5L5 10"></path></svg>`}
+function redesignSidebarFooter(){const restartDisabled=state.phase===6,restartLabel=restartDisabled?plain('學習成果頁沒有可重啟的關卡','There is no stage to restart on the learning dashboard'):plain('重啟本關','Restart this stage');return `<footer class="course-rail-footer"><div class="sidebar-setting"><span class="sidebar-label">${tx('教材語言','Language')}</span><div class="language-toggle" role="group" aria-label="${plain('教材語言','Course language')}"><button type="button" onclick="setLang('zh')" aria-pressed="${state.lang==='zh'}" title="繁體中文"><span class="language-long">繁中</span><span class="language-short">中</span></button><button type="button" onclick="setLang('en')" aria-pressed="${state.lang==='en'}" title="English"><span class="language-long">English</span><span class="language-short">EN</span></button></div></div><button type="button" class="sidebar-restart" onclick="resetPhase()" aria-label="${restartLabel}" title="${restartLabel}" ${restartDisabled?'disabled':''}>${restartIcon()}<span class="restart-copy">${tx('重啟本關','Restart stage')}</span></button></footer>`}
+function redesignCourseRail(){const collapseLabel=state.railCollapsed?plain('展開學習導覽','Expand learning navigation'):plain('收合學習導覽','Collapse learning navigation');return `<aside id="course-rail" class="course-rail ${state.railCollapsed?'collapsed':''} ${state.navOpen?'mobile-open':''}" ${state.navOpen?'role="dialog" aria-modal="true"':''} aria-label="${plain('全站學習導覽','Site learning navigation')}"><div class="course-rail-brand"><div class="brand-mark" aria-hidden="true">G</div><div class="sidebar-copy"><div class="brand-title">${tx('GitHub 協作練習場','GitHub Collaboration Lab')}</div><div class="brand-sub">${tx('五階段學習路徑','Five-stage learning path')}</div></div><button type="button" class="rail-collapse" onclick="toggleCourseNavigation()" aria-expanded="${!state.railCollapsed}" aria-controls="course-rail" aria-label="${collapseLabel}" title="${collapseLabel}">${railIcon(state.railCollapsed?'right':'left')}</button><button type="button" class="course-rail-close" onclick="closeCourseNavigation()" aria-label="${plain('關閉學習導覽','Close learning navigation')}">${closeIcon()}</button></div><nav class="course-nav-list" aria-label="${plain('Stage 與學習成果','Stages and learning dashboard')}">${redesignCourseNavItems()}</nav>${redesignSidebarFooter()}</aside>`}
+function redesignMobileNavigation(){return `<button type="button" class="mobile-nav-trigger" onclick="openCourseNavigation()" aria-expanded="${state.navOpen}" aria-controls="course-rail" aria-label="${plain('開啟學習導覽','Open learning navigation')}">${menuIcon()}<span>${tx('學習路徑','Learning path')}</span><b aria-hidden="true">${state.phase===6?'R':state.phase}</b></button>${state.navOpen?`<button type="button" class="course-nav-scrim" onclick="closeCourseNavigation()" aria-label="${plain('關閉學習導覽','Close learning navigation')}" tabindex="-1"></button>`:''}`}
 function progressSegments(total,current){return `<div class="progress-segments" aria-hidden="true">${Array.from({length:total},(_,i)=>`<i class="${i<current?'done':i===current?'current':''}"></i>`).join('')}</div>`}
 function stageHeading(kicker,title,description,current,total){return `<header class="stage-heading"><div><div class="stage-kicker">${kicker}</div><h1>${title}</h1><p>${description}</p></div><div class="stage-progress" aria-label="${plain(`步驟 ${current+1} / ${total}`,`Step ${current+1} of ${total}`)}"><div class="stage-progress-label"><span>${tx('步驟','Step')}</span><b>${current+1} / ${total}</b></div>${progressSegments(Math.min(total,7),Math.min(current,6))}</div></header>`}
 function saveProgressFeedback(){persist();const status=document.getElementById('save-state');if(status){status.textContent=plain('進度已儲存','Progress saved');setTimeout(()=>{if(document.body.contains(status))status.textContent=plain('變更會自動儲存','Changes save automatically')},1800)}}
@@ -933,15 +1167,20 @@ function scenarioInsight(id){if(!id)return `<div class="diagnosis-insight" aria-
 
 function conceptMapping(p){const key=resolveTermKey(p.term),term=terms[key];if(!term)return'';return `<article class="concept-mapping"><span class="concept-code">MATCH</span><div><h3>${esc(term.en)}｜${esc(term.zh)}</h3><p>${tx(esc(term.descZh),esc(term.descEn))}</p></div></article>`}
 function gitRelation(){return `<div class="git-relation"><article class="relation-card"><h3>Git</h3><p>${tx('Git 會記錄檔案怎麼改、什麼時候改。這門課先用網頁操作，指令之後再學。','Git records what changed in a file and when. This course starts with the web; commands come later.')}</p></article><article class="relation-card"><h3>GitHub</h3><p>${tx('GitHub 把 Repository、Issue、Project、Pull Request 和 Review 集中在同一個協作網站裡。','GitHub brings repositories, issues, projects, pull requests, and reviews together in one collaboration site.')}</p></article></div>`}
-function redesignThinkingPage(){const current=pains.find(p=>p.id===state.thinkingCurrent),done=Object.keys(state.thinking).length===pains.length,content=`${stageHeading('STAGE 2 · GUIDED THINKING',tx('先搞清楚需要什麼，再認識工具。','Clarify the need before learning the tool.'),tx('請判斷每個問題需要哪種協作能力；答對後，你就會看到對應的 GitHub 功能。','Decide which collaboration capability each problem needs; the matching GitHub feature appears after a correct answer.'),Math.min(Math.max(Object.keys(state.thinking).length-1,0),pains.length-1),pains.length)}<div class="mapping-workbench"><nav class="problem-index card" aria-label="${plain('合作問題清單','Collaboration problem list')}">${pains.map((p,i)=>`<button class="${state.thinkingCurrent===p.id?'active':''} ${state.thinking[p.id]?'done':''}" onclick="selectThinking('${p.id}')"><span class="index-state">${state.thinking[p.id]?'✓':i+1}</span><span><b>${tx(...p.title)}</b><small>${state.thinking[p.id]?tx(...p.need):tx('還沒完成','Not matched')}</small></span></button>`).join('')}</nav><section class="decision-canvas card"><span class="status-badge">${tx('現在看的問題','Current problem')}</span><h2>${tx(...current.title)}</h2><p>${tx(...current.body)}</p><div class="decision-question"><b>${tx('這個小組最需要什麼？','What does this team need most?')}</b></div><div class="need-options">${shuffleNeeds(current.id).map((n,i)=>`<button class="need-option ${state.thinking[current.id]&&n.id===current.id?'correct':''}" ${state.thinking[current.id]?'disabled':''} aria-pressed="${state.thinking[current.id]&&n.id===current.id}" onclick="answerNeed('${current.id}','${n.id}')"><span class="sr-only">${String.fromCharCode(65+i)}. </span><b>${tx(...n.need)}</b></button>`).join('')}</div></section></div>`;const learned=pains.filter(p=>state.thinking[p.id]).map(p=>resolveTermKey(p.term));return redesignPage(content,['Git','GitHub',...learned],redesignActionBar('gotoPhase(1)',done?'unlock(3)':null,tx('觀看完整示範','Watch the complete demonstration')))}
+function redesignThinkingPage(){const current=pains.find(p=>p.id===state.thinkingCurrent),currentIndex=pains.findIndex(p=>p.id===current.id),completed=Object.keys(state.thinking).length,done=completed===pains.length,nextProblem=state.thinking[current.id]&&!done?nextUnsolvedThinking(current.id):null,content=`${stageHeading('STAGE 2 · GUIDED THINKING',tx('先搞清楚需要什麼，再認識工具。','Clarify the need before learning the tool.'),tx('請判斷每個問題需要哪種協作能力；答對後，你就會看到對應的 GitHub 功能。','Decide which collaboration capability each problem needs; the matching GitHub feature appears after a correct answer.'),Math.min(Math.max(completed-1,0),pains.length-1),pains.length)}<div class="mapping-workbench"><div class="mapping-route-head"><div><span class="mapping-route-label">${tx('問題路線','Problem route')}</span><h2>${tx('逐題配對協作需求','Match each problem to a collaboration need')}</h2></div><p class="mapping-route-progress">${tx('已完成','Completed')} <b>${completed} / ${pains.length}</b></p></div><nav class="problem-index card" aria-label="${plain('合作問題清單','Collaboration problem list')}">${pains.map((p,i)=>`<button class="${state.thinkingCurrent===p.id?'active':''} ${state.thinking[p.id]?'done':''}" ${state.thinkingCurrent===p.id?'aria-current="step"':''} onclick="selectThinking('${p.id}')"><span class="index-state" aria-hidden="true">${state.thinking[p.id]?'✓':i+1}</span><span><b>${tx(...p.title)}</b><small>${state.thinking[p.id]?tx('已配對：','Matched: ')+tx(...p.need):(state.thinkingCurrent===p.id?tx('目前題目','Current problem'):tx('等待判斷','To decide'))}</small></span></button>`).join('')}</nav><section class="decision-canvas card" aria-labelledby="thinking-question-title"><div class="decision-context"><div class="decision-meta"><span class="decision-counter">${tx('情境','Scenario')} ${currentIndex+1} / ${pains.length}</span><span class="status-badge ${state.thinking[current.id]?'green':''}">${state.thinking[current.id]?tx('配對完成','Matched'):tx('進行中','In progress')}</span></div><h2 id="thinking-question-title">${tx(...current.title)}</h2><p>${tx(...current.body)}</p><div class="decision-context-foot">${tx('先辨識團隊缺少的協作規則，再選出最直接的需求。','Identify the missing collaboration rule, then choose the most direct need.')}</div></div><div class="decision-answer"><div class="decision-question"><div class="decision-question-copy"><span class="decision-question-label">${tx('你的判斷','Your decision')}</span><h3>${tx('這個小組最需要什麼？','What does this team need most?')}</h3><p>${tx('選出最能直接解決目前情境的協作需求。','Choose the collaboration need that most directly resolves this situation.')}</p></div>${nextProblem?`<div class="thinking-next-prompt" role="status" aria-live="polite"><span class="thinking-next-copy">${tx('答對了','Correct')}</span><button type="button" class="btn primary thinking-next-button" onclick="goToNextThinking('${current.id}')" aria-label="${esc(plain('前往下一題：'+nextProblem.title[0],'Go to next question: '+nextProblem.title[1]))}">${tx('下一題','Next question')}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></button></div>`:''}</div><div class="need-options">${shuffleNeeds(current.id).map((n,i)=>`<button class="need-option ${state.thinking[current.id]&&n.id===current.id?'correct':''}" data-need-id="${n.id}" ${state.thinking[current.id]?'disabled':''} aria-pressed="${state.thinking[current.id]&&n.id===current.id}" onclick="answerNeed('${current.id}','${n.id}')"><span class="need-option-key" aria-hidden="true">${String.fromCharCode(65+i)}</span><b>${tx(...n.need)}</b></button>`).join('')}</div></div></section></div>`;const learned=pains.filter(p=>state.thinking[p.id]).map(p=>resolveTermKey(p.term));return redesignPage(content,['Git','GitHub',...learned],redesignActionBar('gotoPhase(1)',done?'unlock(3)':null,tx('觀看完整示範','Watch the complete demonstration')))}
 
 function demoChapterInfo(index){const groups=[];demoSteps.forEach((step,i)=>{const name=step.group[0];let group=groups.find(x=>x.name===name);if(!group){group={name,labels:step.group,indexes:[]};groups.push(group)}group.indexes.push(i)});const currentGroup=groups.find(x=>x.indexes.includes(index));return {groups,currentGroup,chapter:groups.indexOf(currentGroup),local:currentGroup.indexes.indexOf(index),total:currentGroup.indexes.length}}
-function redesignDemoPage(){const i=state.demo.index,s=demoSteps[i],chapter=demoChapterInfo(i),content=`${stageHeading(`STAGE 3 · ${tx('完整示範','FULL DEMONSTRATION')}`,tx(`3.${chapter.chapter+1} ${s.group[0]}`,`3.${chapter.chapter+1} ${s.group[1]}`),tx('系統會逐步操作右側 GitHub 模擬器。橘色框只標示這一步要看的位置；這一階段不能操作。','The system operates the GitHub simulator. The orange frame marks what to watch; this stage is view-only.'),chapter.local,chapter.total)}<div class="course-workbench"><aside class="task-console card"><div class="task-console-header"><span class="status-badge purple">${tx('系統示範中','System demo')} · ${i+1}/${demoSteps.length}</span><h2>${tx(...s.title)}</h2></div><div class="task-section"><div class="task-label">${tx('這一步在做什麼','What happens now')}</div><p>${tx(...s.action)}</p></div><div class="task-section"><div class="task-label">${tx('這一步看哪裡','Where to look')}</div><p>${tx('看右側橘色框標出的按鈕、欄位或資料；這裡先不用操作。','Look at the control, field, or data outlined in orange; do not interact yet.')}</p></div><div class="task-section"><div class="task-label">${tx('完成後會怎樣','What happens next')}</div><p>${tx(...s.result)}</p></div><div class="task-console-actions"><button class="btn" onclick="demoPrev()" ${i===0?'disabled':''}>${tx('上一步','Previous step')}</button><button class="btn" onclick="toggleDemoAuto()">${state.demo.auto?tx('暫停','Pause'):tx('自動播放','Auto play')}</button><button class="btn primary" onclick="demoNext()">${i===demoSteps.length-1?tx('完成示範','Finish demo'):tx('下一步','Next step')}</button></div></aside><section class="workspace-surface"><div class="demo-shield" aria-label="${plain('僅供示範，無法操作','Demonstration only')}"></div>${renderDemoGithub(i)}</section></div>`;return redesignPage(content,['GitHub','Repository','main',resolveTermKey(s.term)],redesignActionBar('gotoPhase(2)',state.demo.played?'unlock(4)':null,tx('開始引導練習','Start guided practice')))}
+function redesignDemoPage(){const i=state.demo.index;markDemoViewed(i);const s=demoSteps[i],chapter=demoChapterInfo(i),content=`${stageHeading(`STAGE 3 · ${tx('完整示範','FULL DEMONSTRATION')}`,tx(`3.${chapter.chapter+1} ${s.group[0]}`,`3.${chapter.chapter+1} ${s.group[1]}`),tx('系統會逐步操作右側 GitHub 模擬器。橘色框只標示這一步要看的位置；這一階段不能操作。','The system operates the GitHub simulator. The orange frame marks what to watch; this stage is view-only.'),chapter.local,chapter.total)}<div class="course-workbench"><aside class="task-console card"><div class="task-console-header"><span class="status-badge purple">${tx('系統示範中','System demo')} · ${i+1}/${demoSteps.length}</span><h2>${tx(...s.title)}</h2></div><div class="task-section"><div class="task-label">${tx('這一步在做什麼','What happens now')}</div><p>${tx(...s.action)}</p></div><div class="task-section"><div class="task-label">${tx('這一步看哪裡','Where to look')}</div><p>${tx('看右側橘色框標出的按鈕、欄位或資料；這裡先不用操作。','Look at the control, field, or data outlined in orange; do not interact yet.')}</p></div><div class="task-section"><div class="task-label">${tx('完成後會怎樣','What happens next')}</div><p>${tx(...s.result)}</p></div><div class="task-console-actions"><button class="btn" onclick="demoPrev()" ${i===0?'disabled':''}>${tx('上一步','Previous step')}</button><button class="btn" onclick="toggleDemoAuto()">${state.demo.auto?tx('暫停','Pause'):tx('自動播放','Auto play')}</button><button class="btn primary" onclick="demoNext()">${i===demoSteps.length-1?tx('完成示範','Finish demo'):tx('下一步','Next step')}</button></div></aside><section class="workspace-surface"><div class="demo-shield" aria-label="${plain('僅供示範，無法操作','Demonstration only')}"></div>${renderDemoGithub(i)}</section></div>`;return redesignPage(content,['GitHub','Repository','main',resolveTermKey(s.term)],redesignActionBar('gotoPhase(2)',state.demo.played?'unlock(4)':null,tx('開始引導練習','Start guided practice')))}
 
 function redesignPracticeWorkspace(){if(!state.practice.predictionOK)return `<div class="workspace-lock"><div class="workspace-lock-inner"><span class="workspace-lock-label">${tx('先想再操作','THINK BEFORE CLICKING')}</span><h2>${tx('操作區尚未解鎖','Workspace locked')}</h2><p>${tx('先完成左側的情境判斷。答對後，GitHub 模擬器會在這裡開啟。','Complete the scenario judgment on the left. The GitHub simulator opens here after a correct answer.')}</p></div></div>`;return renderPracticeWorkspace()}
 function redesignPracticePage(){const p=state.practice,m=practiceMeta[p.step],content=`${stageHeading('STAGE 4 · GUIDED PRACTICE',tx(`4.${p.step+1} ${m.title[0]}`,`4.${p.step+1} ${m.title[1]}`),tx('先想、再操作 GitHub 模擬器；需要時再看提示。做錯時，請看清楚後果並回頭修正。','Predict, operate the GitHub simulator, and use hints when needed. When something goes wrong, read the consequence and fix it.'),p.step,practiceMeta.length)}<div class="course-workbench"><aside class="task-console card"><div class="task-console-header"><span class="status-badge purple">${tx('目前任務','Current task')} · ${p.step+1}/${practiceMeta.length}</span><h2>${tx(...m.title)}</h2></div><div class="task-section"><div class="task-label">${tx('任務目標','Objective')}</div><p>${tx(...m.mission)}</p></div><div class="task-section"><div class="task-label">${tx('操作前先想一想','Predict before acting')}</div><p>${tx(...m.q)}</p><div class="predict">${m.opts.map(o=>`<button class="predict-option ${p.prediction===o[0]?(p.predictionOK?'correct':'wrong'):''}" onclick="practicePredict('${esc(o[0])}')">${tx(o[0],o[1])}</button>`).join('')}</div></div>${p.predictionOK?`<div class="task-section"><button class="btn" onclick="nextHint()">${tx(`展開提示 ${p.hint}/3`,`Show hint ${p.hint}/3`)}</button>${p.hint?`<div class="hint-box">${practiceHint(p.step,p.hint)}</div>`:''}</div>`:''}</aside><section class="workspace-surface">${p.error?practiceError(p.error):''}${redesignPracticeWorkspace()}${p.result?practiceResult():''}</section></div>`;const canContinue=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return redesignPage(content,[resolveTermKey(m.term),'main','Commit','Review'].filter(k=>terms[k]),redesignActionBar('gotoPhase(3)',canContinue?'unlock(5)':null,tx('開始綜合回顧','Start integrated review')))}
 
-document.addEventListener('keydown',event=>{if(state.modal){if(event.key==='Escape'){event.preventDefault();closeModal();return}if(event.key==='Tab'){const focusable=[...document.querySelectorAll('.modal button:not([disabled]),.modal input:not([disabled]),.modal textarea:not([disabled]),.modal select:not([disabled])')];if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}return}if(state.termsOpen){if(event.key==='Escape'){event.preventDefault();closeScenarioGlossary();return}if(event.key==='Tab'){const focusable=[...document.querySelectorAll('#scenario-glossary-drawer button:not([disabled])')];if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}}})
+function trapKeyboardFocus(event,selector){if(event.key!=='Tab')return;const focusable=[...document.querySelectorAll(selector)].filter(function(item){return item.offsetParent!==null});if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}
+document.addEventListener('keydown',event=>{
+  if(state.modal){if(event.key==='Escape'){event.preventDefault();closeModal();return}trapKeyboardFocus(event,'.modal button:not([disabled]),.modal input:not([disabled]),.modal textarea:not([disabled]),.modal select:not([disabled])');return}
+  if(state.termsOpen){if(event.key==='Escape'){event.preventDefault();closeScenarioGlossary();return}trapKeyboardFocus(event,'#scenario-glossary-drawer button:not([disabled])');return}
+  if(state.navOpen){if(event.key==='Escape'){event.preventDefault();closeCourseNavigation();return}trapKeyboardFocus(event,'#course-rail button:not([disabled])')}
+})
 
 /* Stage 1 split view: an editorial introduction, followed by the evidence exercise. */
 function scenarioBubble(id,problemId,author,body,self=false,normal=false){const found=problemId&&state.scenarioFound.includes(problemId),wrong=state.scenarioWrong===id;return `<button type="button" class="scenario-message ${self?'self ':''}${found?'found ':''}${wrong?'wrong':''}" onclick="inspectScenarioBubble('${id}','${problemId||''}')" aria-pressed="${!!found}"><span class="scenario-message-author">${author}</span><span class="scenario-message-body">${body}</span><span class="scenario-message-cue" aria-hidden="true">${found?'✓':normal?tx('普通訊息','Normal'):tx('點一下查看','Tap to inspect')}</span></button>`}
@@ -976,6 +1215,15 @@ function baseReview(){
     attempts:{},wrongAttempts:{},results:{},stepResults:{},feedback:null,reviewStep:1,report:null,migrationNotice:false
   };
 }
+function baseDashboard(){
+  return {schemaVersion:DASHBOARD_SCHEMA_VERSION,firstUnlockedAt:null,firstViewedAt:null,lastViewedAt:null,returnStage:null,helpSeen:false};
+}
+function normalizeDashboard(value){
+  const base=baseDashboard(),v=value&&typeof value==='object'?value:{};
+  return {...base,...v,schemaVersion:DASHBOARD_SCHEMA_VERSION,firstUnlockedAt:typeof v.firstUnlockedAt==='string'?v.firstUnlockedAt:null,firstViewedAt:typeof v.firstViewedAt==='string'?v.firstViewedAt:null,lastViewedAt:typeof v.lastViewedAt==='string'?v.lastViewedAt:null,helpSeen:Boolean(v.helpSeen)};
+}
+const stage5QuestionIds=['workspace','task','branch','commit','pullRequest','review','workflow'];
+function reviewHasAllResults(review){return Boolean(review&&stage5QuestionIds.every(function(id){return ['workspace','task','branch','commit','pullRequest','review','workflow'].includes(id)&&review.results&&review.results[id]}) )}
 function normalizeLearningEvidence(value){
   const base=baseLearningEvidence(),v=value&&typeof value==='object'?value:{},stage2=v.stage2||{},stage3=v.stage3||{},stage4=v.stage4||{};
   return {
@@ -992,7 +1240,30 @@ function normalizeReview(value){
   const validWorkflowIds=['issue','branch','commit','pullRequest','review','merge','workflow'];
   const candidate=Array.isArray(a.workflow)?a.workflow.slice():[];
   const workflow=candidate.length===validWorkflowIds.length&&candidate.every(function(id){return validWorkflowIds.includes(id)})&&new Set(candidate).size===validWorkflowIds.length?candidate:base.answers.workflow.slice();
-  return {...base,...v,answers:{...base.answers,...a,workflow},attempts:{...base.attempts,...(v.attempts||{})},wrongAttempts:{...base.wrongAttempts,...(v.wrongAttempts||{})},results:{...base.results,...(v.results||{})},stepResults:{...base.stepResults,...(v.stepResults||{})},feedback:v.feedback||null,route:Array.isArray(v.route)?v.route.slice():[],migrationNotice:Boolean(v.migrationNotice)};
+  return {...base,...v,answers:{...base.answers,...a,workflow},attempts:{...base.attempts,...(v.attempts||{})},wrongAttempts:{...base.wrongAttempts,...(v.wrongAttempts||{})},results:{...base.results,...(v.results||{})},stepResults:{...base.stepResults,...(v.stepResults||{})},feedback:v.feedback||null,route:Array.isArray(v.route)?v.route.slice():base.route.slice(),migrationNotice:Boolean(v.migrationNotice)};
+}
+function migrateLegacyReportState(source){
+  const out=source||{},review=normalizeReview(out.review),oldRoute=Array.isArray(review.route)?review.route.slice():[],reportIndex=oldRoute.indexOf('report');
+  const hasLegacyReport=reportIndex>=0;
+  if(hasLegacyReport||!stage5RouteIsCurrent(oldRoute)){
+    const oldCursor=Math.max(0,Number(review.cursor)||0),oldMax=Math.max(oldCursor,Number(review.maxVisitedCursor)||0);
+    review.route=[...stage5Route];
+    review.cursor=Math.min(oldCursor,stage5Route.length-1);
+    review.maxVisitedCursor=Math.min(oldMax,stage5Route.length-1);
+    if(hasLegacyReport&&Boolean(review.completed||oldCursor>=reportIndex)){
+      review.completed=true;
+      review.status='completed';
+      review.cursor=stage5Route.length-1;
+      review.maxVisitedCursor=stage5Route.length-1;
+      out.phase=6;
+      out.unlocked=Math.max(Number(out.unlocked)||1,5);
+    }
+    review.migrationNotice=true;
+    out._dashboardMigrationDirty=true;
+  }
+  out.review=review;
+  out.dashboard=normalizeDashboard(out.dashboard);
+  return out;
 }
 function hydrateEvidenceFromExistingState(evidence,source){
   const e=normalizeLearningEvidence(evidence),x=source||{};
@@ -1013,7 +1284,7 @@ function normalizePractice(value){
   return {...base,...v,drafts:{...base.drafts,...(v.drafts||{})},review:{...base.review,...(v.review||{})}};
 }
 function fresh(){
-  return {version:VERSION,lang:'zh',phase:1,unlocked:1,scenarioIntro:true,scenarioFound:[],scenarioSelected:null,scenarioWrong:'',thinking:{},thinkingCurrent:'owner',demo:{index:0,played:false,auto:false,version:DEMO_VERSION},practice:basePractice(),learningEvidence:baseLearningEvidence(),review:baseReview(),termsOpen:false,navOpen:false,railCollapsed:false,modal:null};
+  return {version:VERSION,lang:'zh',phase:1,unlocked:1,scenarioIntro:true,scenarioFound:[],scenarioSelected:null,scenarioWrong:'',thinking:{},thinkingCurrent:'owner',demo:{index:0,played:false,auto:false,version:DEMO_VERSION},practice:basePractice(),learningEvidence:baseLearningEvidence(),review:baseReview(),dashboard:baseDashboard(),stageCompletionSeen:[],termsOpen:false,navOpen:false,railCollapsed:false,modal:null};
 }
 function restorePracticeDrafts(fallback){
   try{
@@ -1037,11 +1308,14 @@ function load(){
       delete out.extension;
       out.learningEvidence=hydrateEvidenceFromExistingState(x.learningEvidence||baseLearningEvidence(),out);
       out.review=normalizeReview(x.review);
+      out.dashboard=normalizeDashboard(x.dashboard);
+      migrateLegacyReportState(out);
       out.navOpen=false;
       if(typeof out.scenarioIntro!=='boolean')out.scenarioIntro=true;
       if(typeof out.scenarioWrong!=='string')out.scenarioWrong='';
       if(typeof out.termsOpen!=='boolean')out.termsOpen=false;
       if(typeof out.railCollapsed!=='boolean')out.railCollapsed=false;
+      if(!Array.isArray(out.stageCompletionSeen))out.stageCompletionSeen=[];
       if(!out.demo||out.demo.version!==DEMO_VERSION)out.demo={index:0,played:false,auto:false,version:DEMO_VERSION};else out.demo.auto=false;
       return out;
     }
@@ -1055,6 +1329,22 @@ function appendLearningEvent(event){
   state.learningEvidence.revision=(Number(state.learningEvidence.revision)||0)+1;
 }
 function recordLearningEvent(event){appendLearningEvent(event);persist()}
+function hasLearningEvent(stage,action){return Boolean((state.learningEvidence?.events||[]).some(function(event){return Number(event.stage)===Number(stage)&&event.action===action}))}
+function recordStageCompletion(stage,concept){if(hasLearningEvent(stage,'stage-completed'))return false;appendLearningEvent({stage:stage,concept:concept||('stage-'+stage),action:'stage-completed',itemId:'stage-'+stage});return true}
+function stage4PracticeComplete(source){
+  const s=source||state,e=s.learningEvidence||baseLearningEvidence(),completed=s.practice&&Array.isArray(s.practice.completed)?s.practice.completed:[];
+  return practiceMeta.every(function(_,index){const evidence=e.stage4?.byStep?.[String(index)];return Boolean(evidence?.completed||completed.includes(index))});
+}
+function stageCompletionSummary(source){
+  const s=source||state,e=s.learningEvidence||baseLearningEvidence(),stage2=e.stage2?.byProblem||{};
+  const stage1=Boolean(e.stage1?.completed||(Array.isArray(s.scenarioFound)&&s.scenarioFound.length===pains.length));
+  const stage2Complete=pains.every(function(p){return Boolean(stage2[p.id]?.solved||(s.thinking&&s.thinking[p.id]))});
+  const stage3=Boolean(e.stage3?.completed||s.demo?.played);
+  const stage4=stage4PracticeComplete(s);
+  const stage5=Boolean(s.review?.completed&&reviewHasAllResults(s.review));
+  const completedStages=[stage1,stage2Complete,stage3,stage4,stage5].filter(Boolean).length;
+  return {stages:[stage1,stage2Complete,stage3,stage4,stage5],completedStages:completedStages,totalStages:5,percent:Math.round(completedStages/5*100)};
+}
 function save(render=true){
   const p=state.practice;
   if(p&&p.error&&p.error.type!=='prediction'){
@@ -1177,7 +1467,15 @@ function ensureReviewRoute(){
   if(!state.review){state.review=baseReview();persist();return state.review}
   const current=normalizeReview(state.review);
   if(!Array.isArray(current.answers.workflow)||current.answers.workflow.length!==7)current.answers.workflow=stage5DefaultWorkflow();
-  if(Number(current.schemaVersion)!==STAGE5_SCHEMA_VERSION||!stage5RouteIsCurrent(current.route)){state.review=baseReview();state.review.migrationNotice=true;persist();return state.review}
+  if(Number(current.schemaVersion)!==STAGE5_SCHEMA_VERSION){current.schemaVersion=STAGE5_SCHEMA_VERSION;current.migrationNotice=true}
+  if(!stage5RouteIsCurrent(current.route)){
+    const oldRoute=current.route.slice(),reportIndex=oldRoute.indexOf('report'),oldCursor=Math.max(0,Number(current.cursor)||0),oldMax=Math.max(oldCursor,Number(current.maxVisitedCursor)||0);
+    current.route=[...stage5Route];
+    current.cursor=Math.min(oldCursor,stage5Route.length-1);
+    current.maxVisitedCursor=Math.min(oldMax,stage5Route.length-1);
+    if(reportIndex>=0&&Boolean(current.completed||oldCursor>=reportIndex)){current.completed=true;current.status='completed';current.cursor=stage5Route.length-1;current.maxVisitedCursor=stage5Route.length-1}
+    current.migrationNotice=true;
+  }
   state.review=current;return state.review;
 }
 function reviewPage(){const r=ensureReviewRoute();return r.route[r.cursor]||'intro'}
@@ -1220,22 +1518,32 @@ function stage5WorkflowIssue(order){
 function stage5CheckWorkflow(q){
   const r=state.review,order=r.answers.workflow||[];
   if(order.length!==q.correctOrder.length||order.some(function(item,index){return item!==q.correctOrder[index]})){stage5RecordWrong('workflow');stage5SetFeedback('workflow','error',stage5WorkflowIssue(order));return}
-  r.results.workflow=stage5RecordCorrect('workflow');stage5SetFeedback('workflow','success',q.successFeedback);
+  r.results.workflow=stage5RecordCorrect('workflow');if(completeStage5AndOpenDashboard())return;stage5SetFeedback('workflow','success',q.successFeedback);
 }
 function stage5CheckCurrent(){
-  const page=reviewPage(),q=stage5Questions[page];if(page==='intro'){reviewNext();return}if(page==='report'){reviewJumpToReport();return}if(q.type==='single')stage5CheckSingle(q);else if(q.type==='review')stage5CheckReview(q);else stage5CheckWorkflow(q);
+  const page=reviewPage(),q=stage5Questions[page];if(page==='intro'){reviewNext();return}if(!q)return;if(q.type==='single')stage5CheckSingle(q);else if(q.type==='review')stage5CheckReview(q);else stage5CheckWorkflow(q);
 }
-function stage5CurrentComplete(page){const r=state.review;if(page==='intro'||page==='report')return true;const key=page==='review'?'review':stage5PageKey(page);return Boolean(r.results[key])}
+function stage5CurrentComplete(page){const r=state.review;if(page==='intro')return true;const key=page==='review'?'review':stage5PageKey(page);return Boolean(r.results[key])}
+function completeStage5AndOpenDashboard(){
+  const r=ensureReviewRoute();
+  if(!reviewHasAllResults(r))return false;
+  r.status='completed';r.completed=true;r.cursor=stage5Route.length-1;r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);r.feedback=null;state.unlocked=Math.max(Number(state.unlocked)||1,5);
+  if(!state.dashboard)state.dashboard=baseDashboard();
+  if(!hasLearningEvent(5,'stage-completed'))recordStageCompletion(5,'integratedReview');
+  const completionEvent=(state.learningEvidence?.events||[]).slice().reverse().find(function(event){return Number(event.stage)===5&&event.action==='stage-completed'});
+  if(!state.dashboard.firstUnlockedAt&&completionEvent?.at)state.dashboard.firstUnlockedAt=completionEvent.at;
+  state.phase=6;markDashboardViewed();persist();draw();topNow();return true;
+}
 function reviewAdvance(){
-  const r=state.review;r.feedback=null;r.cursor=Math.min(r.cursor+1,r.route.length-1);r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);
-  if(r.route[r.cursor]==='report'){r.status='completed';r.completed=true;r.report=reviewBuildReport();state.unlocked=Math.max(state.unlocked,5)}
-  persist();draw();topNow();
+  const r=ensureReviewRoute(),page=r.route[r.cursor]||'intro';
+  if(page==='workflow'){completeStage5AndOpenDashboard();return}
+  r.feedback=null;r.cursor=Math.min(r.cursor+1,r.route.length-1);r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);persist();draw();topNow();
 }
 function reviewNext(){
-  const r=ensureReviewRoute(),page=reviewPage();if(alexTestMode){alexSeedReviewAnswers();if(page==='report'){alexCompleteReview();return}reviewAdvance();return}
-  if(page==='intro'){r.status='in-progress';reviewAdvance();return}if(page==='report'){reviewJumpToReport();return}if(!stage5CurrentComplete(page)){stage5CheckCurrent();return}reviewAdvance();
+  const r=ensureReviewRoute(),page=r.route[r.cursor]||'intro';if(alexTestMode){alexSeedReviewAnswers();reviewAdvance();return}
+  if(page==='intro'){r.status='in-progress';reviewAdvance();return}if(!stage5CurrentComplete(page)){stage5CheckCurrent();return}reviewAdvance();
 }
-function reviewReset(){if(!confirm(plain('重新做一次綜合回顧？前四階段不會被清除。','Redo the integrated review? Stages 1–4 will not be cleared.')))return;state.review=baseReview();state.termsOpen=false;focusRequested=true;save();topNow()}
+function reviewReset(){if(Number(state.unlocked)<5)return;if(!confirm(plain('重新做一次綜合回顧？前四階段不會被清除。','Redo the integrated review? Stages 1–4 will not be cleared.')))return;state.review=baseReview();state.phase=5;state.unlocked=Math.max(Number(state.unlocked)||1,5);state.termsOpen=false;focusRequested=true;save();topNow()}
 
 /* Evidence instrumentation and Stage 5 course shell */
 function inspectScenarioBubble(bubbleId,problemId){
@@ -1255,8 +1563,8 @@ function inspectScenarioBubble(bubbleId,problemId){
     if(!state.learningEvidence)state.learningEvidence=baseLearningEvidence();
     state.learningEvidence.stage1.discoveryOrder.push(problemId);
     appendLearningEvent({stage:1,concept:reviewConceptForProblem(problemId),action:'found-clue',itemId:bubbleId});
+    if(state.scenarioFound.length===pains.length){state.learningEvidence.stage1.completed=true;recordStageCompletion(1,'realContext');openStageCompletion(1)}
   }
-  if(state.scenarioFound.length===pains.length)state.learningEvidence.stage1.completed=true;
   save();
 }
 function answerNeed(painId,answerId){
@@ -1265,11 +1573,13 @@ function answerNeed(painId,answerId){
   if(painId===answerId){
     p.solved=true;state.thinking[painId]=true;state.modal=null;
     appendLearningEvent({stage:2,concept:reviewConceptForProblem(painId),action:'solved-match',itemId:painId});
+    if(pains.every(function(item){return state.learningEvidence.stage2.byProblem[item.id]?.solved})){recordStageCompletion(2,'guidedThinking');openStageCompletion(2)}else thinkingNextFocusRequested=true;
   }else{
     p.wrong++;
     appendLearningEvent({stage:2,concept:reviewConceptForProblem(painId),action:'wrong-match',itemId:painId});
     const wrong=pains.find(function(x){return x.id===answerId});
-    state.modal={type:'wrong',title:['再想一次','Try again'],body:['你選的「'+wrong.need[0]+'」是在解決另一個問題，回頭看看目前情境再選一次。','“'+wrong.need[1]+'” addresses a different problem. Look at the current situation again and choose once more.']};
+    modalReturnFocus=document.activeElement;modalReturnFocusSelector='.need-option[data-need-id="'+answerId+'"]';
+    state.modal={type:'wrong',painId:painId,answerId:answerId,title:['再想一次','Try again'],body:['你選的「'+wrong.need[0]+'」是在解決另一個問題，回頭看看目前情境再選一次。','“'+wrong.need[1]+'” addresses a different problem. Look at the current situation again and choose once more.']};
   }
   save();
 }
@@ -1279,7 +1589,7 @@ function markDemoViewed(index){
   state.learningEvidence.stage3.viewedSteps.push(index);
   const term=resolveTermKey(demoSteps[index]?.term||'');
   if(term&&!state.learningEvidence.stage3.viewedConcepts.includes(term))state.learningEvidence.stage3.viewedConcepts.push(term);
-  if(index===demoSteps.length-1)state.learningEvidence.stage3.completed=true;
+  if(index===demoSteps.length-1){state.learningEvidence.stage3.completed=true;recordStageCompletion(3,'completeDemonstration')}
   appendLearningEvent({stage:3,concept:term||'versionRelations',action:'viewed-demo-step',itemId:'demo-step-'+index});
   persist();
 }
@@ -1313,9 +1623,15 @@ function applyPracticeAutofill(key,id){
   if(button){button.textContent=plain('已填入','Filled');button.classList.add('filled');window.setTimeout(function(){if(document.body.contains(button)){button.textContent=plain('幫我填','Fill it');button.classList.remove('filled')}},1200)}
 }
 function confirmResetPhase(){
-  state.modal=null;modalReturnFocus=null;modalReturnFocusSelector=null;state.termsOpen=false;state.scenarioWrong='';
+  clearStageCompletionSeen(state.phase);state.modal=null;modalReturnFocus=null;modalReturnFocusSelector=null;state.termsOpen=false;state.scenarioWrong='';
   if(state.phase===1){state.scenarioIntro=true;state.scenarioFound=[];state.scenarioSelected=null}
-  if(state.phase===2){state.thinking={};state.thinkingCurrent='owner'}
+  if(state.phase===2){
+    state.thinking={};state.thinkingCurrent='owner';thinkingNextFocusRequested=false;thinkingQuestionFocusRequested=false;
+    if(!state.learningEvidence)state.learningEvidence=baseLearningEvidence();
+    state.learningEvidence.stage2=baseLearningEvidence().stage2;
+    state.learningEvidence.events=(state.learningEvidence.events||[]).filter(function(event){return Number(event.stage)!==2});
+    state.learningEvidence.revision=(Number(state.learningEvidence.revision)||0)+1;
+  }
   if(state.phase===3){state.demo={index:0,played:false,auto:false,version:DEMO_VERSION}}
   if(state.phase===4)state.practice=basePractice();
   if(state.phase===5)state.review=baseReview();
@@ -1326,7 +1642,7 @@ function reviewTermKeys(){
   return keys.filter(function(k){return terms[k]});
 }
 function reviewPageLabel(page){
-  const map={intro:['綜合回顧','Integrated review'],workspace:['共同工作區','Shared workspace'],task:['任務分工','Task ownership'],branch:['安全修改','Safe changes'],commit:['版本紀錄','Version record'],'pull-request':['提出修改','Propose a change'],review:['審查與修正','Review and fix'],workflow:['完整協作流程','Complete workflow'],report:['回顧報告','Review report']};
+  const map={intro:['綜合回顧','Integrated review'],workspace:['共同工作區','Shared workspace'],task:['任務分工','Task ownership'],branch:['安全修改','Safe changes'],commit:['版本紀錄','Version record'],'pull-request':['提出修改','Propose a change'],review:['審查與修正','Review and fix'],workflow:['完整協作流程','Complete workflow']};
   return map[page]||map.intro;
 }
 function stage5Progress(page){
@@ -1334,8 +1650,8 @@ function stage5Progress(page){
   return '<div class="stage5-progress" aria-label="'+esc(plain('第 '+number+' 題，共 7 題','Question '+number+' of 7'))+'"><span>'+tx('第 '+number+' 題，共 7 題','Question '+number+' of 7')+'</span>'+(page==='review'?'<b>'+tx('步驟 '+step+'／2','Step '+step+' of 2')+'</b>':'')+'</div>';
 }
 function reviewHeading(page){
-  const q=stage5Questions[page],label=reviewPageLabel(page),title=page==='intro'?tx('綜合回顧','Integrated review'):page==='report'?tx('回顧報告','Review report'):tx(...label),desc=page==='intro'?tx('這裡不考英文名詞背誦，而是確認你能不能把 GitHub 用在一次真實的小組協作中。七個題組會從分工、修改、留下版本，一路走到審查與正式合併。','This is not an English vocabulary test. It checks whether you can use GitHub in a real team collaboration, from ownership and editing through review and merging.'):page==='report'?tx('這份報告整理五個能力面向，不用分數或排名告訴你下一步。','This report summarizes five ability areas without scores or rankings.'):tx('閱讀情境，做出判斷，再用「檢查答案」查看具體回饋。','Read the scenario, make a judgment, then use “Check answer” to see specific feedback.');
-  return '<header class="stage-heading stage5-heading"><div><div class="stage-kicker">STAGE 5 · INTEGRATED REVIEW</div><h1>'+title+'</h1><p>'+desc+'</p></div><div class="stage5-heading-side">'+(q?stage5Progress(page):page==='report'?stage5Progress('workflow'):'<span class="stage5-time">'+tx('約 5–8 分鐘','About 5–8 minutes')+'</span>')+'</div></header>'+alexReviewTools();
+  const q=stage5Questions[page],label=reviewPageLabel(page),title=page==='intro'?tx('綜合回顧','Integrated review'):tx(...label),desc=page==='intro'?tx('這裡不考英文名詞背誦，而是確認你能不能把 GitHub 用在一次真實的小組協作中。七個題組會從分工、修改、留下版本，一路走到審查與正式合併。','This is not an English vocabulary test. It checks whether you can use GitHub in a real team collaboration, from ownership and editing through review and merging.'):tx('閱讀情境，做出判斷，再用「檢查答案」查看具體回饋。','Read the scenario, make a judgment, then use “Check answer” to see specific feedback.');
+  return '<header class="stage-heading stage5-heading"><div><div class="stage-kicker">STAGE 5 · INTEGRATED REVIEW</div><h1>'+title+'</h1><p>'+desc+'</p></div><div class="stage5-heading-side">'+(q?stage5Progress(page):'<span class="stage5-time">'+tx('約 5–8 分鐘','About 5–8 minutes')+'</span>')+'</div></header>'+alexReviewTools();
 }
 function stage5MigrationNotice(){
   const r=state.review;if(!r.migrationNotice)return '';
@@ -1343,7 +1659,7 @@ function stage5MigrationNotice(){
 }
 function dismissStage5Migration(){state.review.migrationNotice=false;persist();draw()}
 function renderStage5Intro(){
-  const route=stage5Route.filter(function(p){return p!=='intro'&&p!=='report'}),r=ensureReviewRoute();
+  const route=stage5Route.filter(function(p){return p!=='intro'}),r=ensureReviewRoute();
   return '<div class="review-page"><section class="review-intro stage5-intro"><article class="review-brief" aria-labelledby="stage5-intro-title"><span class="status-badge purple">'+tx('綜合回顧','Integrated review')+'</span><h2 id="stage5-intro-title">'+tx('把 GitHub 當成一套小組協作流程','Use GitHub as a team collaboration workflow')+'</h2><p>'+tx('你會從 Issue 分工開始，走過 Branch、Commit、Pull Request、Review 與 Merge，最後確認工作進度。這裡不考英文名詞背誦，而是確認你能不能完成一次真實的小組協作。','You will start with Issue ownership, move through Branch, Commit, Pull Request, Review, and Merge, and finish by checking progress. This is not an English vocabulary test; it checks whether you can complete a real team collaboration.')+'</p><div class="review-actions"><button type="button" class="btn primary" onclick="reviewNext()">'+tx('開始綜合回顧','Start integrated review')+'</button></div></article><aside class="review-route-card"><h3>'+tx('固定七個題組','Seven-question route')+'</h3><ol class="review-route-list">'+route.map(function(p){const q=stage5Questions[p];return '<li><i>'+q.number+'</i><span>'+tx(...q.title)+'</span></li>'}).join('')+'</ol><p class="field-help">'+tx('每題答錯會留在原題，讀過提示後再試；不會插入重複補強頁。','A wrong answer stays on the question with a useful hint; no duplicate repair pages are inserted.')+'</p></aside></div>'+stage5MigrationNotice();
 }
 function stage5OptionMarkup(questionId,options,selected){
@@ -1443,31 +1759,154 @@ function renderStage5Report(){
   return '<section class="review-report"><span class="status-badge green">'+tx('綜合回顧完成','Integrated review complete')+'</span><h2>'+tx('這次你已經能判斷什麼？','What can you judge now?')+'</h2><p>'+tx('這份報告不給百分比或排名，只整理五個能力面向的下一步。','This report gives no percentage or ranking; it summarizes the next step for five ability areas.')+'</p><div class="review-result-grid stage5-result-grid">'+Object.keys(stage5Domains).map(function(domain){const d=stage5Domains[domain],result=report[domain]||'needs-review';return '<article class="review-result '+result+'"><h3>'+tx(...d.title)+' <span class="review-domain-status">'+tx(...stage5StatusLabel(result))+'</span></h3><p>'+tx(...d.description)+'</p>'+reviewReportReturnButton(domain)+'</article>'}).join('')+'</div><div class="review-verify-note"><p>'+tx('你不需要背完所有 GitHub 英文名詞。重點是知道每一步在團隊中解決什麼問題：先說清楚工作、在安全版本修改、留下紀錄、請隊友檢查，再把確認過的內容放進正式版。','You do not need to memorize every GitHub term. The point is knowing what problem each step solves: clarify the work, edit a safe version, leave a record, ask teammates to check, and then put confirmed work into the official version.')+'</p></div><div class="review-actions"><button type="button" class="btn" onclick="reviewReset()">'+tx('重新做一次綜合回顧','Redo the integrated review')+'</button><button type="button" class="btn primary" onclick="gotoPhase(4)">'+tx('回到 Stage 4 複習','Return to Stage 4 practice')+'</button></div></section>';
 }
 function reviewReportView(){return renderStage5Report()}
+function dashboardIsUnlocked(){return true}
+function dashboardResumeStage(){const unlocked=Math.max(1,Math.min(5,Number(state.unlocked)||1)),preferred=Number(state.dashboard?.returnStage);return preferred>=1&&preferred<=unlocked?preferred:unlocked}
+function dashboardActionIsAvailable(domain){const action=dashboardReturnAction(domain);if(action.kind==='practice')return Number(state.unlocked)>=4;if(action.kind==='review')return Number(state.unlocked)>=5;return true}
+function markDashboardViewed(){
+  if(!state.dashboard)state.dashboard=baseDashboard();
+  const now=new Date().toISOString();
+  if(!state.dashboard.firstViewedAt)state.dashboard.firstViewedAt=now;
+  state.dashboard.lastViewedAt=now;
+  if(!(state.learningEvidence?.events||[]).some(function(event){return event.action==='dashboard-opened'}))appendLearningEvent({stage:6,concept:'learningDashboard',action:'dashboard-opened',itemId:'learning-dashboard'});
+}
+function dashboardStage2Records(){
+  const byProblem=state.learningEvidence?.stage2?.byProblem||{};
+  return pains.map(function(p){const record=byProblem[p.id]||{};return {id:p.id,solved:Boolean(record.solved||state.thinking?.[p.id]),wrong:Number(record.wrong)||0,attempts:Number(record.attempts)||0}});
+}
+function dashboardStage4Records(){
+  const byStep=state.learningEvidence?.stage4?.byStep||{},completed=Array.isArray(state.practice?.completed)?state.practice.completed:[];
+  return practiceMeta.map(function(meta,index){const record=byStep[String(index)]||{};return {id:String(index),title:meta.term,completed:Boolean(record.completed||completed.includes(index)),wrongPredictions:Number(record.wrongPredictions)||0,hintsUsed:Number(record.hintsUsed)||0,autofillUses:Number(record.autofillUses)||0,operationErrors:Array.isArray(record.operationErrors)?record.operationErrors:[]}});
+}
+function dashboardStage5Records(){
+  const r=state.review||{};return stage5QuestionIds.map(function(id){return {id:id,result:r.results?.[id]||'',wrong:Number(r.wrongAttempts?.[id])||0,attempts:Number(r.attempts?.[id])||0}});
+}
+function dashboardMetrics(){
+  const completion=stageCompletionSummary(),stage2=dashboardStage2Records(),stage4=dashboardStage4Records(),stage5=dashboardStage5Records();
+  const stage2Comparable=stage2.filter(function(item){return item.solved}),stage2Independent=stage2.filter(function(item){return item.solved&&item.wrong===0});
+  const stage4Comparable=stage4.filter(function(item){return item.completed}),stage4Independent=stage4.filter(function(item){return item.completed&&item.wrongPredictions===0&&item.hintsUsed===0&&item.autofillUses===0&&item.operationErrors.length===0});
+  const stage5Comparable=stage5.filter(function(item){return Boolean(item.result)}),stage5Independent=stage5.filter(function(item){return item.result==='mastered'});
+  const comparable=stage2Comparable.length+stage4Comparable.length+stage5Comparable.length,independent=stage2Independent.length+stage4Independent.length+stage5Independent.length;
+  const recoveries=[];
+  stage2.forEach(function(item){if(item.solved&&item.wrong>0)recoveries.push('stage2:'+item.id)});
+  stage4.forEach(function(item){if(item.completed&&(item.wrongPredictions>0||item.hintsUsed>0||item.autofillUses>0||item.operationErrors.length))recoveries.push('stage4:'+item.id)});
+  stage5.forEach(function(item){if(item.result==='clarified'||item.result==='needs-review')recoveries.push('stage5:'+item.id)});
+  const domains=Object.keys(stage5Domains).map(function(domain){return {id:domain,status:stage5DomainStatus(domain)}}),mastered=domains.filter(function(item){return item.status==='mastered'}).length,clarified=domains.filter(function(item){return item.status==='clarified'}).length;
+  return {completion:completion,skills:{mastered:mastered,clarified:clarified,usable:mastered+clarified,total:domains.length,domains:domains},independent:{independent:independent,comparable:comparable,percent:comparable?Math.round(independent/comparable*100):0,byStage:{stage2:{independent:stage2Independent.length,comparable:stage2Comparable.length},stage4:{independent:stage4Independent.length,comparable:stage4Comparable.length},stage5:{independent:stage5Independent.length,comparable:stage5Comparable.length}}},recoveries:recoveries.length,stage2:stage2,stage4:stage4,stage5:stage5,support:{stage2Wrong:stage2.reduce(function(sum,item){return sum+item.wrong},0),stage4Hints:stage4.reduce(function(sum,item){return sum+item.hintsUsed},0),stage4Autofill:stage4.reduce(function(sum,item){return sum+item.autofillUses},0),stage4Errors:stage4.reduce(function(sum,item){return sum+item.operationErrors.length},0),stage5Reattempts:stage5.reduce(function(sum,item){return sum+item.wrong},0)}};
+}
+function dashboardGrowthData(metrics){
+  const firstTry=metrics.stage2.filter(function(item){return item.solved&&item.wrong===0}).length,completedSteps=metrics.stage4.filter(function(item){return item.completed}).length,independentSteps=metrics.independent.byStage.stage4.independent,masteredQuestions=metrics.stage5.filter(function(item){return item.result==='mastered'}).length;
+  return [{id:'stage2',label:['Stage 2','Stage 2'],value:Math.round(firstTry/5*100),numerator:firstTry,denominator:5,available:firstTry>0||metrics.independent.byStage.stage2.comparable>0},{id:'stage4',label:['Stage 4','Stage 4'],value:completedSteps?Math.round(independentSteps/completedSteps*100):0,numerator:independentSteps,denominator:completedSteps,available:completedSteps>0},{id:'stage5',label:['Stage 5','Stage 5'],value:Math.round(masteredQuestions/7*100),numerator:masteredQuestions,denominator:7,available:masteredQuestions>0||metrics.independent.byStage.stage5.comparable>0}];
+}
+function dashboardEvidenceForDomain(domain,metrics){
+  const d=stage5Domains[domain],records=metrics.stage5,assessed=d.ids.map(function(id){return records.find(function(item){return item.id===id})}).filter(function(item){return item&&item.result});
+  if(!assessed.length)return {status:'unassessed',evidence:['尚無足夠學習證據','There is not enough learning evidence yet.']};
+  const source=assessed.slice().sort(function(a,b){return stage5StatusRank(b.result)-stage5StatusRank(a.result)})[0],q=stage5Questions[source.id]||stage5Questions[stage5QuestionPage(source.id)],number=source.id==='review'?6:q?.number||'';
+  const evidence=source.wrong>0?['Q'+number+' 曾先遇到 '+source.wrong+' 次錯誤，之後完成判斷。','Q'+number+' had '+source.wrong+' incorrect attempt(s) before completion.']:['Q'+number+' 首次判斷完成。','Q'+number+' was completed on the first attempt.'];
+  return {status:stage5FormalResult(stage5DomainStatus(domain)),evidence:evidence};
+}
+function dashboardReturnAction(domain){
+  const map={workspace:{kind:'phase',value:1},taskTracking:{kind:'practice',value:2},safeChanges:{kind:'practice',value:4},reviewMerge:{kind:'practice',value:6},fullWorkflow:{kind:'review',value:'workflow'}};
+  return map[domain]||map.fullWorkflow;
+}
+function dashboardOpenDomain(domain){
+  if(!dashboardActionIsAvailable(domain))return;
+  if(domain==='workspace'){gotoPhase(1);return}
+  const action=dashboardReturnAction(domain);
+  if(action.kind==='practice'){state.phase=4;state.practice.step=action.value;state.modal=null;state.termsOpen=false;state.scenarioWrong='';focusRequested=true;save();topNow();return}
+  if(action.kind==='review'){const r=ensureReviewRoute();r.cursor=Math.max(0,stage5Route.indexOf(action.value));r.maxVisitedCursor=Math.max(r.maxVisitedCursor,r.cursor);r.feedback=null;state.phase=5;state.modal=null;focusRequested=true;save();topNow()}
+}
+function dashboardActionLabel(domain){const d=stage5Domains[domain];if(!dashboardActionIsAvailable(domain))return tx('完成前面 Stage 後可前往','Available after earlier stages');return d?tx('回到：'+d.title[0],'Go to: '+d.title[1]):tx('精準回顧','Review precisely')}
+function dashboardStatusPair(status){return stage5StatusLabel(status)}
+function dashboardRecommendations(metrics){
+  const domains=metrics.skills.domains.map(function(item){return {id:item.id,status:item.status}}).sort(function(a,b){return stage5StatusRank(b.status)-stage5StatusRank(a.status)}),active=domains.filter(function(item){return item.status!=='mastered'}).slice(0,2);
+  if(!active.length)return {items:[],allMastered:true};
+  return {allMastered:false,items:active.map(function(item){const d=stage5Domains[item.id];return {id:item.id,status:item.status,title:d.title,evidence:dashboardEvidenceForDomain(item.id,metrics)}})};
+}
+function dashboardDate(value){
+  if(!value)return plain('時間未記錄','Time not recorded');
+  const date=new Date(value);if(Number.isNaN(date.getTime()))return plain('時間未記錄','Time not recorded');
+  return state.lang==='en'?date.toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):date.toLocaleString('zh-TW',{year:'numeric',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
+}
+function dashboardTimeline(){
+  const events=(state.learningEvidence?.events||[]).filter(function(event){return event&&typeof event==='object'}),valid=events.map(function(event){const date=new Date(event.at);return Number.isNaN(date.getTime())?null:{event:event,date:date}}).filter(Boolean).sort(function(a,b){return a.date-b.date});
+  const completion=stageCompletionSummary(),labels={1:['找出真實協作問題','Find the real collaboration problems'],2:['完成引導思考','Complete guided thinking'],3:['看完完整示範','Finish the complete demonstration'],4:['完成引導練習','Complete guided practice'],5:['完成綜合回顧','Complete the integrated review']},timeline=[];
+  for(let stage=1;stage<=5;stage++)if(completion.stages[stage-1]){const event=events.slice().reverse().find(function(item){return Number(item.stage)===stage&&item.action==='stage-completed'});timeline.push({stage:stage,title:labels[stage],timestamp:event?.at||null,completed:true})}
+  if(state.dashboard?.firstViewedAt)timeline.push({stage:6,title:['開啟學習成果','Open learning dashboard'],timestamp:state.dashboard.firstViewedAt,completed:true,current:state.phase===6});
+  const first=valid[0]?.event?.at||null,lastViewed=state.dashboard?.lastViewedAt||null,lastEvent=valid[valid.length-1]?.event?.at||null,last=lastViewed&&lastEvent?(new Date(lastViewed)>new Date(lastEvent)?lastViewed:lastEvent):(lastViewed||lastEvent);
+  const completionEvent=events.slice().reverse().find(function(item){return Number(item.stage)===5&&item.action==='stage-completed'});
+  return {completionDate:completionEvent?.at||state.dashboard?.firstUnlockedAt||null,firstStart:first,lastStudy:last,timeline:timeline};
+}
+function dashboardChart(metricPoints){
+  const xs=[88,320,552],top=24,bottom=190,height=bottom-top,points=metricPoints.map(function(item,index){return {...item,x:xs[index],y:bottom-(item.value/100)*height}}),available=points.filter(function(item){return item.available}),line=available.length>1?'<path class="dashboard-chart-line" d="'+available.map(function(item,index){return (index?'L':'M')+item.x+' '+item.y}).join(' ')+'" aria-hidden="true"></path>':'';
+  const title=plain('Stage 2、Stage 4、Stage 5 的自主完成率變化','Independent completion across Stage 2, Stage 4, and Stage 5'),desc=plain('只比較可比且已完成的檢核點；這不是分數。','Only comparable completed checkpoints are compared; this is not a score.');
+  return '<div class="dashboard-chart-wrap"><svg class="dashboard-chart" viewBox="0 0 640 240" role="img" aria-labelledby="dashboard-chart-title dashboard-chart-desc"><title id="dashboard-chart-title">'+esc(title)+'</title><desc id="dashboard-chart-desc">'+esc(desc)+'</desc><line class="dashboard-chart-grid" x1="64" y1="24" x2="576" y2="24"></line><line class="dashboard-chart-grid" x1="64" y1="107" x2="576" y2="107"></line><line class="dashboard-chart-grid" x1="64" y1="190" x2="576" y2="190"></line><text class="dashboard-chart-axis" x="24" y="29">100%</text><text class="dashboard-chart-axis" x="36" y="112">50%</text><text class="dashboard-chart-axis" x="48" y="195">0%</text>'+line+points.map(function(item){return item.available?'<circle class="dashboard-chart-point" cx="'+item.x+'" cy="'+item.y+'" r="7" tabindex="0" role="img" aria-label="'+esc(item.label[state.lang==='en'?1:0]+' '+item.value+'%')+'"><title>'+esc(item.label[state.lang==='en'?1:0]+' '+item.value+'%')+'</title></circle><text class="dashboard-chart-value" x="'+item.x+'" y="'+(item.y-13)+'" text-anchor="middle">'+item.value+'%</text>':''}).join('')+points.map(function(item){return '<text class="dashboard-chart-axis" x="'+item.x+'" y="222" text-anchor="middle">'+esc(item.label[state.lang==='en'?1:0])+'</text>'}).join('')+'</svg><table class="dashboard-chart-table sr-only"><caption>'+esc(title)+'</caption><thead><tr><th>'+plain('階段','Stage')+'</th><th>'+plain('自主完成率','Independent completion')+'</th></tr></thead><tbody>'+points.map(function(item){return '<tr><th>'+esc(item.label[state.lang==='en'?1:0])+'</th><td>'+ (item.available?item.value+'%':plain('尚無足夠證據','Not enough evidence'))+'</td></tr>'}).join('')+'</tbody></table><div class="dashboard-chart-legend"><span><i aria-hidden="true"></i>'+tx('自主完成率','Independent completion')+'</span><span>'+tx('不是分數','Not a score')+'</span></div></div>';
+}
+function dashboardSupportValue(value){return value===0?tx('本次未使用','Not used this time'):String(value)}
+function renderDashboardKpis(metrics){
+  const current=dashboardResumeStage(),stages=metrics.completion.stages.map(function(done,index){const stage=index+1,isCurrent=stage===current;return '<li class="'+(done?'done ':'')+(isCurrent?'current':'')+'"><span class="dashboard-stage-node" aria-hidden="true">'+(done?'✓':stage)+'</span><span>Stage '+stage+'</span><span class="sr-only">'+tx(done?'已完成':'尚未完成',done?'Completed':'Not completed')+(isCurrent?' · '+tx('目前關卡','Current stage'):'')+'</span></li>'}).join('');
+  const capabilities=[
+    [tx('可用核心能力','Usable core skills'),metrics.skills.usable+' / '+metrics.skills.total,tx(metrics.skills.mastered+' 已掌握，'+metrics.skills.clarified+' 已釐清',metrics.skills.mastered+' mastered, '+metrics.skills.clarified+' clarified')],
+    [tx('自主完成率','Independent completion'),metrics.independent.percent+'%',tx(metrics.independent.independent+' / '+metrics.independent.comparable+' 個可比檢核點',metrics.independent.independent+' / '+metrics.independent.comparable+' comparable checkpoints')],
+    [tx('成功恢復次數','Successful recoveries'),String(metrics.recoveries),tx('遇到錯誤、提示或重試後仍完成','Completed after an error, hint, or retry')]
+  ];
+  return '<div class="dashboard-summary"><section class="dashboard-progress-panel" aria-labelledby="dashboard-progress-title"><span class="dashboard-panel-label" id="dashboard-progress-title">'+tx('整體完成度','Overall progress')+'</span><div class="dashboard-progress-body"><div class="dashboard-progress-value">'+metrics.completion.percent+'%<small>'+tx(metrics.completion.completedStages+' / 5 個 Stage 已完成',metrics.completion.completedStages+' / 5 stages completed')+'</small></div><ol class="dashboard-stage-rail" aria-label="'+plain('五階段完成狀態','Five-stage completion status')+'">'+stages+'</ol></div></section><section class="dashboard-capability-panel" aria-labelledby="dashboard-capability-title"><span class="dashboard-panel-label" id="dashboard-capability-title">'+tx('能力總覽','Capability overview')+'</span><ul class="dashboard-capability-list">'+capabilities.map(function(item){return '<li class="dashboard-capability-row"><span>'+item[0]+'</span><strong>'+item[1]+'</strong><small>'+item[2]+'</small></li>'}).join('')+'</ul></section></div>';
+}
+function renderDashboardCompetencies(metrics){
+  return '<div class="dashboard-competencies" role="table" aria-label="'+plain('五項能力學習證據','Evidence for five competency areas')+'"><div class="dashboard-competency-table-head" role="row"><span role="columnheader">'+tx('能力','Capability')+'</span><span role="columnheader">'+tx('主要證據','Evidence')+'</span><span role="columnheader">'+tx('狀態','Status')+'</span><span role="columnheader">'+tx('複習','Review')+'</span></div>'+Object.keys(stage5Domains).map(function(domain,index){const d=stage5Domains[domain],evidence=dashboardEvidenceForDomain(domain,metrics),status=evidence.status,available=dashboardActionIsAvailable(domain);return '<article class="dashboard-competency status-'+status+'" role="row"><div class="dashboard-competency-title" role="cell"><span class="dashboard-competency-index" aria-hidden="true">'+(index+1)+'</span><div><h3>'+tx(...d.title)+'</h3><p>'+tx(...d.description)+'</p></div></div><p class="dashboard-competency-evidence" role="cell"><strong>'+tx('目前證據','Current evidence')+'</strong>'+tx(...evidence.evidence)+'</p><span class="dashboard-status '+status+'" role="cell">'+tx(...dashboardStatusPair(status))+'</span><div class="dashboard-next-action" role="cell"><button type="button" class="btn" onclick="dashboardOpenDomain(\''+domain+'\')" '+(available?'':'disabled')+'>'+dashboardActionLabel(domain)+'</button></div></article>'}).join('')+'</div>';
+}
+function renderDashboardTimeline(timeline){
+  return '<aside class="dashboard-section dashboard-timeline" aria-labelledby="dashboard-timeline-title"><h2 id="dashboard-timeline-title">'+tx('學習歷程','Learning journey')+'</h2><ul class="dashboard-timeline-meta"><li><span>'+tx('完成日期','Completion date')+'</span><strong>'+dashboardDate(timeline.completionDate)+'</strong></li><li><span>'+tx('首次開始','First started')+'</span><strong>'+dashboardDate(timeline.firstStart)+'</strong></li><li><span>'+tx('最近學習','Last study')+'</span><strong>'+dashboardDate(timeline.lastStudy)+'</strong></li></ul><ol class="dashboard-timeline-list">'+timeline.timeline.map(function(item){return '<li class="dashboard-timeline-item '+(item.completed?'completed ':'')+(item.current?'current':'')+'"><span class="dashboard-timeline-dot" aria-hidden="true">'+(item.completed?'✓':'')+'</span><div><h3>'+tx(...item.title)+'</h3><p>'+tx(item.completed?'已完成':'尚未完成',item.completed?'Completed':'Not completed')+'</p><span class="dashboard-timeline-time">'+dashboardDate(item.timestamp)+'</span></div></li>'}).join('')+'</ol></aside>';
+}
+function renderDashboardRecommendations(metrics){
+  const recommendations=dashboardRecommendations(metrics);
+  if(recommendations.allMastered)return '<section class="dashboard-section" aria-labelledby="dashboard-next-title"><h2 id="dashboard-next-title">'+tx('下一步建議','Recommended next steps')+'</h2><p>'+tx('五個能力面向目前都已掌握。下一步可以到自己的 GitHub 測試 Repository，完成一次真實協作。','All five competency areas are currently mastered. Next, try one real collaboration in your own GitHub test repository.')+'</p><div class="dashboard-actions"><button type="button" class="btn" onclick="gotoPhase(5)">'+tx('回到 Stage 5','Return to Stage 5')+'</button><button type="button" class="btn" onclick="reviewReset()">'+tx('重新做綜合回顧','Redo integrated review')+'</button><button type="button" class="btn primary" onclick="gotoPhase(1)">'+tx('回到首頁','Return to start')+'</button></div></section>';
+  return '<section class="dashboard-section" aria-labelledby="dashboard-next-title"><h2 id="dashboard-next-title">'+tx('下一步建議','Recommended next steps')+'</h2><p>'+tx('先從最需要再確認的面向開始；每個連結都會回到原本的學習活動。','Start with the areas that need the most confirmation. Each link returns to the original learning activity.')+'</p><ol class="dashboard-recommendations">'+recommendations.items.map(function(item){const available=dashboardActionIsAvailable(item.id);return '<li><strong>'+tx(...item.title)+' · '+tx(...dashboardStatusPair(item.status))+'</strong>'+tx(...item.evidence.evidence)+'<div class="dashboard-actions"><button type="button" class="btn" onclick="dashboardOpenDomain(\''+item.id+'\')" '+(available?'':'disabled')+'>'+dashboardActionLabel(item.id)+'</button></div></li>'}).join('')+'</ol></section>';
+}
+function dashboardHeaderActions(){
+  const resume=dashboardResumeStage();
+  return '<div class="dashboard-header-actions"><button type="button" class="btn" onclick="gotoPhase('+resume+')">'+tx('回到目前關卡','Return to current stage')+'</button></div>';
+}
+function renderLearningDashboard(){
+  const metrics=dashboardMetrics(),timeline=dashboardTimeline(),points=dashboardGrowthData(metrics),completionDate=dashboardDate(timeline.completionDate);
+  const support=[[metrics.support.stage2Wrong,tx('Stage 2 答錯','Stage 2 wrong matches')],[metrics.support.stage4Hints,tx('Stage 4 提示','Stage 4 hints')],[metrics.support.stage4Autofill,tx('Stage 4 範例填入','Stage 4 autofill')],[metrics.support.stage4Errors,tx('Stage 4 操作錯誤','Stage 4 operation errors')],[metrics.support.stage5Reattempts,tx('Stage 5 重新作答','Stage 5 reattempts')]];
+  return redesignPage('<section class="learning-dashboard" aria-labelledby="learning-dashboard-title"><header class="dashboard-header"><div><h1 id="learning-dashboard-title">'+tx('你的 GitHub 協作學習成果','Your GitHub collaboration learning results')+'</h1><p>'+tx('這裡整理你在五個教學 Stage 中留下的學習證據，幫你看見哪些能力已經能獨立使用、哪些地方值得再回來確認。這不是分數，也不會拿你和別人比較。','This dashboard gathers the learning evidence you left across the five teaching stages. It shows what you can use independently and where another look may help. It is not a score and does not compare you with anyone else.')+'</p></div><div class="dashboard-header-side"><div><strong>'+tx('完成日期','Completed')+'</strong>'+completionDate+'</div>'+dashboardHeaderActions()+'</div></header>'+renderDashboardKpis(metrics)+'<div class="dashboard-report"><section class="dashboard-section" aria-labelledby="dashboard-growth-title"><h2 id="dashboard-growth-title">'+tx('自主完成率變化','Independent completion growth')+'</h2><p>'+tx('只比較 Stage 2、Stage 4、Stage 5 中可比且已完成的檢核點；這是學習歷程，不是分數。','Only comparable completed checkpoints from Stage 2, Stage 4, and Stage 5 are compared. This is a learning path, not a score.')+'</p>'+dashboardChart(points)+'</section>'+renderDashboardTimeline(timeline)+'</div><section class="dashboard-section dashboard-support" aria-labelledby="dashboard-support-title"><div class="dashboard-support-intro"><h2 id="dashboard-support-title">'+tx('學習支援使用情形','Support used while learning')+'</h2><p>'+tx('這些是學習過程的線索，不會轉成排名或扣分。','These are traces of the learning process, not a ranking or deduction.')+'</p></div>'+support.map(function(item){return '<article class="dashboard-support-card"><b>'+dashboardSupportValue(item[0])+'</b><span>'+item[1]+'</span></article>'}).join('')+'</section><section class="dashboard-section dashboard-evidence" aria-labelledby="dashboard-competencies-title"><div class="dashboard-evidence-head"><h2 id="dashboard-competencies-title">'+tx('五項能力證據','Five competency areas')+'</h2><p>'+tx('狀態只使用正式的三種結果；尚未有足夠證據時，不會先判定為弱項。','Only the three formal outcomes are used. Without enough evidence, an area is not labeled as weak.')+'</p></div>'+renderDashboardCompetencies(metrics)+'</section>'+renderDashboardRecommendations(metrics)+'</section>',reviewTermKeys(),redesignActionBar(null,null,null,false));
+}
 function stage5AnswerAll(){
   const r=state.review;r.answers.workspace='A';r.answers.task='A';r.answers.branch='A';r.answers.commit='A';r.answers.pullRequest='A';r.answers.reviewStep1='A';r.answers.reviewStep2='A';r.answers.workflow=stage5Questions.workflow.correctOrder.slice();r.reviewStep=2;
-  r.wrongAttempts={};r.attempts={};r.stepResults={reviewStep1:'mastered',reviewStep2:'mastered'};r.results={workspace:'mastered',task:'mastered',branch:'mastered',commit:'mastered',pullRequest:'mastered',review:'mastered',workflow:'mastered'};r.status='in-progress';r.completed=false;r.feedback=null;r.report=reviewBuildReport();
+  r.wrongAttempts={};r.attempts={};r.stepResults={reviewStep1:'mastered',reviewStep2:'mastered'};r.results={workspace:'mastered',task:'mastered',branch:'mastered',commit:'mastered',pullRequest:'mastered',review:'mastered',workflow:'mastered'};r.status='in-progress';r.completed=false;r.feedback=null;
 }
 function alexAnswerCurrent(){
   if(!alexTestMode)return;const page=reviewPage(),r=state.review;
-  if(page==='report'||page==='intro')return;
+  if(page==='intro')return;
   if(page==='workflow')r.answers.workflow=stage5Questions.workflow.correctOrder.slice();
   else if(page==='review')r.answers[r.reviewStep===1?'reviewStep1':'reviewStep2']='A';
   else r.answers[stage5PageKey(page)]='A';
   r.feedback=null;persist();draw();
 }
 function alexSeedReviewAnswers(){
-  if(!alexTestMode)return;stage5AnswerAll();state.review.cursor=Math.min(state.review.cursor,stage5Route.length-1);state.review.maxVisitedCursor=Math.max(state.review.maxVisitedCursor,state.review.cursor);state.review.report=reviewBuildReport();
+  if(!alexTestMode)return;stage5AnswerAll();state.review.cursor=Math.min(state.review.cursor,stage5Route.length-1);state.review.maxVisitedCursor=Math.max(state.review.maxVisitedCursor,state.review.cursor);
 }
-function alexSetReportMode(mode){
-  if(!alexTestMode)return;stage5AnswerAll();const r=state.review;
-  if(mode==='mixed'){r.results.task='clarified';r.results.commit='clarified';r.results.review='clarified'}
-  if(mode==='needs-review'){r.results.branch='needs-review';r.results.review='needs-review';r.results.workflow='needs-review'}
-  r.report=reviewBuildReport();r.cursor=stage5Route.indexOf('report');r.maxVisitedCursor=r.cursor;r.completed=true;r.status='completed';draw();topNow();
+function alexPrepareLearningEvidence(mode){
+  const e=baseLearningEvidence();e.stage1.completed=true;e.stage1.discoveryOrder=pains.map(function(p){return p.id});e.stage2.byProblem=Object.fromEntries(pains.map(function(p){return [p.id,{attempts:1,wrong:0,solved:true}]}));e.stage3.completed=true;e.stage3.viewedSteps=demoSteps.map(function(_,index){return index});e.stage4.byStep=Object.fromEntries(practiceMeta.map(function(_,index){return [String(index),{predictionAttempts:1,wrongPredictions:0,operationErrors:[],hintsUsed:0,autofillUses:0,completed:true}]}));state.learningEvidence=e;state.scenarioFound=pains.map(function(p){return p.id});state.thinking=Object.fromEntries(pains.map(function(p){return [p.id,true]}));state.demo.played=true;state.practice.completed=practiceMeta.map(function(_,index){return index});
+  if(mode==='mixed'){e.stage2.byProblem.owner.wrong=1;e.stage2.byProblem.owner.attempts=2;e.stage4.byStep['0'].wrongPredictions=1;e.stage4.byStep['1'].hintsUsed=1;e.stage4.byStep['2'].autofillUses=1;e.stage4.byStep['3'].operationErrors=['alex-operation-error']}
+  if(mode==='needs-review'){e.stage2.byProblem.owner.wrong=2;e.stage2.byProblem.owner.attempts=3;e.stage4.byStep['0'].wrongPredictions=2;e.stage4.byStep['1'].hintsUsed=2;e.stage4.byStep['2'].autofillUses=1}
+}
+function alexSetDashboardCase(mode){
+  if(!alexTestMode)return;stage5AnswerAll();alexPrepareLearningEvidence(mode);const r=state.review;
+  if(mode==='mixed'){r.results.task='clarified';r.results.commit='clarified';r.results.review='clarified';r.wrongAttempts={task:1,commit:1,review:1};r.attempts={task:2,commit:2,review:2}}
+  if(mode==='needs-review'){r.results.branch='needs-review';r.results.review='needs-review';r.results.workflow='needs-review';r.wrongAttempts={branch:2,review:2,workflow:2};r.attempts={branch:3,review:3,workflow:3}}
+  r.cursor=stage5Route.length-1;r.maxVisitedCursor=r.cursor;r.completed=true;r.status='completed';state.unlocked=5;state.dashboard=baseDashboard();
+  if(mode!=='missing-timeline'){recordStageCompletion(1,'realContext');recordStageCompletion(2,'guidedThinking');recordStageCompletion(3,'completeDemonstration');recordStageCompletion(4,'guidedPractice');recordStageCompletion(5,'integratedReview');const completionEvent=(state.learningEvidence.events||[]).slice().reverse().find(function(event){return Number(event.stage)===5&&event.action==='stage-completed'});state.dashboard.firstUnlockedAt=completionEvent?.at||null;markDashboardViewed()}
+  state.phase=6;draw();topNow();
+}
+function alexSetReportMode(mode){alexSetDashboardCase(mode)}
+function alexLegacyReportCase(){
+  if(!alexTestMode)return;stage5AnswerAll();alexPrepareLearningEvidence('mastered');const r=state.review;r.route=['intro','workspace','task','branch','commit','pull-request','review','workflow','report'];r.cursor=8;r.maxVisitedCursor=8;r.completed=true;r.status='completed';state.dashboard=baseDashboard();state.phase=5;migrateLegacyReportState(state);delete state._dashboardMigrationDirty;draw();topNow();
 }
 function alexJumpReview(target){
   if(!alexTestMode)return;alexSeedReviewAnswers();const r=state.review,index=typeof target==='number'?target:stage5Route.indexOf(String(target));r.cursor=Math.max(0,Math.min(index<0?0:index,stage5Route.length-1));r.feedback=null;draw();topNow();
 }
-function alexCompleteReview(){if(!alexTestMode)return;alexSetReportMode('mastered')}
+function alexCompleteReview(){if(!alexTestMode)return;alexSetDashboardCase('mastered')}
 function alexReviewAnswerKey(){
   if(!alexTestMode)return '';
   const answers=['Repository 與 main','Issue、Assignee 與 Project','Branch','Commit message','Pull Request','Request changes → 修正 → 最新內容 → Approve','Issue → Branch → Commit → Pull Request → Review → Merge → 確認進度'];
@@ -1475,32 +1914,39 @@ function alexReviewAnswerKey(){
 }
 function alexReviewTools(){
   if(!alexTestMode)return '';
-  return '<div class="review-qa-tools" role="region" aria-label="ALEX test controls"><strong>ALEX · QA</strong><button type="button" onclick="alexAnswerCurrent()">'+tx('填入目前題目正確答案','Fill current answer')+'</button><button type="button" onclick="alexSeedReviewAnswers();draw()">'+tx('填入所有新版答案','Fill all new answers')+'</button><label>'+tx('跳到題目','Jump to question')+' <select onchange="alexJumpReview(this.value)"><option value="">—</option>'+stage5Route.map(function(p){return '<option value="'+p+'">'+tx(...reviewPageLabel(p))+'</option>'}).join('')+'</select></label><button type="button" onclick="alexSetReportMode(\'mastered\')">'+tx('全部已掌握報告','All mastered report')+'</button><button type="button" onclick="alexSetReportMode(\'mixed\')">'+tx('混合狀態報告','Mixed-status report')+'</button><button type="button" onclick="alexSetReportMode(\'needs-review\')">'+tx('含建議回顧報告','Needs-review report')+'</button><button type="button" onclick="alexCompleteReview()">'+tx('完成新版 Stage 5','Complete new Stage 5')+'</button></div>'+alexReviewAnswerKey();
+  return '<div class="review-qa-tools" role="region" aria-label="ALEX test controls"><strong>ALEX · QA</strong><button type="button" onclick="alexAnswerCurrent()">'+tx('填入目前題目正確答案','Fill current answer')+'</button><button type="button" onclick="alexSeedReviewAnswers();draw()">'+tx('填入所有新版答案','Fill all new answers')+'</button><label>'+tx('跳到題目','Jump to question')+' <select onchange="alexJumpReview(this.value)"><option value="">—</option>'+stage5Route.map(function(p){return '<option value="'+p+'">'+tx(...reviewPageLabel(p))+'</option>'}).join('')+'</select></label><button type="button" onclick="alexSetDashboardCase(\'mastered\')">'+tx('全自主儀表板','All-autonomous dashboard')+'</button><button type="button" onclick="alexSetDashboardCase(\'mixed\')">'+tx('有支援後完成','Mixed-support dashboard')+'</button><button type="button" onclick="alexSetDashboardCase(\'needs-review\')">'+tx('需要再回顧','Needs-review dashboard')+'</button><button type="button" onclick="alexSetDashboardCase(\'missing-timeline\')">'+tx('缺少時間資料','Missing-timeline dashboard')+'</button><button type="button" onclick="alexLegacyReportCase()">'+tx('測試舊 report 遷移','Test legacy report migration')+'</button><button type="button" onclick="alexCompleteReview()">'+tx('完成新版 Stage 5','Complete new Stage 5')+'</button></div>'+alexReviewAnswerKey();
+}
+function alexDashboardApi(){
+  if(!isLocalTestHost())return {message:'ALEX is available only on a local development page.'};
+  if(!alexTestMode)activateAlexTestMode();
+  return {mastered:function(){alexSetDashboardCase('mastered');return 'mastered dashboard loaded'},mixed:function(){alexSetDashboardCase('mixed');return 'mixed dashboard loaded'},needsReview:function(){alexSetDashboardCase('needs-review');return 'needs-review dashboard loaded'},missingTimeline:function(){alexSetDashboardCase('missing-timeline');return 'missing-timeline dashboard loaded'},legacyReport:function(){alexLegacyReportCase();return 'legacy report migration loaded'}};
+}
+function activateAlexQueryMode(mode){
+  if(!isLocalTestHost())return;
+  alexTestMode=true;state.phase=5;state.unlocked=5;state.review=baseReview();state.dashboard=baseDashboard();state.modal=null;state.navOpen=false;state.termsOpen=false;state.scenarioWrong='';
+  if(mode==='legacyReport')alexLegacyReportCase();else alexSetDashboardCase(['mastered','mixed','needs-review','missing-timeline'].includes(mode)?mode:'mastered');
 }
 function renderReviewPage(){
-  const page=reviewPage(),body=page==='intro'?renderStage5Intro():page==='report'?renderStage5Report():renderStage5Question(page);
-  const content=reviewHeading(page)+(page==='intro'||page==='report'?body:'<div class="review-workbench">'+reviewSidebar()+body+'</div>');
+  const page=reviewPage(),body=page==='intro'?renderStage5Intro():renderStage5Question(page);
+  const content=reviewHeading(page)+(page==='intro'?body:'<div class="review-workbench">'+reviewSidebar()+body+'</div>');
   return redesignPage(content,reviewTermKeys(),redesignActionBar('gotoPhase(4)',null,null,false));
 }
 function redesignChallengePage(){return renderReviewPage()}
-function headerCourseActionState(){
-  if(state.phase===1){if(state.scenarioIntro)return alexTestMode?{prev:null,next:'gotoPhase(2)',label:tx('跳到引導思考','Skip to guided thinking'),showNext:true}:{prev:null,next:null,label:null,showNext:false};const ready=state.scenarioFound.length===pains.length;return {prev:'showScenarioIntro()',next:alexTestMode?'gotoPhase(2)':ready?'unlock(2)':null,label:tx('進入引導思考','Continue to guided thinking'),showNext:true}}
-  if(state.phase===2){const ready=Object.keys(state.thinking).length===pains.length;return {prev:'gotoPhase(1)',next:alexTestMode?'gotoPhase(3)':ready?'unlock(3)':null,label:tx('觀看完整示範','Watch the complete demonstration'),showNext:true}}
-  if(state.phase===3){markDemoViewed(state.demo.index);return {prev:'gotoPhase(2)',next:alexTestMode?'gotoPhase(4)':state.demo.played?'unlock(4)':null,label:tx('開始引導練習','Start guided practice'),showNext:true}}
-  if(state.phase===4){const p=state.practice,ready=p.step===practiceMeta.length-1&&p.result&&p.reflection==='ok';return {prev:'gotoPhase(3)',next:alexTestMode?'gotoPhase(5)':ready?'unlock(5)':null,label:tx('開始綜合回顧','Start integrated review'),showNext:true}}
-  const page=reviewPage();
-  if(page==='intro')return {prev:'gotoPhase(4)',next:'reviewNext()',label:tx('開始綜合回顧','Start integrated review'),showNext:true};
-  if(page==='report')return {prev:'gotoPhase(4)',next:'reviewJumpToReport()',label:tx('重看回顧報告','Review the report again'),showNext:true};
-  const complete=stage5CurrentComplete(page);
-  return {prev:'gotoPhase(4)',next:complete?'reviewNext()':'stage5CheckCurrent()',label:complete?tx('下一題','Next question'):tx('檢查答案','Check answer'),showNext:true};
-}
-function reviewJumpToReport(){const r=ensureReviewRoute(),index=stage5Route.indexOf('report');r.cursor=index;r.maxVisitedCursor=index;r.completed=true;r.status='completed';r.report=reviewBuildReport();r.feedback=null;save()}
+function reviewJumpToDashboard(){if(dashboardIsUnlocked())gotoPhase(6)}
 function draw(){
-  const app=document.getElementById('app'),content=state.phase===1?redesignScenarioPage():state.phase===2?redesignThinkingPage():state.phase===3?redesignDemoPage():state.phase===4?redesignPracticePage():redesignChallengePage();
-  app.innerHTML=redesignHeader()+'<div class="course-shell">'+redesignCourseRail()+'<div class="course-content">'+content+'</div></div>'+modalView();
+  const previousConversation=document.querySelector('.scenario-conversation');
+  if(previousConversation)scenarioConversationScrollTop=previousConversation.scrollTop;
+  ensureStageCompletionModal();
+  const app=document.getElementById('app'),content=state.phase===1?redesignScenarioPage():state.phase===2?redesignThinkingPage():state.phase===3?redesignDemoPage():state.phase===4?redesignPracticePage():state.phase===6?renderLearningDashboard():redesignChallengePage();
+  app.innerHTML=redesignMobileNavigation()+'<div class="course-shell '+(state.railCollapsed?'rail-collapsed':'')+'">'+redesignCourseRail()+'<div class="course-content" '+(state.navOpen?'inert':'')+'>'+content+'</div></div>'+modalView();
+  document.body.classList.toggle('nav-open',state.navOpen&&window.matchMedia('(max-width:1023px)').matches);
   requestAnimationFrame(function(){
-    if(state.modal){const first=document.querySelector('.modal button,.modal input,.modal textarea,.modal select');if(first)first.focus();return}
+    const conversation=document.querySelector('.scenario-conversation');
+    if(conversation)conversation.scrollTop=scenarioConversationScrollTop;
+    if(state.modal){const first=document.querySelector(state.modal.type==='stage-complete'?'.stage-complete-next':state.modal.type==='wrong'?'.thinking-feedback-action':'.modal button,.modal input,.modal textarea,.modal select');if(first)first.focus();return}
     if(focusRequested){const heading=document.querySelector('main h1,main h2');if(heading){heading.setAttribute('tabindex','-1');heading.focus()}focusRequested=false}
+    if(thinkingNextFocusRequested){const nextButton=document.querySelector('.thinking-next-button');if(nextButton)nextButton.focus();thinkingNextFocusRequested=false}
+    if(thinkingQuestionFocusRequested){const question=document.querySelector('#thinking-question-title');if(question){question.setAttribute('tabindex','-1');question.focus()}thinkingQuestionFocusRequested=false}
     if(stage5FocusFeedback){const feedbackHeading=document.querySelector('.stage5-feedback-title');if(feedbackHeading)feedbackHeading.focus();stage5FocusFeedback=false}
     if(stage5FocusSelector){const target=document.querySelector(stage5FocusSelector);if(target)target.focus();stage5FocusSelector=null}
   });
@@ -1520,9 +1966,11 @@ function persist(){
   }catch(e){}
 }
 function gotoPhase(n){
-  if(!alexTestMode&&n>state.unlocked)return;
+  if(n===6&&!dashboardIsUnlocked())return;
+  if(!alexTestMode&&n!==6&&n>state.unlocked)return;
+  if(n===6&&state.phase>=1&&state.phase<=5){if(!state.dashboard)state.dashboard=baseDashboard();state.dashboard.returnStage=state.phase}
   state.phase=n;state.modal=null;state.navOpen=false;state.termsOpen=false;state.scenarioWrong='';
-  navReturnFocus=null;navReturnFocusSelector=null;focusRequested=true;save();topNow();
+  navReturnFocus=null;navReturnFocusSelector=null;focusRequested=true;if(n===6)markDashboardViewed();save();topNow();
 }
 function phaseName(index){
   const names=[['真實情境','Real context'],['引導思考','Guided thinking'],['完整示範','Watch once'],['引導練習','Guided practice'],['綜合回顧','Integrated review']];
@@ -1533,10 +1981,11 @@ function phaseNameText(index){
   return state.lang==='en'?n[1]:n[0];
 }
 function redesignCourseNavItems(){
-  return [1,2,3,4,5].map(i=>{
-    const completedStage5=!alexTestMode&&i===5&&state.review?.completed;
+  const stages=[1,2,3,4,5].map(i=>{
+    const alexDashboardComplete=alexTestMode&&state.phase===6;
+    const completedStage5=i===5&&((!alexTestMode&&state.review?.completed)||alexDashboardComplete);
     const current=state.phase===i&&!completedStage5;
-    const done=!alexTestMode&&(completedStage5||(i<state.unlocked&&!current));
+    const done=alexDashboardComplete||(!alexTestMode&&(completedStage5||(i<state.unlocked&&!current)));
     const locked=!alexTestMode&&i>state.unlocked;
     const available=!current&&!done&&!locked;
     const statusPair=alexTestMode
@@ -1544,8 +1993,10 @@ function redesignCourseNavItems(){
       :(current?['進行中','In progress']:done?['已完成','Completed']:available?['可開始','Ready']:['尚未開始','Not started']);
     const status=tx(...statusPair),statusText=plain(...statusPair);
     const label=plain(`第 ${i} 階段：${phaseNameText(i)}，${statusText}`,`Stage ${i}: ${phaseNameText(i)}, ${statusText}`);
-    return `<button class="course-nav-item ${current?'current':done?'done':available?'available':'locked'}" onclick="gotoPhase(${i})" ${locked?'disabled':''} ${current?'aria-current="step"':''} aria-label="${esc(label)}"><span class="phase-no" aria-hidden="true">${done?'✓':i}</span><span><b>${phaseName(i)}</b><small>${status}</small></span></button>`;
+    return `<button class="course-nav-item ${current?'current':done?'done':available?'available':'locked'}" onclick="gotoPhase(${i})" ${locked?'disabled':''} ${current?'aria-current="step"':''} aria-label="${esc(label)}" title="${esc(label)}"><span class="phase-no" aria-hidden="true">${done?'✓':i}</span><span class="nav-copy"><b>${phaseName(i)}</b><small>${status}</small></span></button>`;
   }).join('');
+  const dashboardCurrent=state.phase===6,dashboardStatus=dashboardCurrent?['目前頁面','Current page']:['隨時可查看','Available anytime'],dashboardLabel=plain('學習成果，'+dashboardStatus[0],'Learning dashboard, '+dashboardStatus[1]);
+  return stages+'<div class="course-nav-divider">'+tx('隨時查看學習進度','View progress anytime')+'</div><button class="course-nav-item course-nav-dashboard '+(dashboardCurrent?'current':'available')+'" onclick="gotoPhase(6)" '+(dashboardCurrent?'aria-current="page"':'')+' aria-label="'+esc(dashboardLabel)+'" title="'+esc(dashboardLabel)+'"><span class="phase-no" aria-hidden="true">R</span><span class="nav-copy"><b>'+tx('學習成果','Learning dashboard')+'</b><small>'+tx(...dashboardStatus)+'</small></span></button>';
 }
 function activateAlexTestMode(){
   if(!isLocalTestHost())return 'ALEX is available only on a local development page.';
@@ -1562,10 +2013,16 @@ function activateAlexTestMode(){
 function installLocalTestShortcut(){
   try{
     Object.defineProperty(window,'ALEX',{configurable:false,enumerable:false,get:activateAlexTestMode});
+    Object.defineProperty(window,'ALEX_DASHBOARD',{configurable:false,enumerable:false,get:alexDashboardApi});
   }catch(e){}
 }
 installLocalTestShortcut();
+const alexQueryMode=new URLSearchParams(location.search).get('alex');
+if(alexQueryMode)activateAlexQueryMode(alexQueryMode);
+if(state._dashboardMigrationDirty){delete state._dashboardMigrationDirty;persist()}
+if(state.phase===6&&dashboardIsUnlocked()&&!state.dashboard?.firstViewedAt){markDashboardViewed();persist()}
 draw();
+window.addEventListener('resize',function(){if(window.innerWidth>=1024&&state.navOpen){state.navOpen=false;navReturnFocus=null;navReturnFocusSelector=null;persist();draw()}});
 </script>
 </body>
 </html>
